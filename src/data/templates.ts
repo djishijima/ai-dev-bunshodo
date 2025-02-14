@@ -20,7 +20,10 @@ export const templates = [
       "インストールガイド",
       "API連携ガイド",
       "1ヶ月のテクニカルサポート"
-    ]
+    ],
+    testimonials: [],
+    benefits: [],
+    updates: []
   },
   {
     id: "api-gateway",
@@ -115,9 +118,40 @@ export const templates = [
       "データベース設計書",
       "管理者マニュアル",
       "6ヶ月のテクニカルサポート"
-    ]
+    ],
+    testimonials: [],
+    benefits: [],
+    updates: []
   }
 ];
 
-export type Template = typeof templates[0];
-export type AIModel = Template['aiModels'][0];
+interface Testimonial {
+  name: string;
+  role: string;
+  comment: string;
+}
+
+interface Benefit {
+  title: string;
+  description: string;
+}
+
+interface Update {
+  date: string;
+  content: string;
+}
+
+export interface Template {
+  id: string;
+  title: string;
+  description: string;
+  price: number;
+  technologies: string[];
+  features: string[];
+  includes: string[];
+  testimonials: Testimonial[];
+  benefits: Benefit[];
+  updates: Update[];
+}
+
+export type { Testimonial, Benefit, Update };

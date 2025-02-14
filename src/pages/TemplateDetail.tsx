@@ -1,10 +1,10 @@
+
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { NavBar } from "@/components/NavBar";
 import { Star, FileCode, BookOpen, Mail, CheckCircle2 } from "lucide-react";
 import { templates } from "@/data/templates";
-import { AIModelsSection } from "@/components/template/AIModelsSection";
 import { PricingSection } from "@/components/template/PricingSection";
 import { FeaturesSection } from "@/components/template/FeaturesSection";
 import { IncludesSection } from "@/components/template/IncludesSection";
@@ -128,10 +128,6 @@ const TemplateDetail = () => {
                 ))}
               </div>
             </div>
-
-            {template.aiModels && (
-              <AIModelsSection models={template.aiModels} />
-            )}
           </motion.div>
 
           <motion.div
@@ -157,21 +153,23 @@ const TemplateDetail = () => {
               </div>
             </div>
 
-            {template.testimonials && (
+            {template.testimonials.length > 0 && (
               <TestimonialsSection testimonials={template.testimonials} />
             )}
 
-            <div className="bg-card p-8 rounded-2xl shadow-lg border border-border">
-              <h2 className="text-2xl font-semibold mb-6 text-card-foreground">最新のアップデート</h2>
-              <div className="space-y-4">
-                {template.updates?.map((update, index) => (
-                  <div key={index} className="flex gap-4 items-start">
-                    <div className="text-sm text-muted-foreground">{update.date}</div>
-                    <div className="text-card-foreground flex-1">{update.content}</div>
-                  </div>
-                ))}
+            {template.updates.length > 0 && (
+              <div className="bg-card p-8 rounded-2xl shadow-lg border border-border">
+                <h2 className="text-2xl font-semibold mb-6 text-card-foreground">最新のアップデート</h2>
+                <div className="space-y-4">
+                  {template.updates.map((update, index) => (
+                    <div key={index} className="flex gap-4 items-start">
+                      <div className="text-sm text-muted-foreground">{update.date}</div>
+                      <div className="text-card-foreground flex-1">{update.content}</div>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             <FeaturesSection features={template.features} />
             <IncludesSection includes={template.includes} />
