@@ -4,23 +4,39 @@ import { motion } from "framer-motion";
 const apis = [
   {
     name: "OpenAI GPT-4",
-    description: "APIキーを設定するだけですぐに利用可能なAIチャット機能のテンプレート",
-    readyFeatures: ["テンプレート化されたチャットUI", "プロンプト設計済み", "ストリーミング実装済み"]
+    description: "チャットボット作成のための実装例とテンプレートコード",
+    readyFeatures: [
+      "const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })",
+      "const response = await openai.chat.completions.create({...})",
+      "const stream = await openai.chat.completions.create({ stream: true })"
+    ]
   },
   {
-    name: "Stripe",
-    description: "決済システムをすぐに導入できるテンプレートコード付き",
-    readyFeatures: ["決済フォーム実装済み", "サブスクリプション管理", "webhookハンドラー"]
+    name: "Google Calendar",
+    description: "カレンダー連携のための実装例とテンプレートコード",
+    readyFeatures: [
+      "const calendar = google.calendar({ version: 'v3', auth })",
+      "await calendar.events.list({ calendarId: 'primary' })",
+      "await calendar.events.insert({ calendarId: 'primary', ... })"
+    ]
   },
   {
-    name: "Supabase",
-    description: "認証とデータベースの実装例が含まれたテンプレート",
-    readyFeatures: ["認証UI実装済み", "データベース設計例", "リアルタイム同期"]
+    name: "Stripe決済",
+    description: "決済システム実装のためのコード例とガイド",
+    readyFeatures: [
+      "const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)",
+      "const session = await stripe.checkout.sessions.create({...})",
+      "app.post('/webhook', express.raw({ type: 'application/json' }))"
+    ]
   },
   {
-    name: "SendGrid",
-    description: "メール送信機能のテンプレートコードを提供",
-    readyFeatures: ["メール送信実装例", "テンプレート連携", "エラーハンドリング"]
+    name: "Supabase認証",
+    description: "認証システム実装のためのコード例とガイド",
+    readyFeatures: [
+      "const { data, error } = await supabase.auth.signUp({...})",
+      "const { data: { session } } = await supabase.auth.getSession()",
+      "await supabase.from('profiles').select('*').eq('id', user.id)"
+    ]
   }
 ];
 
@@ -33,10 +49,10 @@ export const ApiShowcase = () => {
         className="max-w-7xl mx-auto"
       >
         <h2 className="text-4xl font-bold text-center mb-4 bg-gradient-to-r from-[#9b87f5] to-[#8B5CF6] text-transparent bg-clip-text">
-          APIテンプレート付き
+          実装例とテンプレートコード
         </h2>
         <p className="text-xl text-center text-white/80 mb-16">
-          各APIの実装例とテンプレートコードを提供。開発時間を大幅に短縮できます。
+          APIを使用するための具体的なコード例とガイドラインを提供します。
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {apis.map((api, index) => (
@@ -53,9 +69,8 @@ export const ApiShowcase = () => {
                 {api.readyFeatures.map((feature) => (
                   <div 
                     key={feature}
-                    className="flex items-center bg-white/5 rounded-lg p-3"
+                    className="flex items-center bg-black/20 rounded-lg p-3 font-mono text-sm"
                   >
-                    <div className="w-2 h-2 bg-[#8B5CF6] rounded-full mr-3"></div>
                     <span className="text-white/90">{feature}</span>
                   </div>
                 ))}
