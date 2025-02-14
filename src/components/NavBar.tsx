@@ -1,38 +1,32 @@
 
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { NavLink } from "react-router-dom";
 
 export const NavBar = () => {
   return (
-    <motion.nav 
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="fixed w-full top-0 z-50 backdrop-blur-lg bg-white/70 border-b border-gray-200"
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16 items-center">
-          <div className="flex-shrink-0">
-            <h1 className="text-xl font-bold">コードマーケット</h1>
-          </div>
+    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-white/10">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex items-center justify-between h-16">
+          <NavLink to="/" className="text-2xl font-bold text-white hover:text-white/80 transition-colors">
+            RapidSaaS
+          </NavLink>
           
-          <div className="hidden md:flex items-center space-x-8">
-            <a href="#templates" className="text-gray-700 hover:text-gray-900 transition-colors">
-              テンプレート
-            </a>
-            <a href="#features" className="text-gray-700 hover:text-gray-900 transition-colors">
-              機能
-            </a>
-            <a href="#pricing" className="text-gray-700 hover:text-gray-900 transition-colors">
-              料金
-            </a>
-          </div>
-
-          <div className="flex items-center space-x-4">
-            <Button variant="ghost">ログイン</Button>
-            <Button className="premium-button">今すぐ始める</Button>
+          <div className="flex items-center gap-6">
+            <NavLink 
+              to="/pricing" 
+              className={({ isActive }) => 
+                `text-sm ${isActive ? 'text-white' : 'text-white/70 hover:text-white'} transition-colors`
+              }
+            >
+              料金プラン
+            </NavLink>
+            
+            <Button variant="outline" className="bg-white/10 border-white/20 text-white hover:bg-white/20">
+              ログイン
+            </Button>
           </div>
         </div>
       </div>
-    </motion.nav>
+    </nav>
   );
 };
