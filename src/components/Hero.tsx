@@ -16,18 +16,18 @@ export const Hero = () => {
         className="max-w-3xl mx-auto"
       >
         <h1 className="text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600">
-          Build Your SaaS in Minutes
+          数分でSaaSを構築
         </h1>
         <p className="text-xl text-gray-600 mb-8">
-          Premium source code templates with AI and API integrations.
-          Launch your next project faster than ever.
+          AIとAPI統合済みのプレミアムソースコードテンプレート。
+          次のプロジェクトをかつてないスピードで立ち上げましょう。
         </p>
         <div className="flex justify-center gap-4">
           <Button className="premium-button">
-            Browse Templates
+            テンプレートを見る
           </Button>
           <Button variant="outline" className="px-6 py-3 rounded-full">
-            Learn More
+            詳しく見る
           </Button>
         </div>
       </motion.div>

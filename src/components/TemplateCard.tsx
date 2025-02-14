@@ -34,7 +34,7 @@ export const TemplateCard = ({ title, description, price, technologies, index }:
         <div className="flex justify-between items-center">
           <span className="text-2xl font-bold">${price}</span>
           <Button className="premium-button">
-            View Details
+            詳細を見る
           </Button>
         </div>
       </Card>
