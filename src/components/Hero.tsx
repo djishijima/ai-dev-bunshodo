@@ -25,9 +25,9 @@ export const Hero = () => {
           <Star className="w-6 h-6 text-yellow-400" />
         </div>
         <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-[#9b87f5] to-[#8B5CF6] text-transparent bg-clip-text">
-          ひらめきを最速でカタチに！
+          爆速AIアプリ構築
           <br />
-          <span className="text-4xl">API活用ビジネスアプリ</span>
+          <span className="text-4xl">誰でも簡単 APIアプリ開発</span>
         </h1>
         <p className="text-xl text-white/80 mb-8 leading-relaxed">
           「こんなサービス、あったらいいな…」<br />
@@ -71,7 +71,7 @@ export const Hero = () => {
               <Star className="w-6 h-6 text-cyan-400" />
             </div>
             <h3 className="font-semibold text-white mb-2">10分で完成</h3>
-            <p className="text-white/80 text-sm">面倒な設定は全ておまかせ。すぐにビジネスをスタート。</p>
+            <p className="text-white/80 text-sm">詳しい解説動画で、誰でも簡単にアプリが作れます。</p>
           </div>
         </div>
       </motion.div>

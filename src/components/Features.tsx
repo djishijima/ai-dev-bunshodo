@@ -1,6 +1,6 @@
 
 import { motion } from "framer-motion";
-import { Code2, Zap, Lock, Puzzle, Clock, Heart } from "lucide-react";
+import { Code2, Zap, Lock, Puzzle, Clock, VideoIcon } from "lucide-react";
 
 const features = [
   {
@@ -29,9 +29,9 @@ const features = [
     description: "React、TypeScript、Tailwindで構築された、洗練されたコードベース。"
   },
   {
-    icon: <Heart className="w-6 h-6" />,
-    title: "手厚いサポート",
-    description: "導入から運用まで、専門スタッフが丁寧にサポート。困ったときもお任せ。"
+    icon: <VideoIcon className="w-6 h-6" />,
+    title: "充実の解説動画",
+    description: "ステップバイステップの解説動画で、アプリ開発の流れを分かりやすく説明。"
   }
 ];
 
@@ -44,11 +44,11 @@ export const Features = () => {
         className="max-w-7xl mx-auto"
       >
         <h2 className="text-4xl font-bold text-center mb-4 bg-gradient-to-r from-[#9b87f5] to-[#8B5CF6] text-transparent bg-clip-text">
-          なぜ RapidSaaS なのか？
+          なぜ 爆速AIアプリ構築 なのか？
         </h2>
         <p className="text-xl text-center text-white/80 mb-16 max-w-2xl mx-auto">
           「こんなサービス、あったらいいな…」<br />
-          そう思ったことはありませんか？ RapidSaaSなら、それをすぐに実現できます！
+          そう思ったことはありませんか？ すぐにそれを実現できます！
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
