@@ -1,5 +1,5 @@
 
-import { Code2, FileJson, FolderGit2, GitBranch, Webhook, MessagesSquare, BookCheck, Star } from "lucide-react";
+import { Code2, FileJson, FolderGit2, GitBranch, Webhook, MessagesSquare, BookCheck, Star, Shield, Database, FileCode } from "lucide-react";
 
 export const DeliveryContent = () => {
   return (
@@ -8,119 +8,85 @@ export const DeliveryContent = () => {
       
       <div className="bg-slate-900 p-6 rounded-lg text-white/90">
         <pre className="text-sm">
-          {`ai-gijiroku-template/
-├── .env.example           # 環境変数のサンプルファイル
-├── components/           # React コンポーネント
-│   ├── AudioRecorder.js   # 音声録音コンポーネント
-│   ├── Transcript.js      # 文字起こし結果表示コンポーネント
-│   └── GijirokuEditor.js  # 議事録編集コンポーネント
+          {`nextjs-supabase-auth-template/
+├── .env.example             # 環境変数のサンプルファイル
+├── components/             # React コンポーネント
+│   ├── AuthForm.js        # ログイン・サインアップフォーム
+│   ├── Profile.js         # ユーザープロフィール表示
+│   └── ProtectedRoute.js  # 保護されたルート
 ├── pages/
-│   ├── api/              # API Route
-│   │   └── transcribe.js # Whisper API と連携する API Route
-│   └── index.js          # メイン画面
-├── public/              # 静的ファイル
-│   └── logo.png
-├── styles/             # スタイルシート
+│   ├── api/               # API Route
+│   │   └── auth-helpers.js # Supabase認証ヘルパー
+│   ├── login.js           # ログインページ
+│   ├── signup.js          # サインアップページ
+│   └── profile.js         # プロフィールページ
+├── public/               # 静的ファイル
+│   └── favicon.ico
+├── styles/              # スタイルシート
 │   └── globals.css
-├── utils/              # ユーティリティ関数
-│   └── whisper.js      # Whisper API 呼び出し関数
-├── gijiroku-templates/  # 議事録テンプレート
-│   ├── standard.json
-│   └── meeting.md
-├── .gitignore          # Git除外設定
-├── package.json        # 依存関係定義
-└── README.md           # 詳細なドキュメント`}
+├── utils/               # ユーティリティ関数
+│   └── supabaseClient.js # Supabase初期化
+├── .gitignore           # Git除外設定
+├── package.json         # 依存関係定義
+└── README.md            # セットアップガイド`}
         </pre>
       </div>
 
       <div className="space-y-6">
         <div className="flex gap-4 items-start">
           <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0">
-            <GitBranch className="w-6 h-6 text-blue-600" />
+            <Shield className="w-6 h-6 text-blue-600" />
           </div>
           <div>
-            <h3 className="text-lg font-semibold mb-2">GitHubリポジトリ管理</h3>
+            <h3 className="text-lg font-semibold mb-2">認証機能</h3>
             <ul className="list-disc list-inside text-gray-600 space-y-2">
-              <li>プライベートリポジトリでの提供</li>
-              <li>ブランチ戦略（main: 安定版, develop: 開発版）</li>
-              <li>適切な.gitignore設定（APIキー等の除外）</li>
-              <li>GitHub Actionsによる自動化</li>
+              <li>メール/パスワード認証</li>
+              <li>ソーシャルログイン (Google, GitHub)</li>
+              <li>保護されたルート実装</li>
+              <li>セッション管理</li>
             </ul>
           </div>
         </div>
 
         <div className="flex gap-4 items-start">
           <div className="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center flex-shrink-0">
-            <Webhook className="w-6 h-6 text-purple-600" />
+            <Database className="w-6 h-6 text-purple-600" />
           </div>
           <div>
-            <h3 className="text-lg font-semibold mb-2">自動化設定</h3>
+            <h3 className="text-lg font-semibold mb-2">Supabase設定</h3>
             <ul className="list-disc list-inside text-gray-600 space-y-2">
-              <li>テスト・Lint自動実行</li>
-              <li>Vercelとの連携による自動デプロイ</li>
-              <li>コードフォーマット自動化</li>
-              <li>セキュリティチェック</li>
+              <li>認証設定ガイド</li>
+              <li>RLSポリシー設定</li>
+              <li>ストレージバケット設定</li>
+              <li>環境変数設定</li>
             </ul>
           </div>
         </div>
 
         <div className="flex gap-4 items-start">
           <div className="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center flex-shrink-0">
-            <MessagesSquare className="w-6 h-6 text-green-600" />
+            <FileCode className="w-6 h-6 text-green-600" />
           </div>
           <div>
-            <h3 className="text-lg font-semibold mb-2">サポート体制</h3>
+            <h3 className="text-lg font-semibold mb-2">実装コード</h3>
             <ul className="list-disc list-inside text-gray-600 space-y-2">
-              <li>導入サポート（30日間）</li>
-              <li>技術的な質問対応</li>
-              <li>カスタマイズ相談</li>
-              <li>トラブルシューティング</li>
+              <li>認証フォームコンポーネント</li>
+              <li>プロフィール管理機能</li>
+              <li>保護されたルート実装</li>
+              <li>Supabaseクライアント設定</li>
             </ul>
           </div>
         </div>
       </div>
 
       <div className="bg-blue-50 p-6 rounded-lg border border-blue-100">
-        <h3 className="text-lg font-semibold mb-4">議事録テンプレート</h3>
-        <div className="space-y-4">
-          <div>
-            <h4 className="font-medium mb-2">標準テンプレート (JSON)</h4>
-            <pre className="bg-white p-3 rounded text-sm">
-              {`{
-  "title": "会議名",
-  "date": "日付",
-  "attendees": ["参加者1", "参加者2"],
-  "agenda": ["議題1", "議題2"],
-  "summary": "概要",
-  "decisions": ["決定事項1", "決定事項2"],
-  "next_actions": ["次回アクション1", "次回アクション2"]
-}`}
-            </pre>
-          </div>
-          <div>
-            <h4 className="font-medium mb-2">会議用テンプレート (Markdown)</h4>
-            <pre className="bg-white p-3 rounded text-sm">
-              {`# 会議名
-
-**日付:** 2024年10月27日
-
-**参加者:**
-- 参加者1
-- 参加者2
-
-**議題:**
-- 議題1
-- 議題2
-
-**概要:**
-[会議の概要]
-
-**決定事項:**
-- 決定事項1
-- 決定事項2`}
-            </pre>
-          </div>
-        </div>
+        <h3 className="text-lg font-semibold mb-4">環境変数設定例</h3>
+        <pre className="bg-white p-4 rounded text-sm">
+          {`# .env.example
+NEXT_PUBLIC_SUPABASE_URL=YOUR_SUPABASE_URL
+NEXT_PUBLIC_SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY`}
+        </pre>
+        <p className="mt-4 text-sm text-gray-600">※ 実際の値はSupabaseダッシュボードから取得できます</p>
       </div>
 
       <div className="bg-green-50 p-6 rounded-lg border border-green-100">
@@ -129,29 +95,29 @@ export const DeliveryContent = () => {
           <li className="flex items-start gap-3">
             <div className="w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center flex-shrink-0 mt-1">1</div>
             <div>
-              <strong>購入情報の確認</strong>
-              <p className="text-sm text-gray-600 mt-1">GitHubアカウント情報の収集と確認</p>
+              <strong>Supabaseプロジェクト作成</strong>
+              <p className="text-sm text-gray-600 mt-1">認証設定、RLSポリシー設定、APIキー取得</p>
             </div>
           </li>
           <li className="flex items-start gap-3">
             <div className="w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center flex-shrink-0 mt-1">2</div>
             <div>
-              <strong>リポジトリアクセス権の付与</strong>
-              <p className="text-sm text-gray-600 mt-1">プライベートリポジトリへのコラボレーター招待</p>
+              <strong>GitHubリポジトリ設定</strong>
+              <p className="text-sm text-gray-600 mt-1">プライベートリポジトリ作成、コラボレーター招待</p>
             </div>
           </li>
           <li className="flex items-start gap-3">
             <div className="w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center flex-shrink-0 mt-1">3</div>
             <div>
-              <strong>納品完了メール送信</strong>
-              <p className="text-sm text-gray-600 mt-1">アクセス方法、セットアップガイド、サポート情報の案内</p>
+              <strong>環境変数とデプロイ設定</strong>
+              <p className="text-sm text-gray-600 mt-1">Vercelとの連携、環境変数設定</p>
             </div>
           </li>
           <li className="flex items-start gap-3">
             <div className="w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center flex-shrink-0 mt-1">4</div>
             <div>
-              <strong>フォローアップ</strong>
-              <p className="text-sm text-gray-600 mt-1">導入状況の確認と追加サポートの提供</p>
+              <strong>テスト用アカウント提供</strong>
+              <p className="text-sm text-gray-600 mt-1">動作確認用のテストユーザー作成</p>
             </div>
           </li>
         </ol>
@@ -164,12 +130,12 @@ export const DeliveryContent = () => {
             提供ドキュメント
           </h3>
           <ul className="space-y-3 text-gray-700">
-            <li>• Whisper API 設定ガイド</li>
-            <li>• 音声録音実装ガイド</li>
-            <li>• 議事録テンプレート集</li>
-            <li>• カスタマイズガイド</li>
+            <li>• Supabase設定ガイド</li>
+            <li>• 認証実装ガイド</li>
+            <li>• RLSポリシー設定ガイド</li>
             <li>• デプロイマニュアル</li>
-            <li>• APIリファレンス</li>
+            <li>• カスタマイズガイド</li>
+            <li>• トラブルシューティング</li>
           </ul>
         </div>
 
@@ -181,9 +147,9 @@ export const DeliveryContent = () => {
           <ul className="space-y-3 text-gray-700">
             <li>• 30日間の技術サポート</li>
             <li>• プライベートリポジトリアクセス</li>
-            <li>• 30日間の返金保証</li>
-            <li>• カスタマイズ相談</li>
+            <li>• Supabase設定サポート</li>
             <li>• デプロイ支援</li>
+            <li>• カスタマイズ相談</li>
           </ul>
         </div>
       </div>
