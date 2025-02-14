@@ -13,6 +13,15 @@ export const NavBar = () => {
           
           <div className="flex items-center gap-6">
             <NavLink 
+              to="/templates" 
+              className={({ isActive }) => 
+                `text-sm ${isActive ? 'text-white' : 'text-white/70 hover:text-white'} transition-colors`
+              }
+            >
+              テンプレート一覧
+            </NavLink>
+            
+            <NavLink 
               to="/pricing" 
               className={({ isActive }) => 
                 `text-sm ${isActive ? 'text-white' : 'text-white/70 hover:text-white'} transition-colors`
