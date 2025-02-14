@@ -1,4 +1,3 @@
-
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -9,6 +8,7 @@ import { AIModelsSection } from "@/components/template/AIModelsSection";
 import { PricingSection } from "@/components/template/PricingSection";
 import { FeaturesSection } from "@/components/template/FeaturesSection";
 import { IncludesSection } from "@/components/template/IncludesSection";
+import { TestimonialsSection } from "@/components/template/TestimonialsSection";
 
 const TemplateDetail = () => {
   const { id } = useParams();
@@ -68,7 +68,7 @@ const TemplateDetail = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="max-w-7xl mx-auto pt-32 px-4"
+        className="max-w-7xl mx-auto pt-32 px-4 pb-24"
       >
         <Button 
           variant="ghost" 
@@ -141,17 +141,33 @@ const TemplateDetail = () => {
             className="space-y-8"
           >
             <div className="bg-card p-8 rounded-2xl shadow-lg border border-border">
-              <h2 className="text-2xl font-semibold mb-6 text-card-foreground">提供内容</h2>
+              <h2 className="text-2xl font-semibold mb-6 text-card-foreground">主な特徴</h2>
               <div className="space-y-6">
-                {deliverables.map((item, index) => (
+                {template.benefits?.map((benefit, index) => (
                   <div key={index} className="flex gap-4">
                     <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center flex-shrink-0">
-                      <item.icon className="w-6 h-6 text-secondary-foreground" />
+                      <CheckCircle2 className="w-6 h-6 text-secondary-foreground" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-card-foreground">{item.title}</h3>
-                      <p className="text-muted-foreground text-sm">{item.description}</p>
+                      <h3 className="font-semibold text-card-foreground">{benefit.title}</h3>
+                      <p className="text-muted-foreground text-sm">{benefit.description}</p>
                     </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {template.testimonials && (
+              <TestimonialsSection testimonials={template.testimonials} />
+            )}
+
+            <div className="bg-card p-8 rounded-2xl shadow-lg border border-border">
+              <h2 className="text-2xl font-semibold mb-6 text-card-foreground">最新のアップデート</h2>
+              <div className="space-y-4">
+                {template.updates?.map((update, index) => (
+                  <div key={index} className="flex gap-4 items-start">
+                    <div className="text-sm text-muted-foreground">{update.date}</div>
+                    <div className="text-card-foreground flex-1">{update.content}</div>
                   </div>
                 ))}
               </div>
