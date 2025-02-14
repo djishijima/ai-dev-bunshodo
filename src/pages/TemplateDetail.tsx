@@ -1,4 +1,3 @@
-
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -9,6 +8,7 @@ import { PricingSection } from "@/components/template/PricingSection";
 import { FeaturesSection } from "@/components/template/FeaturesSection";
 import { IncludesSection } from "@/components/template/IncludesSection";
 import { TestimonialsSection } from "@/components/template/TestimonialsSection";
+import { DeliveryContent } from "@/components/template/DeliveryContent";
 
 const TemplateDetail = () => {
   const { id } = useParams();
@@ -136,43 +136,15 @@ const TemplateDetail = () => {
             transition={{ delay: 0.3 }}
             className="space-y-8"
           >
-            <div className="bg-card p-8 rounded-2xl shadow-lg border border-border">
-              <h2 className="text-2xl font-semibold mb-6 text-card-foreground">主な特徴</h2>
-              <div className="space-y-6">
-                {template.benefits?.map((benefit, index) => (
-                  <div key={index} className="flex gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center flex-shrink-0">
-                      <CheckCircle2 className="w-6 h-6 text-secondary-foreground" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-card-foreground">{benefit.title}</h3>
-                      <p className="text-muted-foreground text-sm">{benefit.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            {/* 納品物の構成を表示 */}
+            {template.id === 'chatbot-template' && <DeliveryContent />}
 
+            {/* その他のセクション */}
+            <FeaturesSection features={template.features} />
+            <IncludesSection includes={template.includes} />
             {template.testimonials.length > 0 && (
               <TestimonialsSection testimonials={template.testimonials} />
             )}
-
-            {template.updates.length > 0 && (
-              <div className="bg-card p-8 rounded-2xl shadow-lg border border-border">
-                <h2 className="text-2xl font-semibold mb-6 text-card-foreground">最新のアップデート</h2>
-                <div className="space-y-4">
-                  {template.updates.map((update, index) => (
-                    <div key={index} className="flex gap-4 items-start">
-                      <div className="text-sm text-muted-foreground">{update.date}</div>
-                      <div className="text-card-foreground flex-1">{update.content}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            <FeaturesSection features={template.features} />
-            <IncludesSection includes={template.includes} />
 
             <div className="bg-card/50 p-8 rounded-2xl border border-border">
               <h3 className="text-xl font-semibold mb-4 text-card-foreground">
