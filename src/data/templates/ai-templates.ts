@@ -53,7 +53,7 @@ export const aiTemplates: Template[] = [
     id: "ai-minutes",
     title: "AI議事録作成ツール",
     description: "会議音声をリアルタイムで文字起こしし、議事録を自動生成するツール",
-    price: 249,
+    price: 24900,
     technologies: ["React", "OpenAI Whisper API", "DeepSeek"],
     features: [
       "リアルタイム音声文字起こし",
@@ -68,6 +68,11 @@ export const aiTemplates: Template[] = [
       "議事録テンプレート集",
       "カスタマイズガイド"
     ],
+    apiUsage: {
+      description: "Whisper APIの使用量に応じて課金",
+      pricePerUnit: 3,
+      unit: "1分の音声"
+    },
     testimonials: [
       {
         name: "田中 健一",
@@ -109,7 +114,7 @@ export const aiTemplates: Template[] = [
     id: "ai-chatbot",
     title: "AIカスタマーサポートボット",
     description: "OpenAIとDeepSeekを活用した高度なカスタマーサポートチャットボット",
-    price: 299,
+    price: 29900,
     technologies: ["React", "OpenAI GPT-4", "DeepSeek AI", "Node.js"],
     features: [
       "マルチAIモデル対応",
@@ -125,6 +130,11 @@ export const aiTemplates: Template[] = [
       "カスタマイズドキュメント",
       "運用マニュアル"
     ],
+    apiUsage: {
+      description: "OpenAI/DeepSeek APIの使用量に応じて課金",
+      pricePerUnit: 5,
+      unit: "1,000トークン"
+    },
     testimonials: [],
     benefits: [
       {
@@ -151,7 +161,7 @@ export const aiTemplates: Template[] = [
     id: "ai-content-generator",
     title: "AIコンテンツ生成ツール",
     description: "ブログ記事、SNS投稿、メールなどのコンテンツを自動生成",
-    price: 199,
+    price: 19900,
     technologies: ["React", "OpenAI GPT-4", "DeepSeek AI"],
     features: [
       "複数のAIモデル活用",
@@ -166,6 +176,11 @@ export const aiTemplates: Template[] = [
       "コンテンツテンプレート",
       "SEOガイドライン"
     ],
+    apiUsage: {
+      description: "OpenAI/DeepSeek APIの使用量に応じて課金",
+      pricePerUnit: 4,
+      unit: "1,000トークン"
+    },
     testimonials: [],
     benefits: [
       {
