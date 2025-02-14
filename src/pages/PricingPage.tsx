@@ -32,11 +32,11 @@ const PricingPage = () => {
               animate={{ opacity: 1, y: 0 }}
               className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100"
             >
-              <h2 className="text-2xl font-bold mb-4">{template.title}</h2>
+              <h2 className="text-2xl font-bold mb-4 text-gray-900">{template.title}</h2>
               <p className="text-gray-600 mb-6">{template.description}</p>
               
               <div className="flex items-baseline gap-2 mb-6">
-                <span className="text-4xl font-bold">${template.price}</span>
+                <span className="text-4xl font-bold text-gray-900">${template.price}</span>
                 <span className="text-gray-600">（一括払い）</span>
               </div>
 
