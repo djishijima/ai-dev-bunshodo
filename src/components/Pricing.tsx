@@ -38,6 +38,20 @@ const plans = [
       "ホワイトラベル対応"
     ],
     recommended: false
+  },
+  {
+    name: "ホワイトラベル",
+    price: 2000,
+    features: [
+      "エンタープライズの全機能",
+      "完全なブランド変更権利",
+      "独占販売権",
+      "専任開発者のアサイン",
+      "24時間365日サポート",
+      "カスタムAPI開発",
+      "無制限のアップデート"
+    ],
+    recommended: false
   }
 ];
 
@@ -52,7 +66,7 @@ export const Pricing = () => {
         <h2 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-[#9b87f5] to-[#8B5CF6] text-transparent bg-clip-text">
           料金プラン
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {plans.map((plan, index) => (
             <motion.div
               key={plan.name}
