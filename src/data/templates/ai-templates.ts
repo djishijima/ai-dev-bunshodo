@@ -7,7 +7,7 @@ export const aiTemplates: Template[] = [
     title: "AI議事録作成ツール",
     description: "会議音声をリアルタイムで文字起こしし、議事録を自動生成するツール",
     price: 249,
-    technologies: ["React", "OpenAI Whisper API"],
+    technologies: ["React", "OpenAI Whisper API", "DeepSeek"],
     features: [
       "リアルタイム音声文字起こし",
       "AI議事録自動生成",
@@ -59,49 +59,81 @@ export const aiTemplates: Template[] = [
     ]
   },
   {
-    id: "ai-travel-planner",
-    title: "旅程自動作成AIプランナー",
-    description: "行きたい場所や興味を入力すると、AIが最適な旅程を提案する旅行計画ツール",
-    price: 179,
-    technologies: ["React", "OpenAI", "Google Maps API"],
+    id: "ai-chatbot",
+    title: "AIカスタマーサポートボット",
+    description: "OpenAIとDeepSeekを活用した高度なカスタマーサポートチャットボット",
+    price: 299,
+    technologies: ["React", "OpenAI GPT-4", "DeepSeek AI", "Node.js"],
     features: [
-      "AI旅程提案機能",
-      "地図ベースの視覚化",
-      "所要時間計算",
-      "観光スポット情報表示",
-      "カスタム旅程編集"
+      "マルチAIモデル対応",
+      "文脈を理解した応答",
+      "カスタム知識ベース連携",
+      "多言語サポート",
+      "チャット履歴管理",
+      "ダッシュボード分析"
     ],
     includes: [
       "ソースコード一式",
-      "OpenAI API設定ガイド",
-      "Google Maps API設定ガイド",
-      "カスタマイズ例"
+      "AI APIセットアップガイド",
+      "カスタマイズドキュメント",
+      "運用マニュアル"
     ],
     testimonials: [],
-    benefits: [],
-    updates: []
+    benefits: [
+      {
+        title: "24時間365日の対応",
+        description: "AIが自動で顧客サポートを提供し、運用コストを削減します。"
+      },
+      {
+        title: "高度な会話能力",
+        description: "最新のAIモデルによる自然な対話と正確な情報提供が可能です。"
+      },
+      {
+        title: "柔軟なカスタマイズ",
+        description: "業界特有の用語や規則に合わせた応答が設定できます。"
+      }
+    ],
+    updates: [
+      {
+        date: "2024-03-10",
+        content: "DeepSeek AIモデルを追加しました"
+      }
+    ]
   },
   {
-    id: "ai-recipe-advisor",
-    title: "冷蔵庫レシピAI",
-    description: "冷蔵庫にある食材を入力すると、AIが最適なレシピを提案するツール",
-    price: 129,
-    technologies: ["React", "OpenAI", "Recipe API"],
+    id: "ai-content-generator",
+    title: "AIコンテンツ生成ツール",
+    description: "ブログ記事、SNS投稿、メールなどのコンテンツを自動生成",
+    price: 199,
+    technologies: ["React", "OpenAI GPT-4", "DeepSeek AI"],
     features: [
-      "食材からのレシピ提案",
-      "栄養価計算機能",
-      "調理手順の詳細表示",
-      "お気に入りレシピ保存",
-      "買い物リスト作成"
+      "複数のAIモデル活用",
+      "テンプレートベースの生成",
+      "SEO最適化提案",
+      "画像生成連携",
+      "一括生成機能"
     ],
     includes: [
       "ソースコード一式",
-      "OpenAI API設定ガイド",
-      "レシピAPI連携ガイド",
-      "カスタマイズガイド"
+      "API設定マニュアル",
+      "コンテンツテンプレート",
+      "SEOガイドライン"
     ],
     testimonials: [],
-    benefits: [],
+    benefits: [
+      {
+        title: "コンテンツ制作の効率化",
+        description: "AIによる下書き作成で、制作時間を大幅に短縮できます。"
+      },
+      {
+        title: "品質の一貫性",
+        description: "テンプレートベースの生成で、一定品質を維持できます。"
+      },
+      {
+        title: "マルチモデル活用",
+        description: "用途に応じて最適なAIモデルを選択できます。"
+      }
+    ],
     updates: []
   }
 ];
