@@ -17,10 +17,10 @@ const TemplateDetail = () => {
 
   if (!template) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      <div className="min-h-screen bg-background">
         <NavBar />
         <div className="pt-32 text-center">
-          <h1 className="text-2xl">テンプレートが見つかりませんでした</h1>
+          <h1 className="text-2xl text-foreground">テンプレートが見つかりませんでした</h1>
           <Button onClick={() => navigate("/")} className="mt-4">
             トップに戻る
           </Button>
@@ -63,7 +63,7 @@ const TemplateDetail = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen bg-background">
       <NavBar />
       <motion.div
         initial={{ opacity: 0 }}
@@ -84,16 +84,16 @@ const TemplateDetail = () => {
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.2 }}
           >
-            <div className="bg-yellow-50 p-3 rounded-lg inline-flex items-center gap-2 mb-4">
+            <div className="bg-secondary p-3 rounded-lg inline-flex items-center gap-2 mb-4">
               <Star className="text-yellow-500 w-5 h-5" />
-              <span className="text-yellow-700 font-medium">人気のテンプレート</span>
+              <span className="text-yellow-400 font-medium">人気のテンプレート</span>
             </div>
             
-            <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+            <h1 className="text-4xl font-bold mb-4 text-foreground">
               {template.title}
             </h1>
             
-            <p className="text-xl text-gray-600 mb-6 leading-relaxed">
+            <p className="text-xl text-muted-foreground mb-6 leading-relaxed">
               {template.description}
             </p>
             
@@ -101,7 +101,7 @@ const TemplateDetail = () => {
               {template.technologies.map((tech) => (
                 <span
                   key={tech}
-                  className="px-4 py-2 bg-white shadow-sm border border-gray-100 rounded-full text-sm font-medium text-gray-600 hover:shadow-md transition-shadow"
+                  className="px-4 py-2 bg-secondary text-secondary-foreground rounded-full text-sm font-medium hover:bg-secondary/80 transition-colors"
                 >
                   {tech}
                 </span>
@@ -110,19 +110,19 @@ const TemplateDetail = () => {
             
             <PricingSection price={template.price} />
 
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-100 mb-8">
-              <h3 className="text-lg font-semibold text-blue-900 mb-4">
+            <div className="bg-secondary/50 p-6 rounded-xl border border-border mb-8">
+              <h3 className="text-lg font-semibold text-foreground mb-4">
                 購入プロセス
               </h3>
               <div className="space-y-4">
                 {steps.map((step, index) => (
                   <div key={index} className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-1">
-                      <span className="text-blue-600 font-medium">{index + 1}</span>
+                    <div className="w-6 h-6 rounded-full bg-secondary flex items-center justify-center flex-shrink-0 mt-1">
+                      <span className="text-secondary-foreground font-medium">{index + 1}</span>
                     </div>
                     <div>
-                      <h4 className="font-medium text-blue-900">{step.title}</h4>
-                      <p className="text-blue-700 text-sm">{step.description}</p>
+                      <h4 className="font-medium text-foreground">{step.title}</h4>
+                      <p className="text-muted-foreground text-sm">{step.description}</p>
                     </div>
                   </div>
                 ))}
@@ -140,17 +140,17 @@ const TemplateDetail = () => {
             transition={{ delay: 0.3 }}
             className="space-y-8"
           >
-            <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
-              <h2 className="text-2xl font-semibold mb-6">提供内容</h2>
+            <div className="bg-card p-8 rounded-2xl shadow-lg border border-border">
+              <h2 className="text-2xl font-semibold mb-6 text-card-foreground">提供内容</h2>
               <div className="space-y-6">
                 {deliverables.map((item, index) => (
                   <div key={index} className="flex gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center flex-shrink-0">
-                      <item.icon className="w-6 h-6 text-purple-600" />
+                    <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center flex-shrink-0">
+                      <item.icon className="w-6 h-6 text-secondary-foreground" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900">{item.title}</h3>
-                      <p className="text-gray-600 text-sm">{item.description}</p>
+                      <h3 className="font-semibold text-card-foreground">{item.title}</h3>
+                      <p className="text-muted-foreground text-sm">{item.description}</p>
                     </div>
                   </div>
                 ))}
@@ -160,27 +160,27 @@ const TemplateDetail = () => {
             <FeaturesSection features={template.features} />
             <IncludesSection includes={template.includes} />
 
-            <div className="bg-gradient-to-r from-purple-50 to-blue-50 p-8 rounded-2xl border border-purple-100">
-              <h3 className="text-xl font-semibold mb-4 text-purple-900">
+            <div className="bg-card/50 p-8 rounded-2xl border border-border">
+              <h3 className="text-xl font-semibold mb-4 text-card-foreground">
                 商用利用ライセンスについて
               </h3>
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-purple-600 mt-1" />
-                  <p className="text-purple-700">
+                  <CheckCircle2 className="w-5 h-5 text-primary mt-1" />
+                  <p className="text-muted-foreground">
                     購入後、無制限の商用プロジェクトで使用可能です
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-purple-600 mt-1" />
-                  <p className="text-purple-700">
+                  <CheckCircle2 className="w-5 h-5 text-primary mt-1" />
+                  <p className="text-muted-foreground">
                     再販や再配布は禁止されていますが、カスタマイズして
                     顧客のプロジェクトで使用することは可能です
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-purple-600 mt-1" />
-                  <p className="text-purple-700">
+                  <CheckCircle2 className="w-5 h-5 text-primary mt-1" />
+                  <p className="text-muted-foreground">
                     著作権表示は必要ありませんが、appreciate（任意）です
                   </p>
                 </div>
