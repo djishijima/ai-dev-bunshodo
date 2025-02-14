@@ -38,4 +38,6 @@ export interface Template {
   benefits: Benefit[];
   updates: Update[];
   apiUsage?: APIUsage;
+  difficulty: "初級" | "中級" | "上級";
+  developmentTime: string;
 }

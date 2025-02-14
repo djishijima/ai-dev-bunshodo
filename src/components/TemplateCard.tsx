@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
-import { Sparkles, AlertCircle } from "lucide-react";
+import { Sparkles, AlertCircle, Clock, GraduationCap } from "lucide-react";
 import { APIUsage } from "@/types/template";
 
 interface TemplateCardProps {
@@ -13,6 +13,8 @@ interface TemplateCardProps {
   price: number;
   technologies: string[];
   apiUsage?: APIUsage;
+  difficulty: "初級" | "中級" | "上級";
+  developmentTime: string;
   index: number;
 }
 
@@ -23,9 +25,24 @@ export const TemplateCard = ({
   price, 
   technologies, 
   apiUsage,
+  difficulty,
+  developmentTime,
   index 
 }: TemplateCardProps) => {
   const navigate = useNavigate();
+
+  const getDifficultyColor = (difficulty: string) => {
+    switch (difficulty) {
+      case "初級":
+        return "text-green-400";
+      case "中級":
+        return "text-yellow-400";
+      case "上級":
+        return "text-red-400";
+      default:
+        return "text-white";
+    }
+  };
 
   return (
     <motion.div
@@ -42,6 +59,18 @@ export const TemplateCard = ({
         )}
         <h3 className="text-xl font-semibold mb-2 text-white">{title}</h3>
         <p className="text-white/70 mb-4 flex-grow">{description}</p>
+
+        <div className="flex gap-4 mb-4">
+          <div className="flex items-center gap-1.5 text-sm">
+            <GraduationCap className={`w-4 h-4 ${getDifficultyColor(difficulty)}`} />
+            <span className={`${getDifficultyColor(difficulty)}`}>{difficulty}</span>
+          </div>
+          <div className="flex items-center gap-1.5 text-sm text-white/80">
+            <Clock className="w-4 h-4" />
+            <span>目安：{developmentTime}</span>
+          </div>
+        </div>
+
         <div className="flex flex-wrap gap-2 mb-4">
           {technologies.map((tech) => (
             <span

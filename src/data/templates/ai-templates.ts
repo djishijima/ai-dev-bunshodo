@@ -7,6 +7,8 @@ export const aiTemplates: Template[] = [
     title: "Next.js + OpenAI チャットボット",
     description: "環境変数管理、エラーハンドリング、レスポンシブUIを備えた本格的なチャットボットテンプレート",
     price: 14900,
+    difficulty: "中級",
+    developmentTime: "2-3時間",
     technologies: ["Next.js", "OpenAI API", "React", "TypeScript"],
     features: [
       "OpenAI APIとの連携",
@@ -54,6 +56,8 @@ export const aiTemplates: Template[] = [
     title: "AI議事録作成ツール",
     description: "会議音声をリアルタイムで文字起こしし、議事録を自動生成するツール",
     price: 24900,
+    difficulty: "初級",
+    developmentTime: "1-2時間",
     technologies: ["React", "OpenAI Whisper API", "DeepSeek"],
     features: [
       "リアルタイム音声文字起こし",
@@ -115,6 +119,8 @@ export const aiTemplates: Template[] = [
     title: "AIカスタマーサポートボット",
     description: "OpenAIとDeepSeekを活用した高度なカスタマーサポートチャットボット",
     price: 29900,
+    difficulty: "上級",
+    developmentTime: "4-5時間",
     technologies: ["React", "OpenAI GPT-4", "DeepSeek AI", "Node.js"],
     features: [
       "マルチAIモデル対応",
@@ -162,6 +168,8 @@ export const aiTemplates: Template[] = [
     title: "AIコンテンツ生成ツール",
     description: "ブログ記事、SNS投稿、メールなどのコンテンツを自動生成",
     price: 19900,
+    difficulty: "中級",
+    developmentTime: "2-3時間",
     technologies: ["React", "OpenAI GPT-4", "DeepSeek AI"],
     features: [
       "複数のAIモデル活用",
