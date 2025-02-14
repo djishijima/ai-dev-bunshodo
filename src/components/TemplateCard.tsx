@@ -2,8 +2,10 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { useNavigate } from "react-router-dom";
 
 interface TemplateCardProps {
+  id: string;
   title: string;
   description: string;
   price: number;
@@ -11,7 +13,9 @@ interface TemplateCardProps {
   index: number;
 }
 
-export const TemplateCard = ({ title, description, price, technologies, index }: TemplateCardProps) => {
+export const TemplateCard = ({ id, title, description, price, technologies, index }: TemplateCardProps) => {
+  const navigate = useNavigate();
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -33,7 +37,10 @@ export const TemplateCard = ({ title, description, price, technologies, index }:
         </div>
         <div className="flex justify-between items-center">
           <span className="text-2xl font-bold">${price}</span>
-          <Button className="premium-button">
+          <Button 
+            className="premium-button"
+            onClick={() => navigate(`/template/${id}`)}
+          >
             詳細を見る
           </Button>
         </div>

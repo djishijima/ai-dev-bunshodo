@@ -4,18 +4,21 @@ import { motion } from "framer-motion";
 
 const templates = [
   {
+    id: "ai-chat",
     title: "AIチャットアシスタント",
     description: "OpenAI統合とユーザー管理機能を備えた完全なチャットアプリケーション",
     price: 99,
     technologies: ["React", "OpenAI", "Supabase"],
   },
   {
+    id: "api-gateway",
     title: "APIゲートウェイ",
     description: "認証と速度制限機能を備えた安全なAPIゲートウェイ",
     price: 149,
     technologies: ["NextJS", "TypeScript", "REST"],
   },
   {
+    id: "subscription",
     title: "サブスクリプションプラットフォーム",
     description: "Stripe統合による完全な機能を備えたサブスクリプション管理システム",
     price: 199,
