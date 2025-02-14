@@ -141,6 +141,11 @@ interface Update {
   content: string;
 }
 
+export interface AIModel {
+  name: string;
+  features: string[];
+}
+
 export interface Template {
   id: string;
   title: string;
