@@ -1,4 +1,3 @@
-
 import { Code2, FileJson, FolderGit2, GitBranch, Webhook, MessagesSquare, BookCheck, Star, Shield, Database, FileCode, Mail, CheckCircle2, Users } from "lucide-react";
 
 export const DeliveryContent = () => {
@@ -252,6 +251,105 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY`}
             <li>• デプロイ支援</li>
             <li>• カスタマイズ相談</li>
           </ul>
+        </div>
+      </div>
+
+      <div className="bg-purple-50 p-6 rounded-lg border border-purple-100">
+        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+          <FolderGit2 className="w-5 h-5 text-purple-600" />
+          GitHubリポジトリアクセス
+        </h3>
+        <div className="space-y-4">
+          <div className="bg-white p-4 rounded-lg">
+            <h4 className="font-medium mb-2">招待プロセス</h4>
+            <ol className="space-y-2 text-sm text-gray-600 list-decimal list-inside">
+              <li>購入完了後、登録されたメールアドレスに招待メールが自動送信されます</li>
+              <li>メール内のリンクからGitHubの招待を承認してください</li>
+              <li>プライベートリポジトリへのアクセス権が付与されます</li>
+            </ol>
+          </div>
+          
+          <div className="bg-white p-4 rounded-lg">
+            <h4 className="font-medium mb-2">コード取得方法</h4>
+            <div className="space-y-4">
+              <div>
+                <h5 className="text-sm font-medium text-gray-700 mb-2">方法1: Gitでクローン</h5>
+                <pre className="bg-slate-900 text-white/90 p-3 rounded text-sm">
+                  git clone https://github.com/your-org/template-name.git
+                </pre>
+              </div>
+              <div>
+                <h5 className="text-sm font-medium text-gray-700 mb-2">方法2: ZIPでダウンロード</h5>
+                <p className="text-sm text-gray-600">
+                  GitHubリポジトリページの「Code」ボタンから「Download ZIP」を選択
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white p-4 rounded-lg">
+            <h4 className="font-medium mb-2">リポジトリ構成</h4>
+            <ul className="space-y-2 text-sm text-gray-600">
+              <li>• ソースコード一式</li>
+              <li>• 環境構築ガイド（README.md）</li>
+              <li>• 技術仕様書・API仕様書</li>
+              <li>• セットアップスクリプト</li>
+              <li>• デプロイ手順書</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-green-50 p-6 rounded-lg border border-green-100">
+        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+          <Webhook className="w-5 h-5 text-green-600" />
+          デプロイ手順
+        </h3>
+        <div className="space-y-4">
+          <div className="bg-white p-4 rounded-lg">
+            <h4 className="font-medium mb-2">Vercelでのデプロイ</h4>
+            <ol className="space-y-2 text-sm text-gray-600 list-decimal list-inside">
+              <li>Vercelアカウントを作成</li>
+              <li>「New Project」からリポジトリを選択</li>
+              <li>環境変数を設定</li>
+              <li>「Deploy」をクリック</li>
+            </ol>
+          </div>
+
+          <div className="bg-white p-4 rounded-lg">
+            <h4 className="font-medium mb-2">Netlifyでのデプロイ</h4>
+            <ol className="space-y-2 text-sm text-gray-600 list-decimal list-inside">
+              <li>Netlifyアカウントを作成</li>
+              <li>「New site from Git」からリポジトリを選択</li>
+              <li>ビルド設定と環境変数を構成</li>
+              <li>「Deploy site」をクリック</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-orange-50 p-6 rounded-lg border border-orange-100">
+        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+          <MessagesSquare className="w-5 h-5 text-orange-600" />
+          サポート体制
+        </h3>
+        <div className="grid md:grid-cols-2 gap-4">
+          <div className="bg-white p-4 rounded-lg">
+            <h4 className="font-medium mb-2">技術サポート</h4>
+            <ul className="space-y-2 text-sm text-gray-600">
+              <li>• GitHubイシューでの質問対応</li>
+              <li>• メールサポート</li>
+              <li>• バグ修正・機能改善</li>
+            </ul>
+          </div>
+          <div className="bg-white p-4 rounded-lg">
+            <h4 className="font-medium mb-2">ドキュメント</h4>
+            <ul className="space-y-2 text-sm text-gray-600">
+              <li>• リポジトリ内のドキュメント</li>
+              <li>• オンラインマニュアル</li>
+              <li>• APIリファレンス</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
