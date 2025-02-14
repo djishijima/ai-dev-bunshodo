@@ -8,20 +8,25 @@ export const DeliveryContent = () => {
       
       <div className="bg-slate-900 p-6 rounded-lg text-white/90">
         <pre className="text-sm">
-          {`chatbot-template/
-├── .env.example         # 環境変数のサンプルファイル
-├── .github/
-│   └── workflows/       # GitHub Actions設定
-├── components/
-│   └── ChatMessage.js  # チャットメッセージのコンポーネント
+          {`ai-gijiroku-template/
+├── .env.example           # 環境変数のサンプルファイル
+├── components/           # React コンポーネント
+│   ├── AudioRecorder.js   # 音声録音コンポーネント
+│   ├── Transcript.js      # 文字起こし結果表示コンポーネント
+│   └── GijirokuEditor.js  # 議事録編集コンポーネント
 ├── pages/
-│   ├── api/
-│   │   └── chat.js     # OpenAI API と連携する API Route
-│   └── index.js        # メインのチャット UI
-├── public/
-│   └── favicon.ico
-├── styles/
-│   └── globals.css     # 全体的なスタイル
+│   ├── api/              # API Route
+│   │   └── transcribe.js # Whisper API と連携する API Route
+│   └── index.js          # メイン画面
+├── public/              # 静的ファイル
+│   └── logo.png
+├── styles/             # スタイルシート
+│   └── globals.css
+├── utils/              # ユーティリティ関数
+│   └── whisper.js      # Whisper API 呼び出し関数
+├── gijiroku-templates/  # 議事録テンプレート
+│   ├── standard.json
+│   └── meeting.md
 ├── .gitignore          # Git除外設定
 ├── package.json        # 依存関係定義
 └── README.md           # 詳細なドキュメント`}
@@ -38,7 +43,7 @@ export const DeliveryContent = () => {
             <ul className="list-disc list-inside text-gray-600 space-y-2">
               <li>プライベートリポジトリでの提供</li>
               <li>ブランチ戦略（main: 安定版, develop: 開発版）</li>
-              <li>適切な.gitignore設定</li>
+              <li>適切な.gitignore設定（APIキー等の除外）</li>
               <li>GitHub Actionsによる自動化</li>
             </ul>
           </div>
@@ -76,31 +81,74 @@ export const DeliveryContent = () => {
       </div>
 
       <div className="bg-blue-50 p-6 rounded-lg border border-blue-100">
+        <h3 className="text-lg font-semibold mb-4">議事録テンプレート</h3>
+        <div className="space-y-4">
+          <div>
+            <h4 className="font-medium mb-2">標準テンプレート (JSON)</h4>
+            <pre className="bg-white p-3 rounded text-sm">
+              {`{
+  "title": "会議名",
+  "date": "日付",
+  "attendees": ["参加者1", "参加者2"],
+  "agenda": ["議題1", "議題2"],
+  "summary": "概要",
+  "decisions": ["決定事項1", "決定事項2"],
+  "next_actions": ["次回アクション1", "次回アクション2"]
+}`}
+            </pre>
+          </div>
+          <div>
+            <h4 className="font-medium mb-2">会議用テンプレート (Markdown)</h4>
+            <pre className="bg-white p-3 rounded text-sm">
+              {`# 会議名
+
+**日付:** 2024年10月27日
+
+**参加者:**
+- 参加者1
+- 参加者2
+
+**議題:**
+- 議題1
+- 議題2
+
+**概要:**
+[会議の概要]
+
+**決定事項:**
+- 決定事項1
+- 決定事項2`}
+            </pre>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-green-50 p-6 rounded-lg border border-green-100">
         <h3 className="text-lg font-semibold mb-4">納品プロセス</h3>
         <ol className="space-y-4 text-gray-700">
           <li className="flex items-start gap-3">
-            <div className="w-6 h-6 rounded-full bg-blue-500 text-white flex items-center justify-center flex-shrink-0 mt-1">1</div>
+            <div className="w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center flex-shrink-0 mt-1">1</div>
             <div>
               <strong>購入情報の確認</strong>
               <p className="text-sm text-gray-600 mt-1">GitHubアカウント情報の収集と確認</p>
             </div>
           </li>
           <li className="flex items-start gap-3">
-            <div className="w-6 h-6 rounded-full bg-blue-500 text-white flex items-center justify-center flex-shrink-0 mt-1">2</div>
+            <div className="w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center flex-shrink-0 mt-1">2</div>
             <div>
               <strong>リポジトリアクセス権の付与</strong>
               <p className="text-sm text-gray-600 mt-1">プライベートリポジトリへのコラボレーター招待</p>
             </div>
           </li>
           <li className="flex items-start gap-3">
-            <div className="w-6 h-6 rounded-full bg-blue-500 text-white flex items-center justify-center flex-shrink-0 mt-1">3</div>
+            <div className="w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center flex-shrink-0 mt-1">3</div>
             <div>
               <strong>納品完了メール送信</strong>
               <p className="text-sm text-gray-600 mt-1">アクセス方法、セットアップガイド、サポート情報の案内</p>
             </div>
           </li>
           <li className="flex items-start gap-3">
-            <div className="w-6 h-6 rounded-full bg-blue-500 text-white flex items-center justify-center flex-shrink-0 mt-1">4</div>
+            <div className="w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center flex-shrink-0 mt-1">4</div>
             <div>
               <strong>フォローアップ</strong>
               <p className="text-sm text-gray-600 mt-1">導入状況の確認と追加サポートの提供</p>
@@ -116,11 +164,11 @@ export const DeliveryContent = () => {
             提供ドキュメント
           </h3>
           <ul className="space-y-3 text-gray-700">
-            <li>• セットアップガイド</li>
-            <li>• 環境構築手順</li>
-            <li>• デプロイマニュアル</li>
+            <li>• Whisper API 設定ガイド</li>
+            <li>• 音声録音実装ガイド</li>
+            <li>• 議事録テンプレート集</li>
             <li>• カスタマイズガイド</li>
-            <li>• トラブルシューティング</li>
+            <li>• デプロイマニュアル</li>
             <li>• APIリファレンス</li>
           </ul>
         </div>
@@ -133,7 +181,7 @@ export const DeliveryContent = () => {
           <ul className="space-y-3 text-gray-700">
             <li>• 30日間の技術サポート</li>
             <li>• プライベートリポジトリアクセス</li>
-            <li>• アップデート情報の優先案内</li>
+            <li>• 30日間の返金保証</li>
             <li>• カスタマイズ相談</li>
             <li>• デプロイ支援</li>
           </ul>
