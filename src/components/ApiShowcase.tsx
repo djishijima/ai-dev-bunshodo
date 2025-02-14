@@ -4,23 +4,23 @@ import { motion } from "framer-motion";
 const apis = [
   {
     name: "OpenAI GPT-4",
-    description: "AIチャットボット、文章生成、画像生成などの機能を数分で実装",
-    readyFeatures: ["チャットUI", "プロンプト管理", "ストリーミングレスポンス"]
+    description: "APIキーを設定するだけですぐに利用可能なAIチャット機能のテンプレート",
+    readyFeatures: ["テンプレート化されたチャットUI", "プロンプト設計済み", "ストリーミング実装済み"]
   },
   {
     name: "Stripe",
-    description: "決済システムとサブスクリプション管理をすぐに利用可能",
-    readyFeatures: ["クレジットカード決済", "サブスクリプション管理", "請求書発行"]
+    description: "決済システムをすぐに導入できるテンプレートコード付き",
+    readyFeatures: ["決済フォーム実装済み", "サブスクリプション管理", "webhookハンドラー"]
   },
   {
     name: "Supabase",
-    description: "認証システムとデータベースが完全統合され即座に利用可能",
-    readyFeatures: ["ユーザー認証", "データベース", "リアルタイム更新"]
+    description: "認証とデータベースの実装例が含まれたテンプレート",
+    readyFeatures: ["認証UI実装済み", "データベース設計例", "リアルタイム同期"]
   },
   {
     name: "SendGrid",
-    description: "メール配信システムが設定済みですぐに利用可能",
-    readyFeatures: ["トランザクションメール", "メールテンプレート", "配信管理"]
+    description: "メール送信機能のテンプレートコードを提供",
+    readyFeatures: ["メール送信実装例", "テンプレート連携", "エラーハンドリング"]
   }
 ];
 
@@ -33,10 +33,10 @@ export const ApiShowcase = () => {
         className="max-w-7xl mx-auto"
       >
         <h2 className="text-4xl font-bold text-center mb-4 bg-gradient-to-r from-[#9b87f5] to-[#8B5CF6] text-transparent bg-clip-text">
-          主要APIが設定済み
+          APIテンプレート付き
         </h2>
         <p className="text-xl text-center text-white/80 mb-16">
-          面倒な認証設定やAPI連携は全て完了。アイデアの実装に集中できます。
+          各APIの実装例とテンプレートコードを提供。開発時間を大幅に短縮できます。
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {apis.map((api, index) => (
