@@ -4,7 +4,7 @@ export const templates = [
     id: "cat-generator",
     title: "カワイイ猫画像ジェネレーター",
     description: "ボタンをクリックするたびに新しい猫画像を表示。品種選択やダウンロード機能付き",
-    price: 0,
+    price: 49,
     technologies: ["React", "Cat API"],
     features: [
       "ランダム猫画像の表示",
@@ -27,7 +27,7 @@ export const templates = [
     id: "today-trivia",
     title: "今日は何の日？豆知識アプリ",
     description: "今日が何の日かを表示し、関連する豆知識を提供する学習系アプリ",
-    price: 0,
+    price: 79,
     technologies: ["React", "Wikipedia API"],
     features: [
       "今日の記念日表示",
@@ -50,7 +50,7 @@ export const templates = [
     id: "cafe-finder",
     title: "近くのカフェ検索マップ",
     description: "現在地周辺のカフェをGoogle Maps上に表示する実用的なアプリ",
-    price: 0,
+    price: 149,
     technologies: ["React", "Google Maps API", "Places API"],
     features: [
       "現在地の表示",
@@ -73,7 +73,7 @@ export const templates = [
     id: "mini-weather",
     title: "天気予報ミニ",
     description: "現在地の天気予報をシンプルに表示するミニマルなアプリ",
-    price: 0,
+    price: 99,
     technologies: ["React", "OpenWeatherMap API"],
     features: [
       "現在の天気表示",
@@ -96,7 +96,7 @@ export const templates = [
     id: "haiku-generator",
     title: "AI俳句ジェネレーター",
     description: "テーマを入力すると、AIが俳句を生成する創造的なアプリ",
-    price: 0,
+    price: 199,
     technologies: ["React", "OpenAI"],
     features: [
       "AI俳句生成機能",

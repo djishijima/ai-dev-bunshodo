@@ -13,8 +13,8 @@ export const TemplatesGrid = () => {
       >
         <h2 className="section-title">アプリテンプレート一覧</h2>
         <p className="text-center text-white/80 mb-12">
-          無料APIを使った実用的なアプリケーションを<br />
-          すぐに構築できるテンプレートを用意しています
+          すぐに使える実用的なアプリケーションを<br />
+          手頃な価格で提供しています
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
           {templates.map((template, index) => (
