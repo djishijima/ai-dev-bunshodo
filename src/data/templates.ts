@@ -2,7 +2,7 @@ export const templates = [
   {
     id: "ai-minutes",
     title: "AI議事録作成ツール",
-    description: "会議音声をリアルタイムで文字起こしし、議事録を自��生成するツール",
+    description: "会議音声をリアルタイムで文字起こしし、議事録を自動生成するツール",
     price: 249,
     technologies: ["React", "OpenAI Whisper API"],
     features: [
@@ -292,6 +292,75 @@ export const templates = [
       "ソースコード一式",
       "FFmpeg設定ガイド",
       "音声処理ライブラリ",
+      "カスタマイズガイド"
+    ],
+    testimonials: [],
+    benefits: [],
+    updates: []
+  },
+  {
+    id: "retro-filter",
+    title: "レトロフィルターカメラ",
+    description: "写真に昭和レトロなフィルターをかけることができるアプリ。複数のフィルターから選択可能",
+    price: 99,
+    technologies: ["React", "Canvas API"],
+    features: [
+      "複数のレトロフィルター",
+      "写真のアップロード機能",
+      "フィルターのプレビュー",
+      "写真の保存機能",
+      "SNSシェア機能"
+    ],
+    includes: [
+      "ソースコード一式",
+      "フィルターアルゴリズム集",
+      "カスタマイズガイド",
+      "デザインテンプレート"
+    ],
+    testimonials: [],
+    benefits: [],
+    updates: []
+  },
+  {
+    id: "friend-chat",
+    title: "フレンドチャット",
+    description: "友達とリアルタイムでチャットができるシンプルなアプリ。既読機能、絵文字対応付き",
+    price: 149,
+    technologies: ["React", "Firebase", "WebSocket"],
+    features: [
+      "リアルタイムチャット",
+      "既読表示機能",
+      "絵文字送信機能",
+      "画像送信機能",
+      "オンライン状態表示"
+    ],
+    includes: [
+      "ソースコード一式",
+      "Firebase設定ガイド",
+      "WebSocket実装ガイド",
+      "カスタマイズガイド"
+    ],
+    testimonials: [],
+    benefits: [],
+    updates: []
+  },
+  {
+    id: "study-ai",
+    title: "AIスタディメイト",
+    description: "宿題やテストの問題を入力すると、AIが詳しい解説付きで答えを提供する学習支援ツール",
+    price: 199,
+    technologies: ["React", "OpenAI"],
+    features: [
+      "AI解答生成機能",
+      "詳細な解説表示",
+      "数式対応",
+      "履歴保存機能",
+      "教科別カテゴリ分類"
+    ],
+    includes: [
+      "ソースコード一式",
+      "OpenAI API設定ガイド",
+      "教科別プロンプト集",
       "カスタマイズガイド"
     ],
     testimonials: [],
