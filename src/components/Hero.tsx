@@ -15,10 +15,10 @@ export const Hero = () => {
         transition={{ delay: 0.2 }}
         className="max-w-3xl mx-auto"
       >
-        <h1 className="text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600">
+        <h1 className="text-5xl font-bold mb-6 text-white bg-clip-text">
           数分でSaaSを構築
         </h1>
-        <p className="text-xl text-gray-600 mb-8">
+        <p className="text-xl text-white/80 mb-8">
           AIとAPI統合済みのプレミアムソースコードテンプレート。
           次のプロジェクトをかつてないスピードで立ち上げましょう。
         </p>
@@ -26,7 +26,7 @@ export const Hero = () => {
           <Button className="premium-button">
             テンプレートを見る
           </Button>
-          <Button variant="outline" className="px-6 py-3 rounded-full">
+          <Button variant="outline" className="px-6 py-3 rounded-full bg-white/10 text-white border-white/20 hover:bg-white/20">
             詳しく見る
           </Button>
         </div>
