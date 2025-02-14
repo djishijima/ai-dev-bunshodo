@@ -1,5 +1,5 @@
 
-import { Code2, FileJson, FolderGit2, GitBranch, Webhook, MessagesSquare, BookCheck, Star, Shield, Database, FileCode } from "lucide-react";
+import { Code2, FileJson, FolderGit2, GitBranch, Webhook, MessagesSquare, BookCheck, Star, Shield, Database, FileCode, Mail, CheckCircle2, Users } from "lucide-react";
 
 export const DeliveryContent = () => {
   return (
@@ -74,6 +74,107 @@ export const DeliveryContent = () => {
               <li>プロフィール管理機能</li>
               <li>保護されたルート実装</li>
               <li>Supabaseクライアント設定</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-blue-50 p-6 rounded-lg border border-blue-100">
+        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+          <Mail className="w-5 h-5 text-blue-600" />
+          納品メール
+        </h3>
+        <div className="space-y-4">
+          <div className="bg-white p-4 rounded-lg">
+            <h4 className="font-medium mb-2">件名</h4>
+            <p className="text-sm text-gray-600">【ご購入ありがとうございます】[テンプレート名] 納品のお知らせ</p>
+          </div>
+          <div className="bg-white p-4 rounded-lg">
+            <h4 className="font-medium mb-2">本文構成</h4>
+            <ul className="space-y-2 text-sm text-gray-600">
+              <li>• 購入のお礼</li>
+              <li>• GitHubリポジトリへの招待手順</li>
+              <li>• セットアップガイド（README.md）へのリンク</li>
+              <li>• デモサイトへのリンク</li>
+              <li>• 技術サポート連絡先</li>
+              <li>• FAQへのリンク</li>
+              <li>• 購入特典の詳細（個別サポート、クーポン）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-6">
+        <div className="bg-purple-50 p-6 rounded-lg border border-purple-100">
+          <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+            <CheckCircle2 className="w-5 h-5 text-purple-600" />
+            開発者側タスク
+          </h3>
+          <ul className="space-y-3 text-gray-700">
+            <li className="flex items-start gap-2">
+              <span className="w-5 h-5 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+              <span>購入情報のデータベース登録</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="w-5 h-5 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+              <span>サンキューメール自動送信</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="w-5 h-5 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
+              <span>GitHubリポジトリ招待</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="w-5 h-5 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
+              <span>アクセス権確認と技術サポート</span>
+            </li>
+          </ul>
+        </div>
+
+        <div className="bg-green-50 p-6 rounded-lg border border-green-100">
+          <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+            <Users className="w-5 h-5 text-green-600" />
+            購入者側タスク
+          </h3>
+          <ul className="space-y-3 text-gray-700">
+            <li className="flex items-start gap-2">
+              <span className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+              <span>GitHubリポジトリアクセス</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+              <span>環境構築（Node.js, npm）</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
+              <span>APIキー取得と環境変数設定</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
+              <span>動作確認とカスタマイズ</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="bg-orange-50 p-6 rounded-lg border border-orange-100">
+        <h3 className="text-lg font-semibold mb-4">継続的なサポート体制</h3>
+        <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <h4 className="font-medium mb-3">技術サポート</h4>
+            <ul className="space-y-2 text-sm text-gray-600">
+              <li>• 質問対応（メール、チャット）</li>
+              <li>• バグ修正と機能改善</li>
+              <li>• セットアップ支援</li>
+              <li>• カスタマイズ相談</li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-medium mb-3">コミュニティ</h4>
+            <ul className="space-y-2 text-sm text-gray-600">
+              <li>• フォーラム・Discordでの情報交換</li>
+              <li>• ユーザー同士の交流</li>
+              <li>• 定期的なアップデート情報</li>
+              <li>• 事例共有・フィードバック</li>
             </ul>
           </div>
         </div>
