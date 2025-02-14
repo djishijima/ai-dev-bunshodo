@@ -7,7 +7,7 @@ import { Check, Star, ChevronRight } from "lucide-react";
 const templates = [
   {
     id: "ai-chat",
-    title: "AIチャットアシ���タント",
+    title: "AIチャットアシスタント",
     description: "OpenAI統合とユーザー管理機能を備えた完全なチャットアプリケーション",
     price: 99,
     technologies: ["React", "OpenAI", "Supabase"],
@@ -25,6 +25,35 @@ const templates = [
       "インストールガイド",
       "API連携ガイド",
       "1ヶ月のテクニカルサポート"
+    ],
+    aiModels: [
+      {
+        name: "OpenAI GPT-4",
+        features: [
+          "高度な自然言語処理",
+          "複雑なタスクの理解と実行",
+          "多言語サポート",
+          "コンテキストの理解力"
+        ]
+      },
+      {
+        name: "Google Gemini Pro",
+        features: [
+          "マルチモーダル処理能力",
+          "効率的な処理速度",
+          "コスト効率の良い応答",
+          "画像認識機能"
+        ]
+      },
+      {
+        name: "Anthropic Claude",
+        features: [
+          "長文処理の得意分野",
+          "高い倫理性と安全性",
+          "詳細な分析能力",
+          "正確な情報提供"
+        ]
+      }
     ]
   },
   {
@@ -156,6 +185,27 @@ const TemplateDetail = () => {
                 30日間の返金保証付き
               </p>
             </div>
+
+            {template.aiModels && (
+              <div className="bg-white p-6 rounded-2xl shadow-lg mb-8 border border-gray-100">
+                <h2 className="text-2xl font-semibold mb-6">対応AIモデル</h2>
+                <div className="space-y-6">
+                  {template.aiModels.map((model, index) => (
+                    <div key={index} className="pb-6 border-b border-gray-100 last:border-0 last:pb-0">
+                      <h3 className="text-lg font-medium mb-3 text-gray-900">{model.name}</h3>
+                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {model.features.map((feature, featureIndex) => (
+                          <li key={featureIndex} className="flex items-center gap-2 text-gray-600">
+                            <Check className="w-4 h-4 text-blue-500" />
+                            <span>{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </motion.div>
 
           <motion.div
