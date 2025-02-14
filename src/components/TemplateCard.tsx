@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
+import { Sparkles } from "lucide-react";
 
 interface TemplateCardProps {
   id: string;
@@ -23,6 +24,12 @@ export const TemplateCard = ({ id, title, description, price, technologies, inde
       transition={{ delay: index * 0.1 }}
     >
       <Card className="glass-card p-6 h-full flex flex-col">
+        {price === 0 && (
+          <div className="flex items-center gap-2 text-yellow-400 mb-2">
+            <Sparkles className="w-4 h-4" />
+            <span className="text-sm font-medium">無料テンプレート</span>
+          </div>
+        )}
         <h3 className="text-xl font-semibold mb-2 text-white">{title}</h3>
         <p className="text-white/70 mb-4 flex-grow">{description}</p>
         <div className="flex flex-wrap gap-2 mb-4">
@@ -36,7 +43,9 @@ export const TemplateCard = ({ id, title, description, price, technologies, inde
           ))}
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-2xl font-bold text-white">${price}</span>
+          <span className="text-2xl font-bold text-white">
+            {price === 0 ? "無料" : `$${price}`}
+          </span>
           <Button 
             className="premium-button"
             onClick={() => navigate(`/template/${id}`)}

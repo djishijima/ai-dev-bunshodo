@@ -4,26 +4,33 @@ import { motion } from "framer-motion";
 
 const templates = [
   {
+    id: "simple-chat",
+    title: "シンプルチャットボット",
+    description: "OpenAIを使った基本的なチャットボット。5分で作れる初心者向けテンプレート",
+    price: 0,
+    technologies: ["React", "OpenAI"],
+  },
+  {
+    id: "image-gallery",
+    title: "AIイメージギャラリー",
+    description: "AIで画像を生成・管理できるギャラリーアプリ。無料で始められます",
+    price: 0,
+    technologies: ["React", "OpenAI", "Cloudinary"],
+  },
+  {
     id: "ai-chat",
     title: "AIチャットアシスタント",
-    description: "OpenAI統合とユーザー管理機能を備えた完全なチャットアプリケーション",
+    description: "チャット履歴保存、ユーザー管理機能付きの本格的なAIチャットアプリ",
     price: 99,
     technologies: ["React", "OpenAI", "Supabase"],
   },
   {
     id: "api-gateway",
-    title: "APIゲートウェイ",
-    description: "認証と速度制限機能を備えた安全なAPIゲートウェイ",
+    title: "モダンAPIゲートウェイ",
+    description: "高性能で安全なAPIゲートウェイ。認証、レート制限、モニタリング機能を統合",
     price: 149,
-    technologies: ["NextJS", "TypeScript", "REST"],
-  },
-  {
-    id: "subscription",
-    title: "サブスクリプションプラットフォーム",
-    description: "Stripe統合による完全な機能を備えたサブスクリプション管理システム",
-    price: 199,
-    technologies: ["React", "Stripe", "Supabase"],
-  },
+    technologies: ["React", "TypeScript", "Redis"],
+  }
 ];
 
 export const TemplatesGrid = () => {
@@ -34,8 +41,12 @@ export const TemplatesGrid = () => {
         animate={{ opacity: 1 }}
         className="max-w-7xl mx-auto"
       >
-        <h2 className="section-title">プレミアムテンプレート</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <h2 className="section-title">アプリテンプレート一覧</h2>
+        <p className="text-center text-white/80 mb-12">
+          初心者の方でも簡単に始められる無料テンプレートから、<br />
+          本格的なビジネス用途まで幅広く取り揃えています
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
           {templates.map((template, index) => (
             <TemplateCard key={template.title} {...template} index={index} />
           ))}
