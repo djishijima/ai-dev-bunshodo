@@ -43,8 +43,8 @@ export const TemplatesGrid = () => {
       >
         <h2 className="section-title">アプリテンプレート一覧</h2>
         <p className="text-center text-white/80 mb-12">
-          すぐに始められる無料テンプレートを用意しています<br />
-          プログラミング知識がなくても、OpenAIを使ったアプリが作れます
+          OpenAIを使った様々なアプリケーションを<br />
+          すぐに構築できるテンプレートを用意しています
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
           {templates.map((template, index) => (
