@@ -1,13 +1,13 @@
-
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { NavBar } from "@/components/NavBar";
+import { Check, Star, ChevronRight } from "lucide-react";
 
 const templates = [
   {
     id: "ai-chat",
-    title: "AIチャットアシスタント",
+    title: "AIチャットアシ���タント",
     description: "OpenAI統合とユーザー管理機能を備えた完全なチャットアプリケーション",
     price: 99,
     technologies: ["React", "OpenAI", "Supabase"],
@@ -114,25 +114,48 @@ const TemplateDetail = () => {
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.2 }}
           >
-            <h1 className="text-4xl font-bold mb-4">{template.title}</h1>
-            <p className="text-xl text-gray-600 mb-6">{template.description}</p>
+            <div className="bg-yellow-50 p-3 rounded-lg inline-flex items-center gap-2 mb-4">
+              <Star className="text-yellow-500 w-5 h-5" />
+              <span className="text-yellow-700 font-medium">人気のテンプレート</span>
+            </div>
+            
+            <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+              {template.title}
+            </h1>
+            
+            <p className="text-xl text-gray-600 mb-6 leading-relaxed">
+              {template.description}
+            </p>
+            
             <div className="flex flex-wrap gap-2 mb-6">
               {template.technologies.map((tech) => (
                 <span
                   key={tech}
-                  className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-600"
+                  className="px-4 py-2 bg-white shadow-sm border border-gray-100 rounded-full text-sm font-medium text-gray-600 hover:shadow-md transition-shadow"
                 >
                   {tech}
                 </span>
               ))}
             </div>
-            <div className="mb-8">
-              <span className="text-3xl font-bold">${template.price}</span>
-              <span className="text-gray-600 ml-2">（一括払い）</span>
+            
+            <div className="bg-white p-6 rounded-2xl shadow-lg mb-8 border border-gray-100">
+              <div className="flex items-baseline gap-2 mb-2">
+                <span className="text-4xl font-bold">${template.price}</span>
+                <span className="text-gray-600">（一括払い）</span>
+              </div>
+              <p className="text-green-600 flex items-center gap-2 mb-4">
+                <Check className="w-5 h-5" />
+                ソースコード完全版を即時ダウンロード
+              </p>
+              
+              <Button className="premium-button w-full text-lg py-6 gap-2">
+                今すぐ購入 <ChevronRight className="w-5 h-5" />
+              </Button>
+              
+              <p className="text-center text-sm text-gray-500 mt-4">
+                30日間の返金保証付き
+              </p>
             </div>
-            <Button className="premium-button w-full md:w-auto">
-              今すぐ購入
-            </Button>
           </motion.div>
 
           <motion.div
@@ -141,28 +164,43 @@ const TemplateDetail = () => {
             transition={{ delay: 0.3 }}
             className="space-y-8"
           >
-            <div>
-              <h2 className="text-2xl font-semibold mb-4">主な機能</h2>
-              <ul className="space-y-2">
+            <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+              <h2 className="text-2xl font-semibold mb-6">主な機能</h2>
+              <ul className="space-y-4">
                 {template.features.map((feature, index) => (
-                  <li key={index} className="flex items-center">
-                    <span className="w-2 h-2 bg-black rounded-full mr-3" />
-                    {feature}
+                  <li key={index} className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                      <Check className="w-4 h-4 text-green-600" />
+                    </div>
+                    <span className="text-gray-700">{feature}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div>
-              <h2 className="text-2xl font-semibold mb-4">含まれるもの</h2>
-              <ul className="space-y-2">
+            <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+              <h2 className="text-2xl font-semibold mb-6">含まれるもの</h2>
+              <ul className="space-y-4">
                 {template.includes.map((item, index) => (
-                  <li key={index} className="flex items-center">
-                    <span className="w-2 h-2 bg-black rounded-full mr-3" />
-                    {item}
+                  <li key={index} className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                      <Check className="w-4 h-4 text-blue-600" />
+                    </div>
+                    <span className="text-gray-700">{item}</span>
                   </li>
                 ))}
               </ul>
+            </div>
+
+            <div className="bg-gradient-to-r from-purple-50 to-blue-50 p-8 rounded-2xl border border-purple-100">
+              <h3 className="text-xl font-semibold mb-4 text-purple-900">
+                お客様満足度保証
+              </h3>
+              <p className="text-purple-700 leading-relaxed">
+                30日間の返金保証付き。テンプレートにご満足いただけない場合は、
+                全額返金いたします。技術サポートも含まれているので、安心して
+                ご購入いただけます。
+              </p>
             </div>
           </motion.div>
         </div>
