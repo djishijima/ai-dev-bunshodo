@@ -11,7 +11,7 @@ const Index = () => {
       animate={{ opacity: 1 }}
       className="min-h-screen relative"
       style={{
-        backgroundImage: 'url("/lovable-uploads/83bc9aa7-7751-4367-bf96-014ff2a5f5c1.png")',
+        backgroundImage: 'url("/lovable-uploads/d6723242-0839-4de3-b94d-94999fb55762.png")',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
