@@ -1,6 +1,8 @@
 
 import { NavBar } from "@/components/NavBar";
 import { Hero } from "@/components/Hero";
+import { Features } from "@/components/Features";
+import { Pricing } from "@/components/Pricing";
 import { TemplatesGrid } from "@/components/TemplatesGrid";
 import { motion } from "framer-motion";
 
@@ -21,7 +23,9 @@ const Index = () => {
       <div className="relative z-10">
         <NavBar />
         <Hero />
+        <Features />
         <TemplatesGrid />
+        <Pricing />
       </div>
     </motion.div>
   );
