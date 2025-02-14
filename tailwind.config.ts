@@ -53,6 +53,14 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        navy: {
+          900: "#000B27",
+        },
+        cyan: {
+          400: "#22D3EE",
+          500: "#06B6D4",
+          900: "#164E63",
+        },
       },
       keyframes: {
         "slide-up": {

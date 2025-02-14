@@ -5,25 +5,25 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
+    --background: 217 71% 3%;
+    --foreground: 210 40% 98%;
+    --card: 217 71% 5%;
+    --card-foreground: 210 40% 98%;
+    --popover: 217 71% 5%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 186 100% 50%;
+    --primary-foreground: 217 71% 3%;
+    --secondary: 217 71% 15%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217 71% 15%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217 71% 15%;
+    --accent-foreground: 210 40% 98%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 5.9% 10%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217 71% 15%;
+    --input: 217 71% 15%;
+    --ring: 186 100% 50%;
     --radius: 1rem;
   }
  
@@ -36,17 +36,18 @@
   }
 
   .glass-card {
-    @apply backdrop-blur-lg bg-white/30 border border-white/40 shadow-lg;
+    @apply backdrop-blur-lg bg-white/10 border border-white/20 shadow-lg;
   }
 
   .premium-button {
-    @apply px-6 py-3 rounded-full bg-black text-white font-medium 
-           transition-all duration-300 hover:bg-opacity-80 
-           hover:translate-y-[-2px] hover:shadow-lg;
+    @apply px-6 py-3 rounded-full bg-cyan-500 text-black font-medium 
+           transition-all duration-300 hover:bg-cyan-400 
+           hover:translate-y-[-2px] hover:shadow-lg
+           shadow-cyan-500/25;
   }
 
   .section-title {
-    @apply text-4xl font-bold mb-6 text-center;
+    @apply text-4xl font-bold mb-6 text-center text-white;
   }
 
   .fade-in {
