@@ -1,3 +1,4 @@
+
 import { Template } from "@/types/template";
 
 export const aiTemplates: Template[] = [
@@ -5,7 +6,7 @@ export const aiTemplates: Template[] = [
     id: "chatbot-template",
     title: "Next.js + OpenAI チャットボット",
     description: "環境変数管理、エラーハンドリング、レスポンシブUIを備えた本格的なチャットボットテンプレート",
-    price: 149,
+    price: 14900,
     technologies: ["Next.js", "OpenAI API", "React", "TypeScript"],
     features: [
       "OpenAI APIとの連携",
@@ -21,6 +22,11 @@ export const aiTemplates: Template[] = [
       "デプロイマニュアル",
       "カスタマイズガイド"
     ],
+    apiUsage: {
+      description: "OpenAI APIの使用量に応じて課金",
+      pricePerUnit: 4,
+      unit: "1,000トークン"
+    },
     testimonials: [],
     benefits: [
       {

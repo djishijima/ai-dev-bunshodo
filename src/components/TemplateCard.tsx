@@ -3,7 +3,8 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
-import { Sparkles } from "lucide-react";
+import { Sparkles, AlertCircle } from "lucide-react";
+import { APIUsage } from "@/types/template";
 
 interface TemplateCardProps {
   id: string;
@@ -11,10 +12,19 @@ interface TemplateCardProps {
   description: string;
   price: number;
   technologies: string[];
+  apiUsage?: APIUsage;
   index: number;
 }
 
-export const TemplateCard = ({ id, title, description, price, technologies, index }: TemplateCardProps) => {
+export const TemplateCard = ({ 
+  id, 
+  title, 
+  description, 
+  price, 
+  technologies, 
+  apiUsage,
+  index 
+}: TemplateCardProps) => {
   const navigate = useNavigate();
 
   return (
@@ -42,16 +52,29 @@ export const TemplateCard = ({ id, title, description, price, technologies, inde
             </span>
           ))}
         </div>
-        <div className="flex justify-between items-center">
-          <span className="text-2xl font-bold text-white">
-            {price === 0 ? "無料" : `$${price}`}
-          </span>
-          <Button 
-            className="premium-button"
-            onClick={() => navigate(`/template/${id}`)}
-          >
-            詳細を見る
-          </Button>
+        <div className="space-y-4">
+          <div className="flex justify-between items-center">
+            <span className="text-2xl font-bold text-white">
+              {price === 0 ? "無料" : `¥${price.toLocaleString()}`}
+            </span>
+            <Button 
+              className="premium-button"
+              onClick={() => navigate(`/template/${id}`)}
+            >
+              詳細を見る
+            </Button>
+          </div>
+          
+          {apiUsage && (
+            <div className="flex items-start gap-2 text-sm text-yellow-400/90 bg-yellow-400/10 p-3 rounded-lg">
+              <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="font-medium mb-1">API使用料（従量課金）</p>
+                <p>{apiUsage.description}</p>
+                <p>¥{apiUsage.pricePerUnit.toLocaleString()} / {apiUsage.unit}</p>
+              </div>
+            </div>
+          )}
         </div>
       </Card>
     </motion.div>

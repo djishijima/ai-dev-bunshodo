@@ -20,6 +20,12 @@ export interface AIModel {
   features: string[];
 }
 
+export interface APIUsage {
+  description: string;
+  pricePerUnit: number;
+  unit: string;
+}
+
 export interface Template {
   id: string;
   title: string;
@@ -31,4 +37,5 @@ export interface Template {
   testimonials: Testimonial[];
   benefits: Benefit[];
   updates: Update[];
+  apiUsage?: APIUsage;
 }
