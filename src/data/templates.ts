@@ -1,5 +1,119 @@
-
 export const templates = [
+  {
+    id: "ai-minutes",
+    title: "AI議事録作成ツール",
+    description: "会議音声をリアルタイムで文字起こしし、議事録を自��生成するツール",
+    price: 249,
+    technologies: ["React", "OpenAI Whisper API"],
+    features: [
+      "リアルタイム音声文字起こし",
+      "AI議事録自動生成",
+      "議事録テンプレート選択",
+      "エクスポート機能",
+      "音声データ保存機能"
+    ],
+    includes: [
+      "ソースコード一式",
+      "Whisper API設定ガイド",
+      "議事録テンプレート集",
+      "カスタマイズガイド"
+    ],
+    testimonials: [],
+    benefits: [],
+    updates: []
+  },
+  {
+    id: "ai-travel-planner",
+    title: "旅程自動作成AIプランナー",
+    description: "行きたい場所や興味を入力すると、AIが最適な旅程を提案する旅行計画ツール",
+    price: 179,
+    technologies: ["React", "OpenAI", "Google Maps API"],
+    features: [
+      "AI旅程提案機能",
+      "地図ベースの視覚化",
+      "所要時間計算",
+      "観光スポット情報表示",
+      "カスタム旅程編集"
+    ],
+    includes: [
+      "ソースコード一式",
+      "OpenAI API設定ガイド",
+      "Google Maps API設定ガイド",
+      "カスタマイズ例"
+    ],
+    testimonials: [],
+    benefits: [],
+    updates: []
+  },
+  {
+    id: "ai-recipe-advisor",
+    title: "冷蔵庫レシピAI",
+    description: "冷蔵庫にある食材を入力すると、AIが最適なレシピを提案するツール",
+    price: 129,
+    technologies: ["React", "OpenAI", "Recipe API"],
+    features: [
+      "食材からのレシピ提案",
+      "栄養価計算機能",
+      "調理手順の詳細表示",
+      "お気に入りレシピ保存",
+      "買い物リスト作成"
+    ],
+    includes: [
+      "ソースコード一式",
+      "OpenAI API設定ガイド",
+      "レシピAPI連携ガイド",
+      "カスタマイズガイド"
+    ],
+    testimonials: [],
+    benefits: [],
+    updates: []
+  },
+  {
+    id: "ai-english-tutor",
+    title: "AI英語学習パートナー",
+    description: "AIがあなたのレベルに合わせた英会話レッスンを提供する学習ツール",
+    price: 299,
+    technologies: ["React", "OpenAI", "Speech Recognition API"],
+    features: [
+      "AIとの英会話練習",
+      "発音チェック機能",
+      "レベル別学習プラン",
+      "進捗管理ダッシュボード",
+      "学習履歴の記録"
+    ],
+    includes: [
+      "ソースコード一式",
+      "OpenAI API設定ガイド",
+      "音声認識API設定ガイド",
+      "カスタマイズガイド"
+    ],
+    testimonials: [],
+    benefits: [],
+    updates: []
+  },
+  {
+    id: "ai-parenting-chat",
+    title: "AI子育て相談チャット",
+    description: "子育てに関する悩みや疑問に、AIが24時間いつでも回答するサポートツール",
+    price: 99,
+    technologies: ["React", "OpenAI"],
+    features: [
+      "24時間AI相談対応",
+      "年齢別アドバイス",
+      "専門家監修の回答DB",
+      "相談履歴の保存",
+      "緊急時の連絡先表示"
+    ],
+    includes: [
+      "ソースコード一式",
+      "OpenAI API設定ガイド",
+      "子育て情報DB",
+      "カスタマイズガイド"
+    ],
+    testimonials: [],
+    benefits: [],
+    updates: []
+  },
   {
     id: "cat-generator",
     title: "カワイイ猫画像ジェネレーター",
