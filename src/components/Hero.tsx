@@ -15,7 +15,7 @@ export const Hero = () => {
         transition={{ delay: 0.2 }}
         className="max-w-3xl mx-auto"
       >
-        <h1 className="text-5xl font-bold mb-6 text-white bg-clip-text">
+        <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-[#9b87f5] to-[#8B5CF6] text-transparent bg-clip-text">
           数分でSaaSを構築
         </h1>
         <p className="text-xl text-white/80 mb-8">
