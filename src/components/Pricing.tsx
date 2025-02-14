@@ -11,6 +11,7 @@ const standardPlans = [
       "APIゲートウェイ基本機能",
       "認証システム",
       "基本的なUI/UXテンプレート",
+      "生涯アップデート無料",
       "1年間の技術サポート",
     ],
     recommended: false
@@ -23,6 +24,7 @@ const standardPlans = [
       "AIチャット統合",
       "カスタムデザインシステム",
       "優先サポート",
+      "生涯アップデート無料",
       "ソースコードの商用利用可"
     ],
     recommended: true
@@ -35,6 +37,7 @@ const standardPlans = [
       "専用のテクニカルサポート",
       "カスタマイズ開発サポート",
       "SLA保証",
+      "生涯アップデート無料",
       "ホワイトラベル対応"
     ],
     recommended: false
@@ -51,7 +54,7 @@ const whiteLabel = {
     "専任開発者のアサイン",
     "24時間365日サポート",
     "カスタムAPI開発",
-    "無制限のアップデート"
+    "生涯アップデート無料"
   ],
   recommended: false
 };
@@ -86,7 +89,7 @@ export const Pricing = () => {
               <h3 className="text-2xl font-bold text-white mb-4">{plan.name}</h3>
               <div className="mb-6">
                 <span className="text-4xl font-bold text-white">${plan.price}</span>
-                <span className="text-white/70">/テンプレート</span>
+                <span className="text-white/70">（生涯ライセンス）</span>
               </div>
               <ul className="space-y-4 mb-8">
                 {plan.features.map((feature) => (
@@ -115,7 +118,7 @@ export const Pricing = () => {
               <h3 className="text-2xl font-bold text-white mb-4">{whiteLabel.name}</h3>
               <div className="mb-6">
                 <span className="text-4xl font-bold text-white">${whiteLabel.price}</span>
-                <span className="text-white/70">/テンプレート</span>
+                <span className="text-white/70">（生涯ライセンス）</span>
               </div>
               <Button className="w-full bg-white/10 hover:bg-white/20 text-white">
                 プランを選択
