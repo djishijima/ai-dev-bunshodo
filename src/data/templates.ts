@@ -13,4 +13,4 @@ export const templates: Template[] = [
 ];
 
 export type { Template } from "@/types/template";
-export type { Testimonial, Benefit, Update } from "@/types/template";
+export type { Testimonial, Benefit, Update, AIModel } from "@/types/template";

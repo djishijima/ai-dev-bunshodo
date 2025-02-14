@@ -1,6 +1,6 @@
 
 import { Check } from "lucide-react";
-import type { AIModel } from "@/data/templates";
+import type { AIModel } from "@/types/template";
 
 interface AIModelsSectionProps {
   models: AIModel[];
