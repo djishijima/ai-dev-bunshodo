@@ -30,6 +30,15 @@ export const NavBar = () => {
               料金プラン
             </NavLink>
             
+            <NavLink 
+              to="/mypage" 
+              className={({ isActive }) => 
+                `text-sm ${isActive ? 'text-white' : 'text-white/70 hover:text-white'} transition-colors`
+              }
+            >
+              マイページ
+            </NavLink>
+            
             <Button variant="outline" className="bg-white/10 border-white/20 text-white hover:bg-white/20">
               ログイン
             </Button>
