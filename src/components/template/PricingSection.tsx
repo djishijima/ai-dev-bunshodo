@@ -8,6 +8,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 
 interface PricingSectionProps {
   price: number;
@@ -15,9 +17,32 @@ interface PricingSectionProps {
 
 export const PricingSection = ({ price }: PricingSectionProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handlePurchase = () => {
     setIsModalOpen(true);
+  };
+
+  const handleDownload = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) {
+      toast.error("メールアドレスを入力してください");
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      // ここで実際のダウンロード処理を実装
+      await new Promise(resolve => setTimeout(resolve, 1000)); // デモ用の遅延
+      toast.success("ダウンロードリンクをメールで送信しました！");
+      setIsModalOpen(false);
+      setEmail("");
+    } catch (error) {
+      toast.error("エラーが発生しました。もう一度お試しください。");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -84,17 +109,28 @@ export const PricingSection = ({ price }: PricingSectionProps) => {
               </div>
             </div>
 
-            <div className="space-y-4">
+            <form onSubmit={handleDownload} className="space-y-4">
+              <div>
+                <Input
+                  type="email"
+                  placeholder="メールアドレスを入力"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full py-6 text-lg"
+                  required
+                />
+              </div>
               <Button 
+                type="submit"
                 className="w-full py-6 text-lg bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600"
-                onClick={() => setIsModalOpen(false)}
+                disabled={isSubmitting}
               >
-                無料でダウンロード
+                {isSubmitting ? "送信中..." : "無料でダウンロード"}
               </Button>
               <p className="text-center text-sm text-gray-500">
-                ※ ダウンロード後、メールアドレスの登録が必要です
+                ※ ダウンロードリンクをメールで送信します
               </p>
-            </div>
+            </form>
           </div>
         </DialogContent>
       </Dialog>
