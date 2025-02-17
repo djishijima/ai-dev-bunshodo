@@ -10,6 +10,7 @@ import {
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { supabase } from "@/lib/supabase";
 
 interface PricingSectionProps {
   price: number;
@@ -33,12 +34,20 @@ export const PricingSection = ({ price }: PricingSectionProps) => {
 
     setIsSubmitting(true);
     try {
-      // ここで実際のダウンロード処理を実装
-      await new Promise(resolve => setTimeout(resolve, 1000)); // デモ用の遅延
-      toast.success("ダウンロードリンクをメールで送信しました！");
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options: {
+          emailRedirectTo: `${window.location.origin}/mypage`,
+        },
+      });
+
+      if (error) throw error;
+
+      toast.success("認証メールを送信しました！メールをご確認ください。");
       setIsModalOpen(false);
       setEmail("");
     } catch (error) {
+      console.error('Error:', error);
       toast.error("エラーが発生しました。もう一度お試しください。");
     } finally {
       setIsSubmitting(false);
@@ -125,10 +134,10 @@ export const PricingSection = ({ price }: PricingSectionProps) => {
                 className="w-full py-6 text-lg bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600"
                 disabled={isSubmitting}
               >
-                {isSubmitting ? "送信中..." : "無料でダウンロード"}
+                {isSubmitting ? "送信中..." : "メールアドレスで登録"}
               </Button>
               <p className="text-center text-sm text-gray-500">
-                ※ ダウンロードリンクをメールで送信します
+                ※ 認証メールをお送りします
               </p>
             </form>
           </div>
