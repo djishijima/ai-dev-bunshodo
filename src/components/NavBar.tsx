@@ -22,6 +22,15 @@ export const NavBar = () => {
             </NavLink>
             
             <NavLink 
+              to="/setup-guide" 
+              className={({ isActive }) => 
+                `text-sm ${isActive ? 'text-white' : 'text-white/70 hover:text-white'} transition-colors`
+              }
+            >
+              セットアップガイド
+            </NavLink>
+            
+            <NavLink 
               to="/pricing" 
               className={({ isActive }) => 
                 `text-sm ${isActive ? 'text-white' : 'text-white/70 hover:text-white'} transition-colors`
