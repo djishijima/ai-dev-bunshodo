@@ -66,10 +66,21 @@ export const PricingSection = ({ price }: PricingSectionProps) => {
               </div>
 
               <div className="border border-gray-200 p-4 rounded-lg">
-                <p className="text-gray-600 text-sm">
-                  このテンプレートは無料でダウンロードできます。<br/>
-                  さらに、テンプレート内で使用できる30%OFFクーポンが付いてきます！
-                </p>
+                <div className="space-y-3">
+                  <p className="text-gray-700 text-sm leading-relaxed">
+                    はじめまして。私たちは、あなたのような創造的な方々のために
+                    このテンプレートを作りました。
+                  </p>
+                  <p className="text-gray-700 text-sm leading-relaxed">
+                    プログラミングの世界は時として難しく感じるかもしれません。
+                    でも、このテンプレートがあなたの最初の一歩を後押しできれば
+                    と思っています。
+                  </p>
+                  <p className="text-gray-700 text-sm leading-relaxed">
+                    まずは無料で始めてみませんか？さらに、あなたの挑戦を
+                    応援したい気持ちを込めて、30%OFFクーポンもご用意しました。
+                  </p>
+                </div>
               </div>
             </div>
 
