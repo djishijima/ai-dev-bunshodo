@@ -38,9 +38,9 @@ export const Hero = () => {
           <div className="flex gap-4">
             <Button 
               className="premium-button text-lg px-8 py-6"
-              onClick={() => window.open('#', '_blank')}
+              onClick={() => navigate('/template/hello-world')}
             >
-              無料デモを試す
+              無料テンプレートで始める
             </Button>
             <Button 
               className="bg-white/10 hover:bg-white/20 text-white text-lg px-8 py-6"
