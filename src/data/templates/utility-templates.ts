@@ -7,6 +7,8 @@ export const utilityTemplates: Template[] = [
     title: "MIDIファイル変換ツール",
     description: "MIDIファイルを様々な形式に変換できるシンプルなツール",
     price: 99,
+    difficulty: "中級",
+    developmentTime: "2-3時間",
     technologies: ["React", "Web Audio API"],
     features: [
       "MIDIファイル形式変換",
@@ -30,6 +32,8 @@ export const utilityTemplates: Template[] = [
     title: "音声ファイル変換ツール",
     description: "様々な音声ファイル形式を相互に変換できるシンプルなツール",
     price: 79,
+    difficulty: "初級",
+    developmentTime: "1-2時間",
     technologies: ["React", "Web Audio API", "FFmpeg"],
     features: [
       "複数形式対応",

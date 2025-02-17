@@ -7,6 +7,8 @@ export const entertainmentTemplates: Template[] = [
     title: "レトロフィルターカメラ",
     description: "写真に昭和レトロなフィルターをかけることができるアプリ。複数のフィルターから選択可能",
     price: 99,
+    difficulty: "初級",
+    developmentTime: "1-2時間",
     technologies: ["React", "Canvas API"],
     features: [
       "複数のレトロフィルター",
@@ -30,6 +32,8 @@ export const entertainmentTemplates: Template[] = [
     title: "フレンドチャット",
     description: "友達とリアルタイムでチャットができるシンプルなアプリ。既読機能、絵文字対応付き",
     price: 149,
+    difficulty: "中級",
+    developmentTime: "2-3時間",
     technologies: ["React", "Firebase", "WebSocket"],
     features: [
       "リアルタイムチャット",

@@ -7,6 +7,8 @@ export const educationTemplates: Template[] = [
     title: "AIスタディメイト",
     description: "宿題やテストの問題を入力すると、AIが詳しい解説付きで答えを提供する学習支援ツール",
     price: 199,
+    difficulty: "初級",
+    developmentTime: "2-3時間",
     technologies: ["React", "OpenAI"],
     features: [
       "AI解答生成機能",
@@ -30,6 +32,8 @@ export const educationTemplates: Template[] = [
     title: "AI英語学習パートナー",
     description: "AIがあなたのレベルに合わせた英会話レッスンを提供する学習ツール",
     price: 299,
+    difficulty: "中級",
+    developmentTime: "3-4時間",
     technologies: ["React", "OpenAI", "Speech Recognition API"],
     features: [
       "AIとの英会話練習",
