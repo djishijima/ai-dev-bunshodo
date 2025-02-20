@@ -26,14 +26,20 @@
     --ring: 186 100% 50%;
     --radius: 1rem;
   }
- 
+}
+
+@layer base {
   * {
     @apply border-border;
-    font-family: 'Inter', sans-serif;
+  }
+  
+  html {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   }
 
   body {
     @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   }
 
   .glass-card {
