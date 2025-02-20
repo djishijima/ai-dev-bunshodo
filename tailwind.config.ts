@@ -62,6 +62,9 @@ export default {
           900: "#164E63",
         },
       },
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+      },
       keyframes: {
         "slide-up": {
           "0%": { transform: "translateY(10px)", opacity: "0" },
