@@ -110,7 +110,11 @@ const TemplateDetail = () => {
               ))}
             </div>
             
-            <PricingSection price={template.price} />
+            <PricingSection 
+              price={template.price} 
+              templateId={template.id}
+              templateName={template.title}
+            />
 
             <div className="bg-secondary/50 p-6 rounded-xl border border-border mb-8">
               <h3 className="text-lg font-semibold text-foreground mb-4">
