@@ -89,13 +89,13 @@ const MyPage = () => {
           if (error) throw error;
           if (data) {
             // ユーザーデータが存在する場合は更新
-            setUser(prev => ({
-              ...prev,
-              name: `${data.first_name || ''} ${data.last_name || ''}`.trim() || prev.name,
-              email: session.user.email || prev.email,
-              avatar: data.avatar_url || prev.avatar
+            setUser(prevState => ({
+              ...prevState,
+              name: `${data.first_name || ''} ${data.last_name || ''}`.trim() || prevState.name,
+              email: session.user.email || prevState.email,
+              avatar: data.avatar_url || prevState.avatar
             }));
-            setEditName(`${data.first_name || ''} ${data.last_name || ''}`.trim() || prev.name);
+            setEditName(`${data.first_name || ''} ${data.last_name || ''}`.trim() || user.name);
           }
         }
       } catch (error) {
@@ -128,8 +128,8 @@ const MyPage = () => {
 
       if (error) throw error;
 
-      setUser(prev => ({
-        ...prev,
+      setUser(prevState => ({
+        ...prevState,
         name: editName
       }));
       setIsEditMode(false);
