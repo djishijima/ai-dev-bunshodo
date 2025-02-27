@@ -22,17 +22,25 @@ const LoginPage = () => {
   const handleGithubLogin = async () => {
     setIsLoading(prev => ({ ...prev, github: true }));
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
+      const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'github',
         options: {
           redirectTo: `${window.location.origin}/mypage`
         }
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('GitHub login error:', error);
+        throw error;
+      }
+
+      if (data) {
+        toast.success("GitHubでログインしました");
+        navigate("/mypage");
+      }
     } catch (error) {
       console.error('Error:', error);
-      toast.error("GitHubログインに失敗しました");
+      toast.error("GitHubログインに失敗しました。ネットワーク接続を確認してください。");
     } finally {
       setIsLoading(prev => ({ ...prev, github: false }));
     }
@@ -41,17 +49,25 @@ const LoginPage = () => {
   const handleGoogleLogin = async () => {
     setIsLoading(prev => ({ ...prev, google: true }));
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
+      const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
           redirectTo: `${window.location.origin}/mypage`
         }
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Google login error:', error);
+        throw error;
+      }
+
+      if (data) {
+        toast.success("Googleでログインしました");
+        navigate("/mypage");
+      }
     } catch (error) {
       console.error('Error:', error);
-      toast.error("Googleログインに失敗しました");
+      toast.error("Googleログインに失敗しました。ネットワーク接続を確認してください。");
     } finally {
       setIsLoading(prev => ({ ...prev, google: false }));
     }
@@ -66,21 +82,26 @@ const LoginPage = () => {
 
     setIsLoading(prev => ({ ...prev, email: true }));
     try {
-      const { error } = await supabase.auth.signInWithOtp({
+      const { data, error } = await supabase.auth.signInWithOtp({
         email,
         options: {
           emailRedirectTo: `${window.location.origin}/mypage`
         }
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Email login error:', error);
+        throw error;
+      }
 
-      toast.success("認証メールを送信しました。メールをご確認ください。");
-      setEmail("");
-      setShowEmailInput(false);
+      if (data) {
+        toast.success("認証メールを送信しました。メールをご確認ください。");
+        setEmail("");
+        setShowEmailInput(false);
+      }
     } catch (error) {
       console.error('Error:', error);
-      toast.error("メールでのログインに失敗しました");
+      toast.error("メールでのログインに失敗しました。ネットワーク接続を確認してください。");
     } finally {
       setIsLoading(prev => ({ ...prev, email: false }));
     }
