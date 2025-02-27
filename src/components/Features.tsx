@@ -36,14 +36,32 @@ const features = [
 ];
 
 export const Features = () => {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { 
+        staggerChildren: 0.1
+      }
+    }
+  };
+  
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  };
+
   return (
-    <section className="py-24 px-4">
+    <section className="py-24 px-4 relative">
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-[#1a1335]/20 pointer-events-none"></div>
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="max-w-7xl mx-auto"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={containerVariants}
+        className="max-w-7xl mx-auto relative z-10"
       >
-        <h2 className="text-4xl font-bold text-center mb-4 bg-gradient-to-r from-[#9b87f5] to-[#8B5CF6] text-transparent bg-clip-text">
+        <h2 className="section-title text-4xl font-bold mb-4">
           なぜ 爆速AIアプリ構築 なのか？
         </h2>
         <p className="text-xl text-center text-white/80 mb-16 max-w-2xl mx-auto">
@@ -54,16 +72,19 @@ export const Features = () => {
           {features.map((feature, index) => (
             <motion.div
               key={feature.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="glass-card p-6"
+              variants={itemVariants}
+              className="glass-card p-8 rounded-xl relative overflow-hidden group"
             >
-              <div className="w-12 h-12 mx-auto mb-4 bg-gradient-to-r from-[#9b87f5] to-[#8B5CF6] rounded-full flex items-center justify-center text-white">
+              <div className="absolute -right-6 -top-6 w-12 h-12 bg-gradient-to-br from-[#9b87f5]/10 to-[#D946EF]/10 rounded-full blur-xl 
+                              group-hover:scale-[1.5] transition-all duration-700" />
+              
+              <div className="w-14 h-14 mb-6 animated-gradient-bg rounded-2xl flex items-center justify-center text-white shadow-lg
+                             group-hover:scale-110 transition-transform duration-300">
                 {feature.icon}
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-white text-center">{feature.title}</h3>
-              <p className="text-white/70 text-center">{feature.description}</p>
+              
+              <h3 className="text-xl font-semibold mb-3 text-white">{feature.title}</h3>
+              <p className="text-white/70">{feature.description}</p>
             </motion.div>
           ))}
         </div>

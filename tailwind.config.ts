@@ -61,6 +61,14 @@ export default {
           500: "#06B6D4",
           900: "#164E63",
         },
+        purple: {
+          light: "#9b87f5",
+          DEFAULT: "#8B5CF6",
+          dark: "#6E59A5",
+        },
+        magenta: {
+          DEFAULT: "#D946EF",
+        }
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
