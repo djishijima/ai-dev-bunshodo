@@ -1,6 +1,7 @@
 
 import { NavBar } from "@/components/NavBar";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Github, Mail } from "lucide-react";
 import { useState } from "react";
 import { supabase } from "@/lib/supabase";
@@ -10,8 +11,12 @@ import { useNavigate } from "react-router-dom";
 const LoginPage = () => {
   const [isLoading, setIsLoading] = useState({
     github: false,
-    google: false
+    google: false,
+    email: false
   });
+  const [email, setEmail] = useState("");
+  const [showEmailInput, setShowEmailInput] = useState(false);
+  
   const navigate = useNavigate();
 
   const handleGithubLogin = async () => {
@@ -52,8 +57,37 @@ const LoginPage = () => {
     }
   };
 
+  const handleEmailLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) {
+      toast.error("メールアドレスを入力してください");
+      return;
+    }
+
+    setIsLoading(prev => ({ ...prev, email: true }));
+    try {
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options: {
+          emailRedirectTo: `${window.location.origin}/mypage`
+        }
+      });
+
+      if (error) throw error;
+
+      toast.success("認証メールを送信しました。メールをご確認ください。");
+      setEmail("");
+      setShowEmailInput(false);
+    } catch (error) {
+      console.error('Error:', error);
+      toast.error("メールでのログインに失敗しました");
+    } finally {
+      setIsLoading(prev => ({ ...prev, email: false }));
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-600 to-blue-800">
+    <div className="min-h-screen bg-gradient-to-b from-melon-700 to-melon-900">
       <NavBar />
       <div className="max-w-md mx-auto px-4 pt-32">
         <div className="bg-white/10 backdrop-blur-xl p-8 rounded-xl border border-white/20">
@@ -95,9 +129,44 @@ const LoginPage = () => {
               </svg>
               {isLoading.google ? "Googleと連携中..." : "Googleでログイン"}
             </Button>
+
+            <Button 
+              variant="premium"
+              className="w-full"
+              onClick={() => setShowEmailInput(prev => !prev)}
+            >
+              <Mail className="mr-2 h-5 w-5" />
+              メールでログイン
+            </Button>
           </div>
 
-          <div className="relative my-8">
+          {showEmailInput && (
+            <form onSubmit={handleEmailLogin} className="mt-4 space-y-4">
+              <div className="space-y-2">
+                <Input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="メールアドレスを入力"
+                  className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                  required
+                />
+                <Button 
+                  type="submit"
+                  variant="premium"
+                  className="w-full"
+                  disabled={isLoading.email}
+                >
+                  {isLoading.email ? "送信中..." : "認証メールを送信"}
+                </Button>
+              </div>
+              <p className="text-xs text-white/70 text-center">
+                ※ 入力したメールアドレスに認証リンクが送信されます
+              </p>
+            </form>
+          )}
+
+          <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-white/20"></div>
             </div>
@@ -107,8 +176,8 @@ const LoginPage = () => {
           </div>
 
           <p className="text-sm text-white/70 text-center">
-            Googleアカウントまたは<br />
-            GitHubアカウントでログインできます
+            アカウントをお持ちでない場合は<br />
+            上記の方法でそのまま新規登録できます
           </p>
         </div>
       </div>
