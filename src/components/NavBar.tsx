@@ -40,7 +40,7 @@ export const NavBar = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <NavLink to="/" className="text-2xl font-bold text-white hover:text-white/80 transition-colors">
-            RapidSaaS
+            AI開発プラットフォーム
           </NavLink>
           
           <div className="flex items-center gap-6">

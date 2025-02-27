@@ -9,7 +9,7 @@ export const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-white">RapidSaaS</h3>
+            <h3 className="text-lg font-semibold text-white">AI開発プラットフォーム</h3>
             <p className="text-sm text-white/70">
               誰でも簡単にAIアプリケーションを<br />開発できるプラットフォーム
             </p>
@@ -85,7 +85,7 @@ export const Footer = () => {
         <Separator className="my-8 bg-white/10" />
 
         <div className="text-center text-sm text-white/50">
-          © 2024 RapidSaaS. All rights reserved.
+          © 2024 AI開発プラットフォーム. All rights reserved.
         </div>
       </div>
     </footer>
