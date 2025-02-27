@@ -7,184 +7,196 @@ const standardPlans = [
   {
     name: "スタンダード",
     price: 99,
+    period: "生涯ライセンス",
+    description: "個人や小規模チームに最適なプラン",
     features: [
       "APIゲートウェイ基本機能",
       "認証システム",
-      "基本的なUI/UXテンプレート",
-      "生涯アップデート無料",
-      "1年間の技術サポート",
+      "基本UIテンプレート",
+      "無料アップデート",
+      "コミュニティサポート",
     ],
-    recommended: false
+    recommended: false,
+    cta: "プランを選択"
   },
   {
     name: "プロフェッショナル",
     price: 199,
+    period: "生涯ライセンス",
+    description: "成長するビジネスのための高度な機能",
     features: [
       "スタンダードの全機能",
-      "AIチャット統合",
+      "AI機能統合",
       "カスタムデザインシステム",
       "優先サポート",
-      "生涯アップデート無料",
-      "ソースコードの商用利用可"
+      "商用利用ライセンス",
+      "ソースコード全権利"
     ],
-    recommended: true
+    recommended: true,
+    cta: "プランを選択"
   },
   {
     name: "エンタープライズ",
     price: 499,
+    period: "生涯ライセンス",
+    description: "大規模組織向けの拡張性と機能",
     features: [
-      "プロフェッショナルの全機能",
-      "専用のテクニカルサポート",
-      "カスタマイズ開発サポート",
+      "プロの全機能",
+      "専任技術サポート",
+      "カスタム開発サポート",
       "SLA保証",
-      "生涯アップデート無料",
-      "ホワイトラベル対応"
+      "ホワイトラベル対応",
+      "拡張APIアクセス"
     ],
-    recommended: false
+    recommended: false,
+    cta: "プランを選択"
   }
 ];
 
 const whiteLabel = {
   name: "ホワイトラベル",
   price: 2000,
+  period: "生涯ライセンス",
+  description: "自社ブランドとして提供したい企業向け",
   features: [
     "エンタープライズの全機能",
-    "完全なブランド変更権利",
+    "ブランド名変更権利",
     "独占販売権",
-    "専任開発者のアサイン",
+    "専任開発サポート",
     "24時間365日サポート",
     "カスタムAPI開発",
-    "生涯アップデート無料"
+    "拡張サポート契約"
   ],
-  recommended: false
+  cta: "お問い合わせ"
 };
 
 export const Pricing = () => {
-  const cardVariants = {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { 
+        staggerChildren: 0.15,
+        delayChildren: 0.1
+      }
+    }
+  };
+  
+  const itemVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.5 }
-    },
-    hover: { 
-      y: -10,
-      boxShadow: "0 20px 25px -5px rgba(111, 76, 255, 0.1), 0 10px 10px -5px rgba(111, 76, 255, 0.04)",
-      transition: { duration: 0.2 }
+      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
     }
   };
 
   return (
-    <section className="py-24 px-4 relative" id="pricing">
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-[#1a1335]/10 to-background pointer-events-none"></div>
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        className="max-w-7xl mx-auto relative z-10"
-      >
-        <h2 className="section-title text-4xl font-bold mb-16">
-          料金プラン
-        </h2>
+    <section className="py-24 px-4" id="pricing">
+      <div className="max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-16"
+        >
+          <h2 className="section-title text-4xl sm:text-5xl font-bold mb-6">
+            シンプルな料金体系
+          </h2>
+          <p className="text-lg text-white/70 max-w-2xl mx-auto">
+            サブスクリプションなし。一度の支払いで、生涯アップデート付きのライセンスをご提供します。
+          </p>
+        </motion.div>
         
-        {/* Standard Plans - 3 columns */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={containerVariants}
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10"
+        >
           {standardPlans.map((plan, index) => (
             <motion.div
               key={plan.name}
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              whileHover="hover"
-              viewport={{ once: true, amount: 0.1 }}
-              transition={{ delay: index * 0.1 }}
-              className={`glass-card p-8 rounded-xl relative ${
+              variants={itemVariants}
+              className={`glass-card p-8 rounded-md relative ${
                 plan.recommended 
-                  ? 'border-[#D946EF] border-2 bg-gradient-to-b from-[#D946EF]/5 to-transparent' 
-                  : 'border-white/5'
+                  ? 'ring-1 ring-purple' 
+                  : ''
               }`}
             >
               {plan.recommended && (
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-gradient-to-r from-[#9b87f5] to-[#D946EF] text-white px-4 py-1 rounded-full text-sm font-medium">
-                    おすすめ
+                  <span className="bg-primary text-white px-4 py-1 rounded-full text-sm font-medium">
+                    人気プラン
                   </span>
                 </div>
               )}
-              <h3 className="text-2xl font-bold mb-4 gradient-text">{plan.name}</h3>
+              
               <div className="mb-6">
-                <span className="text-5xl font-bold text-white">${plan.price}</span>
-                <span className="text-white/70 ml-2">（生涯ライセンス）</span>
+                <h3 className="text-xl font-medium text-white mb-2">{plan.name}</h3>
+                <p className="text-white/60 text-sm">{plan.description}</p>
               </div>
-              <ul className="space-y-4 mb-8 min-h-[240px]">
+              
+              <div className="mb-6">
+                <span className="text-4xl font-bold text-white">${plan.price}</span>
+                <span className="text-white/60 ml-2 text-sm">{plan.period}</span>
+              </div>
+              
+              <ul className="space-y-3 mb-8 min-h-[220px]">
                 {plan.features.map((feature, idx) => (
-                  <motion.li 
-                    key={feature} 
-                    initial={{ opacity: 0, x: -10 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.3 + idx * 0.1 }}
-                    className="flex items-center text-white/90"
-                  >
-                    <div className="w-5 h-5 rounded-full bg-gradient-to-r from-[#9b87f5] to-[#D946EF] flex items-center justify-center mr-3 flex-shrink-0">
-                      <Check className="w-3 h-3 text-white" />
-                    </div>
-                    {feature}
-                  </motion.li>
+                  <li key={feature} className="flex items-start text-white/80 text-sm">
+                    <Check className="w-4 h-4 text-primary mt-0.5 mr-2 flex-shrink-0" />
+                    <span>{feature}</span>
+                  </li>
                 ))}
               </ul>
-              <Button className={`w-full ${
+              
+              <Button className={`w-full rounded-md py-5 ${
                 plan.recommended 
                   ? 'premium-button' 
-                  : 'bg-white/5 hover:bg-white/10 border border-white/10 text-white hover:border-[#9b87f5]/30'
-              } rounded-xl py-6`}>
-                プランを選択
+                  : 'bg-white/[0.03] hover:bg-white/[0.06] border border-white/10 text-white hover:border-purple/20'
+              }`}>
+                {plan.cta}
               </Button>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        {/* White Label Plan - Full width */}
         <motion.div
-          variants={cardVariants}
+          variants={itemVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-          className="glass-card p-10 rounded-xl relative border-[#9b87f5]/30 border bg-gradient-to-r from-[#9b87f5]/5 via-transparent to-[#D946EF]/5"
+          className="glass-card p-8 rounded-md relative border-t border-purple/10"
         >
           <div className="grid md:grid-cols-[1fr_2fr] gap-8 items-center">
             <div>
-              <h3 className="text-3xl font-bold mb-4 gradient-text">{whiteLabel.name}</h3>
+              <h3 className="text-xl font-medium text-white mb-2">{whiteLabel.name}</h3>
+              <p className="text-white/60 text-sm mb-4">{whiteLabel.description}</p>
+              
               <div className="mb-6">
-                <span className="text-5xl font-bold text-white">${whiteLabel.price}</span>
-                <span className="text-white/70 ml-2">（生涯ライセンス）</span>
+                <span className="text-4xl font-bold text-white">${whiteLabel.price}</span>
+                <span className="text-white/60 ml-2 text-sm">{whiteLabel.period}</span>
               </div>
-              <Button className="w-full bg-white/5 hover:bg-white/10 border border-white/10 text-white 
-                                hover:border-[#9b87f5]/30 rounded-xl py-6">
-                プランを選択
+              
+              <Button className="w-full rounded-md py-5 bg-white/[0.03] hover:bg-white/[0.06] border border-white/10 text-white hover:border-purple/20">
+                {whiteLabel.cta}
               </Button>
             </div>
-            <div className="grid grid-cols-2 gap-6">
-              {whiteLabel.features.map((feature, idx) => (
-                <motion.div 
-                  key={feature} 
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.5 + idx * 0.05 }}
-                  className="flex items-center text-white/90 list-none"
-                >
-                  <div className="w-5 h-5 rounded-full bg-gradient-to-r from-[#9b87f5] to-[#D946EF] flex items-center justify-center mr-3 flex-shrink-0">
-                    <Check className="w-3 h-3 text-white" />
-                  </div>
-                  {feature}
-                </motion.div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {whiteLabel.features.map((feature) => (
+                <div key={feature} className="flex items-start text-white/80 text-sm">
+                  <Check className="w-4 h-4 text-primary mt-0.5 mr-2 flex-shrink-0" />
+                  <span>{feature}</span>
+                </div>
               ))}
             </div>
           </div>
         </motion.div>
-      </motion.div>
+      </div>
     </section>
   );
 };

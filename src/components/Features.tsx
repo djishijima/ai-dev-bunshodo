@@ -1,37 +1,44 @@
 
 import { motion } from "framer-motion";
-import { Code2, Zap, Lock, Puzzle, Clock, VideoIcon } from "lucide-react";
+import {
+  CodeSquare,
+  Shield,
+  Clock,
+  Zap,
+  Layers,
+  PlayCircle
+} from "lucide-react";
 
 const features = [
   {
-    icon: <Clock className="w-6 h-6" />,
-    title: "最速10分で立ち上げ",
-    description: "面倒な設定は全ておまかせ。API連携済みのテンプレートで、すぐにスタート。"
+    icon: <Clock className="w-5 h-5" />,
+    title: "迅速な開発",
+    description: "AIが設定を自動化し、数分でアプリを立ち上げ。従来の開発期間を大幅に短縮します。"
   },
   {
-    icon: <Zap className="w-6 h-6" />,
-    title: "トレンドのAPI活用",
-    description: "OpenAI、Stripe、Supabaseなど、最新APIを組み合わせて、便利なアプリを開発。"
+    icon: <Zap className="w-5 h-5" />,
+    title: "最新API連携",
+    description: "OpenAI、Stripe、Supabaseなど、トレンドの技術を簡単に組み合わせて実装できます。"
   },
   {
-    icon: <Lock className="w-6 h-6" />,
-    title: "安心のセキュリティ",
-    description: "認証・認可システムを標準搭載。業界標準のセキュリティ対策で安全に運用。"
+    icon: <Shield className="w-5 h-5" />,
+    title: "セキュリティ対策",
+    description: "業界標準のセキュリティを標準搭載。安全なユーザー認証システムを実現します。"
   },
   {
-    icon: <Puzzle className="w-6 h-6" />,
-    title: "自由自在なカスタマイズ",
-    description: "モジュール設計で、機能の追加・変更も自由自在。ビジネスに合わせて進化。"
+    icon: <Layers className="w-5 h-5" />,
+    title: "柔軟なカスタマイズ",
+    description: "モジュール設計により、必要な機能だけを選択。ビジネスの成長に合わせて拡張可能です。"
   },
   {
-    icon: <Code2 className="w-6 h-6" />,
-    title: "最新テクノロジー",
-    description: "React、TypeScript、Tailwindで構築された、洗練されたコードベース。"
+    icon: <CodeSquare className="w-5 h-5" />,
+    title: "最新技術スタック",
+    description: "React、TypeScript、Tailwindなど、現代的な技術で構築された高品質コードベース。"
   },
   {
-    icon: <VideoIcon className="w-6 h-6" />,
-    title: "充実の解説動画",
-    description: "ステップバイステップの解説動画で、アプリ開発の流れを分かりやすく説明。"
+    icon: <PlayCircle className="w-5 h-5" />,
+    title: "詳細な解説動画",
+    description: "ステップバイステップの動画ガイドで、複雑な実装も理解しやすく解説します。"
   }
 ];
 
@@ -41,54 +48,64 @@ export const Features = () => {
     visible: { 
       opacity: 1,
       transition: { 
-        staggerChildren: 0.1
+        staggerChildren: 0.1,
+        delayChildren: 0.1
       }
     }
   };
   
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 }
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
+    }
   };
 
   return (
-    <section className="py-24 px-4 relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-[#1a1335]/20 pointer-events-none"></div>
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={containerVariants}
-        className="max-w-7xl mx-auto relative z-10"
-      >
-        <h2 className="section-title text-4xl font-bold mb-4">
-          なぜ 爆速AIアプリ構築 なのか？
-        </h2>
-        <p className="text-xl text-center text-white/80 mb-16 max-w-2xl mx-auto">
-          「こんなサービス、あったらいいな…」<br />
-          そう思ったことはありませんか？ すぐにそれを実現できます！
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <section className="py-24 px-4">
+      <div className="max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-16"
+        >
+          <h2 className="section-title text-4xl sm:text-5xl font-bold mb-6">
+            直感的な開発体験
+          </h2>
+          <p className="text-lg text-white/70 max-w-2xl mx-auto">
+            複雑な技術を簡単に。あなたのアイデアを形にするための必要なツールを全て揃えました。
+          </p>
+        </motion.div>
+
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={containerVariants}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
           {features.map((feature, index) => (
             <motion.div
               key={feature.title}
               variants={itemVariants}
-              className="glass-card p-8 rounded-xl relative overflow-hidden group"
+              className="glass-card p-8 rounded-md relative overflow-hidden card-shine-effect"
             >
-              <div className="absolute -right-6 -top-6 w-12 h-12 bg-gradient-to-br from-[#9b87f5]/10 to-[#D946EF]/10 rounded-full blur-xl 
-                              group-hover:scale-[1.5] transition-all duration-700" />
-              
-              <div className="w-14 h-14 mb-6 animated-gradient-bg rounded-2xl flex items-center justify-center text-white shadow-lg
-                             group-hover:scale-110 transition-transform duration-300">
-                {feature.icon}
+              <div className="mb-6 flex items-center">
+                <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center text-primary">
+                  {feature.icon}
+                </div>
               </div>
               
-              <h3 className="text-xl font-semibold mb-3 text-white">{feature.title}</h3>
-              <p className="text-white/70">{feature.description}</p>
+              <h3 className="text-xl font-medium text-white mb-3">{feature.title}</h3>
+              <p className="text-white/60 leading-relaxed">{feature.description}</p>
             </motion.div>
           ))}
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
     </section>
   );
 };
