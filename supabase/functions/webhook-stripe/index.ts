@@ -56,13 +56,11 @@ serve(async (req) => {
         let userId = null;
         if (customerEmail) {
           const { data: userData } = await supabase
-            .from("auth.users")
-            .select("id")
-            .eq("email", customerEmail)
-            .limit(1);
+            .auth.admin.listUsers();
 
-          if (userData && userData.length > 0) {
-            userId = userData[0].id;
+          const user = userData?.users.find(u => u.email === customerEmail);
+          if (user) {
+            userId = user.id;
           }
         }
 

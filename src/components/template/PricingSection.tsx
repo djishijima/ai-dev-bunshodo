@@ -56,17 +56,21 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
         // またはSupabaseから購入履歴を確認（認証済みの場合）
         const { data: sessionData } = await supabase.auth.getSession();
         if (sessionData?.session?.user) {
-          const { data: purchaseData } = await supabase
+          const { data: purchaseData, error } = await supabase
             .from('purchases')
             .select('*')
             .eq('template_id', templateId)
             .eq('user_id', sessionData.session.user.id)
-            .single();
+            .maybeSingle();
             
           if (purchaseData) {
             setIsPurchaseComplete(true);
             // ローカルにも保存
             savePurchaseToLocalStorage();
+          }
+          
+          if (error && error.code !== 'PGRST116') {
+            console.error("購入確認エラー:", error);
           }
         }
       } catch (error) {
