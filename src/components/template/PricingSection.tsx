@@ -7,7 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
@@ -23,6 +23,63 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
   const [isPurchaseComplete, setIsPurchaseComplete] = useState(false);
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // 購入状態を確認
+  useEffect(() => {
+    // ローカルストレージから購入状態を確認
+    const checkPurchaseStatus = async () => {
+      try {
+        const purchasedItems = localStorage.getItem('purchasedTemplates');
+        if (purchasedItems) {
+          const purchases = JSON.parse(purchasedItems);
+          if (purchases.includes(templateId)) {
+            setIsPurchaseComplete(true);
+            return;
+          }
+        }
+        
+        // またはSupabaseから購入履歴を確認（認証済みの場合）
+        const { data: sessionData } = await supabase.auth.getSession();
+        if (sessionData?.session?.user) {
+          const { data: purchaseData } = await supabase
+            .from('purchases')
+            .select('*')
+            .eq('template_id', templateId)
+            .eq('user_id', sessionData.session.user.id)
+            .single();
+            
+          if (purchaseData) {
+            setIsPurchaseComplete(true);
+            // ローカルにも保存
+            savePurchaseToLocalStorage();
+          }
+        }
+      } catch (error) {
+        console.error("購入状態確認エラー:", error);
+      }
+    };
+    
+    checkPurchaseStatus();
+  }, [templateId]);
+  
+  // ローカルストレージに購入情報を保存
+  const savePurchaseToLocalStorage = () => {
+    try {
+      const purchasedItems = localStorage.getItem('purchasedTemplates');
+      let purchases = [];
+      
+      if (purchasedItems) {
+        purchases = JSON.parse(purchasedItems);
+      }
+      
+      if (!purchases.includes(templateId)) {
+        purchases.push(templateId);
+        localStorage.setItem('purchasedTemplates', JSON.stringify(purchases));
+      }
+    } catch (error) {
+      console.error("購入情報保存エラー:", error);
+    }
+  };
 
   const handlePurchase = () => {
     setIsModalOpen(true);
@@ -37,21 +94,42 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
 
     setIsSubmitting(true);
     try {
-      // 実際のアプリでは、ここで決済処理を行います
-      // ここではデモとして、3秒後に購入完了とします
-      await new Promise(resolve => setTimeout(resolve, 3000));
-
-      // 成功したら購入完了状態に
+      // 実際のアプリでは、ここで決済APIを呼び出します
+      // このデモでは、購入をシミュレートします
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // 購入情報をSupabaseに保存
+      const { data: sessionData } = await supabase.auth.getSession();
+      const userId = sessionData?.session?.user?.id;
+      
+      if (userId) {
+        // 認証済みユーザーの場合、Supabaseに購入記録を保存
+        const { error } = await supabase
+          .from('purchases')
+          .insert({
+            template_id: templateId,
+            user_id: userId,
+            email: email,
+            price: price,
+            purchased_at: new Date().toISOString()
+          });
+          
+        if (error) {
+          console.error("購入記録保存エラー:", error);
+          // エラーがあっても続行（ローカルストレージには保存）
+        }
+      }
+      
+      // ローカルストレージに購入情報を保存
+      savePurchaseToLocalStorage();
+      
+      // 購入完了状態に更新
       setIsPurchaseComplete(true);
+      setIsModalOpen(false);
       toast.success("ご購入ありがとうございます！テンプレートをダウンロードできます。");
       
-      // オプション: 購入記録をSupabaseに保存するなど
-      // const { error } = await supabase
-      //   .from('purchases')
-      //   .insert({ template_id: templateId, email: email, price: price });
-      
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Purchase error:', error);
       toast.error("エラーが発生しました。もう一度お試しください。");
     } finally {
       setIsSubmitting(false);
@@ -59,10 +137,9 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
   };
 
   const handleDownload = () => {
-    // 実際のアプリでは、認証済みユーザーに対して保護されたダウンロードリンクを提供します
-    // ここではデモとしてダウンロードをシミュレート
+    // 実際のアプリではここで認証済みユーザー向けの保護されたダウンロードURLを提供
+    // このデモではテンプレートファイルを生成してダウンロード
     
-    // 一時的なテキストファイルを作成してダウンロード
     const templateContent = `
 # ${templateName} テンプレート
 
@@ -75,7 +152,7 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
 詳しいセットアップ方法とカスタマイズガイドは付属のドキュメントをご覧ください。
 `;
 
-    // ダウンロード用のBlobを作成
+    // BlobとURLを作成
     const blob = new Blob([templateContent], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     
@@ -93,6 +170,24 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
     }, 0);
     
     toast.success("ダウンロードを開始しました");
+    
+    // ダウンロード記録（オプション）
+    const trackDownload = async () => {
+      const { data: sessionData } = await supabase.auth.getSession();
+      const userId = sessionData?.session?.user?.id;
+      
+      if (userId) {
+        await supabase
+          .from('downloads')
+          .insert({
+            template_id: templateId,
+            user_id: userId,
+            downloaded_at: new Date().toISOString()
+          });
+      }
+    };
+    
+    trackDownload().catch(console.error);
   };
 
   // 価格表示を日本円に変換して整形（カンマ区切り）
