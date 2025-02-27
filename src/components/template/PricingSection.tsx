@@ -26,6 +26,21 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
   
   // 購入状態を確認
   useEffect(() => {
+    // URLパラメータをチェック（Stripeからの成功リダイレクト）
+    const urlParams = new URLSearchParams(window.location.search);
+    const isSuccess = urlParams.get('success') === 'true';
+    
+    if (isSuccess) {
+      // Stripeから成功リダイレクト後の処理
+      toast.success("購入が完了しました！テンプレートをダウンロードできます。");
+      savePurchaseToLocalStorage();
+      setIsPurchaseComplete(true);
+      
+      // URLからパラメータを削除（ブラウザの履歴を汚さないため）
+      window.history.replaceState({}, document.title, window.location.pathname);
+      return;
+    }
+    
     // ローカルストレージから購入状態を確認
     const checkPurchaseStatus = async () => {
       try {
@@ -85,7 +100,7 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
     setIsModalOpen(true);
   };
 
-  const simulatePurchase = async (e: React.FormEvent) => {
+  const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) {
       toast.error("メールアドレスを入力してください");
@@ -94,52 +109,49 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
 
     setIsSubmitting(true);
     try {
-      // 実際のアプリでは、ここで決済APIを呼び出します
-      // このデモでは、購入をシミュレートします
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // 購入情報をSupabaseに保存
-      const { data: sessionData } = await supabase.auth.getSession();
-      const userId = sessionData?.session?.user?.id;
-      
-      if (userId) {
-        // 認証済みユーザーの場合、Supabaseに購入記録を保存
-        const { error } = await supabase
-          .from('purchases')
-          .insert({
-            template_id: templateId,
-            user_id: userId,
-            email: email,
-            price: price,
-            purchased_at: new Date().toISOString()
-          });
-          
-        if (error) {
-          console.error("購入記録保存エラー:", error);
-          // エラーがあっても続行（ローカルストレージには保存）
+      // Supabaseのエッジ関数でStripeチェックアウトセッションを作成
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL || 'https://fkjgcszdgcbcdmclgfer.supabase.co'}/functions/v1/create-checkout`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZramdjc3pkZ2NiY2RtY2xnZmVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAwODUyMDgsImV4cCI6MjA1NTY2MTIwOH0.M-6eN4TW_87p1JpXAN5HhY1mRCK7b8GOFXiRdRuRmUM'}`,
+          },
+          body: JSON.stringify({
+            templateId,
+            templateName,
+            price,
+            email,
+            successUrl: `${window.location.origin}/template/${templateId}?success=true`,
+            cancelUrl: `${window.location.origin}/template/${templateId}?canceled=true`,
+          }),
         }
+      );
+
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.error || "決済処理に失敗しました");
+      }
+
+      // Stripeチェックアウトページにリダイレクト
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error("決済URLが見つかりません");
       }
       
-      // ローカルストレージに購入情報を保存
-      savePurchaseToLocalStorage();
-      
-      // 購入完了状態に更新
-      setIsPurchaseComplete(true);
-      setIsModalOpen(false);
-      toast.success("ご購入ありがとうございます！テンプレートをダウンロードできます。");
-      
     } catch (error) {
-      console.error('Purchase error:', error);
-      toast.error("エラーが発生しました。もう一度お試しください。");
+      console.error('Stripe checkout error:', error);
+      toast.error("決済処理の開始に失敗しました。もう一度お試しください。");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const handleDownload = () => {
-    // 実際のアプリではここで認証済みユーザー向けの保護されたダウンロードURLを提供
-    // このデモではテンプレートファイルを生成してダウンロード
-    
+    // 実際のテンプレートファイルのダウンロード処理
     const templateContent = `
 # ${templateName} テンプレート
 
@@ -266,7 +278,7 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
               </div>
             </div>
 
-            <form onSubmit={simulatePurchase} className="space-y-4">
+            <form onSubmit={handleCheckout} className="space-y-4">
               <div>
                 <Input
                   type="email"
