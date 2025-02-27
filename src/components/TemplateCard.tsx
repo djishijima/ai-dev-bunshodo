@@ -87,7 +87,7 @@ export const TemplateCard = ({
               {price === 0 ? "無料" : `¥${price.toLocaleString()}`}
             </span>
             <Button 
-              className="premium-button"
+              variant="premium"
               onClick={() => navigate(`/template/${id}`)}
             >
               詳細を見る

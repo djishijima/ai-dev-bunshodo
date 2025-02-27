@@ -59,12 +59,12 @@ export const PricingSection = ({ price }: PricingSectionProps) => {
 
   return (
     <>
-      <div className="bg-white p-6 rounded-2xl shadow-lg mb-8 border border-gray-100">
+      <div className="bg-melon-700/90 p-6 rounded-2xl shadow-lg mb-8 border border-melon-600">
         <div className="flex items-baseline gap-2 mb-2">
-          <span className="text-4xl font-bold">¥{formattedPrice}</span>
-          <span className="text-gray-600">（一括払い）</span>
+          <span className="text-4xl font-bold text-white">¥{formattedPrice}</span>
+          <span className="text-melon-200">（一括払い）</span>
         </div>
-        <p className="text-green-600 flex items-center gap-2 mb-4">
+        <p className="text-teal-200 flex items-center gap-2 mb-4">
           <Check className="w-5 h-5" />
           ソースコード完全版を即時ダウンロード
         </p>
@@ -76,7 +76,7 @@ export const PricingSection = ({ price }: PricingSectionProps) => {
           今すぐ購入 <ChevronRight className="w-5 h-5" />
         </Button>
         
-        <p className="text-center text-sm text-gray-500 mt-4">
+        <p className="text-center text-sm text-melon-200 mt-4">
           30日間の返金保証付き
         </p>
       </div>
@@ -134,7 +134,8 @@ export const PricingSection = ({ price }: PricingSectionProps) => {
               </div>
               <Button 
                 type="submit"
-                className="w-full py-6 text-lg bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white font-medium shadow-md transition-all"
+                variant="premium"
+                className="w-full py-6 text-lg"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "送信中..." : "メールアドレスで登録"}
