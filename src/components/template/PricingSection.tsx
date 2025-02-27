@@ -82,27 +82,27 @@ export const PricingSection = ({ price }: PricingSectionProps) => {
       </div>
 
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="sm:max-w-xl">
+        <DialogContent className="sm:max-w-xl bg-gradient-to-b from-gray-50 to-white border-none shadow-xl">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-center">
+            <DialogTitle className="text-2xl font-bold text-center text-gray-800">
               🎉 特別キャンペーン実施中 🎉
             </DialogTitle>
           </DialogHeader>
           
           <div className="space-y-6 py-6">
             <div className="text-center space-y-4">
-              <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-6 rounded-lg shadow-lg">
-                <p className="text-xl mb-2">現在の価格</p>
-                <p className="text-5xl font-bold mb-2">¥0</p>
-                <div className="text-2xl font-semibold text-yellow-300">
+              <div className="bg-gradient-to-r from-teal-600 to-cyan-600 text-white p-8 rounded-lg shadow-md">
+                <p className="text-xl mb-2 font-medium">現在の価格</p>
+                <p className="text-5xl font-bold mb-3">¥0</p>
+                <div className="text-2xl font-semibold text-teal-100">
                   + さらに30%OFF
                 </div>
-                <p className="text-sm mt-2 text-gray-200">
+                <p className="text-sm mt-3 text-teal-100">
                   ※ クーポンコード自動適用済み
                 </p>
               </div>
 
-              <div className="border border-gray-200 p-4 rounded-lg">
+              <div className="border border-teal-100 bg-teal-50 p-6 rounded-lg shadow-sm">
                 <div className="space-y-3">
                   <p className="text-gray-700 text-sm leading-relaxed">
                     はじめまして。私たちは、あなたのような創造的な方々のために
@@ -128,13 +128,13 @@ export const PricingSection = ({ price }: PricingSectionProps) => {
                   placeholder="メールアドレスを入力"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full py-6 text-lg"
+                  className="w-full py-6 text-lg border-gray-300 focus:border-teal-500 focus:ring-teal-500"
                   required
                 />
               </div>
               <Button 
                 type="submit"
-                className="w-full py-6 text-lg bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600"
+                className="w-full py-6 text-lg bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white font-medium shadow-md transition-all"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "送信中..." : "メールアドレスで登録"}
