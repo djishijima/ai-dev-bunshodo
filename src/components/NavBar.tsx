@@ -5,6 +5,7 @@ import { supabase } from "@/lib/supabase";
 import { useEffect, useState } from "react";
 import { User } from "@supabase/supabase-js";
 import { toast } from "sonner";
+import { PlusCircle } from "lucide-react";
 
 export const NavBar = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -39,9 +40,13 @@ export const NavBar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-lg bg-background/80 border-b border-white/5">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <NavLink to="/" className="text-2xl font-bold text-white hover:text-white/80 transition-colors">
-            AI開発プラットフォーム
-          </NavLink>
+          <div className="flex items-center space-x-2">
+            <PlusCircle className="h-5 w-5 text-primary" />
+            <span className="text-sm font-medium text-primary">Plus+Program</span>
+            <NavLink to="/" className="ml-4 text-2xl font-bold text-white hover:text-white/80 transition-colors">
+              AI開発プラットフォーム
+            </NavLink>
+          </div>
           
           <div className="flex items-center gap-6">
             <NavLink 

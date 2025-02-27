@@ -21,8 +21,8 @@ export const Hero = () => {
           </span>
           
           <h1 className="text-5xl sm:text-6xl font-bold mb-6 leading-tight tracking-tight text-white">
-            次世代<span className="text-primary">AI</span>アプリ<br />
-            開発プラットフォーム
+            <span className="text-primary">AI</span>アプリを<br />
+            爆速1日で開発できる
           </h1>
           
           <p className="text-xl text-muted-foreground mb-10 leading-relaxed max-w-xl mx-auto">
