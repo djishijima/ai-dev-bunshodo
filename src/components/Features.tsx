@@ -13,98 +13,69 @@ const features = [
   {
     icon: <Clock className="w-5 h-5" />,
     title: "迅速な開発",
-    description: "AIが設定を自動化し、数分でアプリを立ち上げ。従来の開発期間を大幅に短縮します。"
+    description: "AIが設定を自動化し、従来の開発期間の最大90%を削減します。"
   },
   {
     icon: <Zap className="w-5 h-5" />,
-    title: "最新API連携",
-    description: "OpenAI、Stripe、Supabaseなど、トレンドの技術を簡単に組み合わせて実装できます。"
+    title: "主要API連携",
+    description: "OpenAI、Stripe、Google APIなど、先端テクノロジーを簡単に活用できます。"
   },
   {
     icon: <Shield className="w-5 h-5" />,
-    title: "セキュリティ対策",
-    description: "業界標準のセキュリティを標準搭載。安全なユーザー認証システムを実現します。"
+    title: "強固なセキュリティ",
+    description: "GDPR準拠のセキュリティ対策を標準実装し、ユーザーデータを確実に保護します。"
   },
   {
     icon: <Layers className="w-5 h-5" />,
-    title: "柔軟なカスタマイズ",
-    description: "モジュール設計により、必要な機能だけを選択。ビジネスの成長に合わせて拡張可能です。"
+    title: "拡張性の高さ",
+    description: "ビジネスの成長に合わせて柔軟に拡張できるモジュラー設計を採用しています。"
   },
   {
     icon: <CodeSquare className="w-5 h-5" />,
-    title: "最新技術スタック",
-    description: "React、TypeScript、Tailwindなど、現代的な技術で構築された高品質コードベース。"
+    title: "洗練されたコード",
+    description: "最新のテクノロジースタックで構築された、メンテナンス性の高いコードベース。"
   },
   {
     icon: <PlayCircle className="w-5 h-5" />,
-    title: "詳細な解説動画",
-    description: "ステップバイステップの動画ガイドで、複雑な実装も理解しやすく解説します。"
+    title: "詳細なドキュメント",
+    description: "包括的なガイドと動画で複雑な実装も理解しやすく解説されています。"
   }
 ];
 
 export const Features = () => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1,
-      transition: { 
-        staggerChildren: 0.1,
-        delayChildren: 0.1
-      }
-    }
-  };
-  
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
-    }
-  };
-
   return (
     <section className="py-24 px-4">
       <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
-        >
+        <div className="text-center mb-16">
           <h2 className="section-title text-4xl sm:text-5xl font-bold mb-6">
-            直感的な開発体験
+            ビジネス構築の<span className="text-primary">未来</span>
           </h2>
-          <p className="text-lg text-white/70 max-w-2xl mx-auto">
-            複雑な技術を簡単に。あなたのアイデアを形にするための必要なツールを全て揃えました。
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            複雑な技術を簡単に。あなたのビジネスアイデアを最速で形にするためのツールスイート。
           </p>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          variants={containerVariants}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, index) => (
             <motion.div
               key={feature.title}
-              variants={itemVariants}
-              className="glass-card p-8 rounded-md relative overflow-hidden card-shine-effect"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1, duration: 0.5 }}
+              className="bg-card p-8 rounded-md border border-white/5"
             >
-              <div className="mb-6 flex items-center">
+              <div className="mb-6">
                 <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center text-primary">
                   {feature.icon}
                 </div>
               </div>
               
-              <h3 className="text-xl font-medium text-white mb-3">{feature.title}</h3>
-              <p className="text-white/60 leading-relaxed">{feature.description}</p>
+              <h3 className="text-xl font-semibold text-white mb-3">{feature.title}</h3>
+              <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

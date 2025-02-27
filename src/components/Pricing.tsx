@@ -71,59 +71,30 @@ const whiteLabel = {
 };
 
 export const Pricing = () => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1,
-      transition: { 
-        staggerChildren: 0.15,
-        delayChildren: 0.1
-      }
-    }
-  };
-  
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
-    }
-  };
-
   return (
     <section className="py-24 px-4" id="pricing">
       <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
-        >
+        <div className="text-center mb-16">
           <h2 className="section-title text-4xl sm:text-5xl font-bold mb-6">
-            シンプルな料金体系
+            明瞭な<span className="text-primary">料金体系</span>
           </h2>
-          <p className="text-lg text-white/70 max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             サブスクリプションなし。一度の支払いで、生涯アップデート付きのライセンスをご提供します。
           </p>
-        </motion.div>
+        </div>
         
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          variants={containerVariants}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
           {standardPlans.map((plan, index) => (
             <motion.div
               key={plan.name}
-              variants={itemVariants}
-              className={`glass-card p-8 rounded-md relative ${
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1, duration: 0.5 }}
+              className={`bg-card p-8 rounded-md border ${
                 plan.recommended 
-                  ? 'ring-1 ring-purple' 
-                  : ''
+                  ? 'border-primary' 
+                  : 'border-white/5'
               }`}
             >
               {plan.recommended && (
@@ -135,18 +106,18 @@ export const Pricing = () => {
               )}
               
               <div className="mb-6">
-                <h3 className="text-xl font-medium text-white mb-2">{plan.name}</h3>
-                <p className="text-white/60 text-sm">{plan.description}</p>
+                <h3 className="text-xl font-semibold text-white mb-2">{plan.name}</h3>
+                <p className="text-muted-foreground text-sm">{plan.description}</p>
               </div>
               
               <div className="mb-6">
                 <span className="text-4xl font-bold text-white">${plan.price}</span>
-                <span className="text-white/60 ml-2 text-sm">{plan.period}</span>
+                <span className="text-muted-foreground ml-2 text-sm">{plan.period}</span>
               </div>
               
               <ul className="space-y-3 mb-8 min-h-[220px]">
                 {plan.features.map((feature, idx) => (
-                  <li key={feature} className="flex items-start text-white/80 text-sm">
+                  <li key={feature} className="flex items-start text-muted-foreground text-sm">
                     <Check className="w-4 h-4 text-primary mt-0.5 mr-2 flex-shrink-0" />
                     <span>{feature}</span>
                   </li>
@@ -155,40 +126,40 @@ export const Pricing = () => {
               
               <Button className={`w-full rounded-md py-5 ${
                 plan.recommended 
-                  ? 'premium-button' 
-                  : 'bg-white/[0.03] hover:bg-white/[0.06] border border-white/10 text-white hover:border-purple/20'
+                  ? 'bg-primary hover:bg-primary/90 text-white' 
+                  : 'bg-secondary hover:bg-secondary/80 text-white'
               }`}>
                 {plan.cta}
               </Button>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
 
         <motion.div
-          variants={itemVariants}
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="glass-card p-8 rounded-md relative border-t border-purple/10"
+          transition={{ delay: 0.3, duration: 0.5 }}
+          className="bg-card p-8 rounded-md border border-white/5"
         >
           <div className="grid md:grid-cols-[1fr_2fr] gap-8 items-center">
             <div>
-              <h3 className="text-xl font-medium text-white mb-2">{whiteLabel.name}</h3>
-              <p className="text-white/60 text-sm mb-4">{whiteLabel.description}</p>
+              <h3 className="text-xl font-semibold text-white mb-2">{whiteLabel.name}</h3>
+              <p className="text-muted-foreground text-sm mb-4">{whiteLabel.description}</p>
               
               <div className="mb-6">
                 <span className="text-4xl font-bold text-white">${whiteLabel.price}</span>
-                <span className="text-white/60 ml-2 text-sm">{whiteLabel.period}</span>
+                <span className="text-muted-foreground ml-2 text-sm">{whiteLabel.period}</span>
               </div>
               
-              <Button className="w-full rounded-md py-5 bg-white/[0.03] hover:bg-white/[0.06] border border-white/10 text-white hover:border-purple/20">
+              <Button className="w-full rounded-md py-5 bg-secondary hover:bg-secondary/80 text-white">
                 {whiteLabel.cta}
               </Button>
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {whiteLabel.features.map((feature) => (
-                <div key={feature} className="flex items-start text-white/80 text-sm">
+                <div key={feature} className="flex items-start text-muted-foreground text-sm">
                   <Check className="w-4 h-4 text-primary mt-0.5 mr-2 flex-shrink-0" />
                   <span>{feature}</span>
                 </div>

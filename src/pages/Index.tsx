@@ -13,14 +13,13 @@ const Index = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       className="min-h-screen relative max-w-[100vw] overflow-hidden"
-      style={{
-        backgroundImage: 'url("/lovable-uploads/d6723242-0839-4de3-b94d-94999fb55762.png")',
-        backgroundSize: '100% auto',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-      }}
     >
-      <div className="absolute inset-0 bg-gradient-to-r from-navy-900/80 to-cyan-900/50 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-background min-h-screen" />
+      
+      {/* グラデーションバックグラウンド効果 */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] -z-10 opacity-20" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] -z-10 opacity-20" />
+      
       <div className="relative z-10">
         <NavBar />
         <Hero />
