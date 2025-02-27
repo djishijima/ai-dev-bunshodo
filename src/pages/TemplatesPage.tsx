@@ -2,6 +2,7 @@
 import { NavBar } from "@/components/NavBar";
 import { TemplatesGrid } from "@/components/TemplatesGrid";
 import { motion } from "framer-motion";
+import { ChatBot } from "@/components/ChatBot";
 
 const TemplatesPage = () => {
   return (
@@ -13,6 +14,7 @@ const TemplatesPage = () => {
           <TemplatesGrid />
         </div>
       </div>
+      <ChatBot />
     </div>
   );
 };

@@ -10,6 +10,7 @@ import { FeaturesSection } from "@/components/template/FeaturesSection";
 import { IncludesSection } from "@/components/template/IncludesSection";
 import { TestimonialsSection } from "@/components/template/TestimonialsSection";
 import { DeliveryContent } from "@/components/template/DeliveryContent";
+import { ChatBot } from "@/components/ChatBot";
 
 const TemplateDetail = () => {
   const { id } = useParams();
@@ -176,6 +177,7 @@ const TemplateDetail = () => {
           </motion.div>
         </div>
       </motion.div>
+      <ChatBot />
     </div>
   );
 };

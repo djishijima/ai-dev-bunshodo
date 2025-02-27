@@ -6,6 +6,7 @@ import { Pricing } from "@/components/Pricing";
 import { TemplatesGrid } from "@/components/TemplatesGrid";
 import { ApiShowcase } from "@/components/ApiShowcase";
 import { motion } from "framer-motion";
+import { ChatBot } from "@/components/ChatBot";
 
 const Index = () => {
   return (
@@ -28,6 +29,8 @@ const Index = () => {
         <TemplatesGrid />
         <Pricing />
       </div>
+      
+      <ChatBot />
     </motion.div>
   );
 };
