@@ -6,7 +6,7 @@ import { Check } from "lucide-react";
 const standardPlans = [
   {
     name: "スタンダード",
-    price: 99,
+    price: 9900,
     period: "生涯ライセンス",
     description: "個人や小規模チームに最適なプラン",
     features: [
@@ -21,7 +21,7 @@ const standardPlans = [
   },
   {
     name: "プロフェッショナル",
-    price: 199,
+    price: 19900,
     period: "生涯ライセンス",
     description: "成長するビジネスのための高度な機能",
     features: [
@@ -37,7 +37,7 @@ const standardPlans = [
   },
   {
     name: "エンタープライズ",
-    price: 499,
+    price: 49900,
     period: "生涯ライセンス",
     description: "大規模組織向けの拡張性と機能",
     features: [
@@ -55,7 +55,7 @@ const standardPlans = [
 
 const whiteLabel = {
   name: "ホワイトラベル",
-  price: 2000,
+  price: 200000,
   period: "生涯ライセンス",
   description: "自社ブランドとして提供したい企業向け",
   features: [
@@ -71,6 +71,11 @@ const whiteLabel = {
 };
 
 export const Pricing = () => {
+  // 価格表示を日本円形式に整形するヘルパー関数
+  const formatPrice = (price: number) => {
+    return price.toLocaleString('ja-JP');
+  };
+
   return (
     <section className="py-24 px-4" id="pricing">
       <div className="max-w-7xl mx-auto">
@@ -111,7 +116,7 @@ export const Pricing = () => {
               </div>
               
               <div className="mb-6">
-                <span className="text-4xl font-bold text-white">${plan.price}</span>
+                <span className="text-4xl font-bold text-white">¥{formatPrice(plan.price)}</span>
                 <span className="text-muted-foreground ml-2 text-sm">{plan.period}</span>
               </div>
               
@@ -148,7 +153,7 @@ export const Pricing = () => {
               <p className="text-muted-foreground text-sm mb-4">{whiteLabel.description}</p>
               
               <div className="mb-6">
-                <span className="text-4xl font-bold text-white">${whiteLabel.price}</span>
+                <span className="text-4xl font-bold text-white">¥{formatPrice(whiteLabel.price)}</span>
                 <span className="text-muted-foreground ml-2 text-sm">{whiteLabel.period}</span>
               </div>
               

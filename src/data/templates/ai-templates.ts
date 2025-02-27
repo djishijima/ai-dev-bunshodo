@@ -26,7 +26,7 @@ export const aiTemplates: Template[] = [
     ],
     apiUsage: {
       description: "OpenAI APIの使用量に応じて課金",
-      pricePerUnit: 4,
+      pricePerUnit: 400,
       unit: "1,000トークン"
     },
     testimonials: [],
@@ -74,7 +74,7 @@ export const aiTemplates: Template[] = [
     ],
     apiUsage: {
       description: "Whisper APIの使用量に応じて課金",
-      pricePerUnit: 3,
+      pricePerUnit: 300,
       unit: "1分の音声"
     },
     testimonials: [
@@ -138,7 +138,7 @@ export const aiTemplates: Template[] = [
     ],
     apiUsage: {
       description: "OpenAI/DeepSeek APIの使用量に応じて課金",
-      pricePerUnit: 5,
+      pricePerUnit: 500,
       unit: "1,000トークン"
     },
     testimonials: [],
@@ -186,7 +186,7 @@ export const aiTemplates: Template[] = [
     ],
     apiUsage: {
       description: "OpenAI/DeepSeek APIの使用量に応じて課金",
-      pricePerUnit: 4,
+      pricePerUnit: 400,
       unit: "1,000トークン"
     },
     testimonials: [],

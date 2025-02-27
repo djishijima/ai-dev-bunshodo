@@ -54,11 +54,14 @@ export const PricingSection = ({ price }: PricingSectionProps) => {
     }
   };
 
+  // 価格表示を日本円に変換して整形（カンマ区切り）
+  const formattedPrice = price.toLocaleString('ja-JP');
+
   return (
     <>
       <div className="bg-white p-6 rounded-2xl shadow-lg mb-8 border border-gray-100">
         <div className="flex items-baseline gap-2 mb-2">
-          <span className="text-4xl font-bold">${price}</span>
+          <span className="text-4xl font-bold">¥{formattedPrice}</span>
           <span className="text-gray-600">（一括払い）</span>
         </div>
         <p className="text-green-600 flex items-center gap-2 mb-4">

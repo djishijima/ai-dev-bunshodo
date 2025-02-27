@@ -9,6 +9,11 @@ import { useNavigate } from "react-router-dom";
 const PricingPage = () => {
   const navigate = useNavigate();
 
+  // 価格表示を日本円形式に整形するヘルパー関数
+  const formatPrice = (price: number) => {
+    return price.toLocaleString('ja-JP');
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <NavBar />
@@ -36,7 +41,7 @@ const PricingPage = () => {
               <p className="text-gray-600 mb-6">{template.description}</p>
               
               <div className="flex items-baseline gap-2 mb-6">
-                <span className="text-4xl font-bold text-gray-900">${template.price}</span>
+                <span className="text-4xl font-bold text-gray-900">¥{formatPrice(template.price)}</span>
                 <span className="text-gray-600">（一括払い）</span>
               </div>
 
