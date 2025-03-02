@@ -1,81 +1,123 @@
 
-// Follow this setup guide to integrate the Deno runtime with Supabase:
-// https://supabase.com/docs/guides/functions/deno
-// https://stripe.com/docs/checkout/quickstart
+import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.7.1";
+import Stripe from 'https://esm.sh/stripe@12.6.0?target=deno';
 
-import { serve } from "https://deno.land/std@0.131.0/http/server.ts";
-import Stripe from "https://esm.sh/stripe@12.18.0?dts";
-
-// APIキーを環境変数から取得
-const stripeSecretKey = Deno.env.get("STRIPE_SECRET_KEY") || "";
-if (!stripeSecretKey) {
-  console.error("Missing STRIPE_SECRET_KEY");
-}
-
-const stripe = new Stripe(stripeSecretKey, {
-  apiVersion: "2023-10-16", // 最新のAPIバージョンを指定
-  httpClient: Stripe.createFetchHttpClient(),
-});
-
+// CORSヘッダー設定
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
 serve(async (req) => {
-  // プリフライトリクエストへの応答
-  if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: corsHeaders });
+  // OPTIONSリクエスト（CORS preflight）の処理
+  if (req.method === 'OPTIONS') {
+    return new Response(null, { headers: corsHeaders });
   }
 
   try {
+    // 環境変数から設定
+    const supabaseAdminClient = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
+    );
+
+    // Stripeキーを取得
+    const stripeKey = Deno.env.get('STRIPE_SECRET_KEY');
+    
+    if (!stripeKey) {
+      console.error("Stripe secret key is not set");
+      return new Response(
+        JSON.stringify({ error: "Stripeの設定がされていません" }),
+        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Stripeクライアント初期化
+    const stripe = new Stripe(stripeKey, {
+      apiVersion: '2023-10-16',
+    });
+
+    // リクエストボディを取得
     const { templateId, templateName, price, email, successUrl, cancelUrl } = await req.json();
 
-    // Stripeセッションを作成
+    console.log("チェックアウトセッション作成:", { 
+      templateId, templateName, price, successUrl, cancelUrl
+    });
+
+    // Stripeチェックアウトセッション作成
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
+      payment_method_types: ['card'],
       line_items: [
         {
           price_data: {
-            currency: "jpy",
+            currency: 'jpy',
             product_data: {
               name: templateName,
-              description: `テンプレート: ${templateName}`,
+              description: `${templateName}テンプレート - フルソースコード`,
             },
-            unit_amount: price, // 円単位
+            unit_amount: price,
           },
           quantity: 1,
         },
       ],
-      mode: "payment",
-      success_url: successUrl || `${req.headers.get("origin")}/template/${templateId}?success=true`,
-      cancel_url: cancelUrl || `${req.headers.get("origin")}/template/${templateId}?canceled=true`,
+      mode: 'payment',
+      success_url: successUrl,
+      cancel_url: cancelUrl,
       customer_email: email,
       metadata: {
         templateId,
         templateName,
+        buyerEmail: email,
       },
     });
 
-    // セッションIDとURLを返す
+    // 作成したチェックアウトセッションをDBに保存（オプション）
+    if (session?.id) {
+      await supabaseAdminClient
+        .from('checkout_sessions')
+        .insert({
+          session_id: session.id,
+          template_id: templateId,
+          email: email,
+          amount: price,
+          created_at: new Date().toISOString(),
+          status: 'created'
+        })
+        .select();
+    }
+
+    console.log("チェックアウトセッション作成成功:", { 
+      sessionId: session.id, 
+      url: session.url 
+    });
+
+    // 成功レスポンス
     return new Response(
-      JSON.stringify({
-        sessionId: session.id,
-        url: session.url,
+      JSON.stringify({ 
+        sessionId: session.id, 
+        url: session.url 
       }),
-      {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 200,
+      { 
+        status: 200, 
+        headers: { 
+          ...corsHeaders, 
+          "Content-Type": "application/json" 
+        } 
       }
     );
   } catch (error) {
-    console.error("Error creating checkout session:", error);
+    console.error("エラー:", error);
     return new Response(
       JSON.stringify({ error: error.message }),
-      {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 500,
+      { 
+        status: 500, 
+        headers: { 
+          ...corsHeaders, 
+          "Content-Type": "application/json" 
+        } 
       }
     );
   }
 });
+

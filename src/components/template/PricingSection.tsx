@@ -6,6 +6,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
@@ -113,6 +114,16 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
 
     setIsSubmitting(true);
     try {
+      // ログを追加してデバッグ
+      console.log("チェックアウト開始:", {
+        templateId,
+        templateName,
+        price,
+        email,
+        successUrl: `${window.location.origin}/template/${templateId}?success=true`,
+        cancelUrl: `${window.location.origin}/template/${templateId}?canceled=true`,
+      });
+
       // Supabaseのエッジ関数でStripeチェックアウトセッションを作成
       const response = await fetch(
         `${import.meta.env.VITE_SUPABASE_URL || 'https://fkjgcszdgcbcdmclgfer.supabase.co'}/functions/v1/create-checkout`,
@@ -134,6 +145,7 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
       );
 
       const data = await response.json();
+      console.log("チェックアウトレスポンス:", data);
       
       if (!response.ok) {
         throw new Error(data.error || "決済処理に失敗しました");
@@ -141,6 +153,7 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
 
       // Stripeチェックアウトページにリダイレクト
       if (data.url) {
+        console.log("リダイレクト先URL:", data.url);
         window.location.href = data.url;
       } else {
         throw new Error("決済URLが見つかりません");
@@ -248,6 +261,9 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
             <DialogTitle className="text-2xl font-bold text-center text-gray-800">
               🎉 特別キャンペーン実施中 🎉
             </DialogTitle>
+            <DialogDescription className="text-center text-gray-600">
+              期間限定のスペシャル割引をご利用いただけます
+            </DialogDescription>
           </DialogHeader>
           
           <div className="space-y-6 py-6">
@@ -311,3 +327,4 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
     </>
   );
 };
+
