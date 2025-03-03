@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Github, Mail, AlertCircle } from "lucide-react";
 import { useState, useEffect } from "react";
-import { supabase } from "@/lib/supabase";
+import { supabase, checkAuthSession } from "@/lib/supabase";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 
@@ -23,12 +23,15 @@ const LoginPage = () => {
   // Check if user is already logged in when component mounts
   useEffect(() => {
     const checkSession = async () => {
-      const { data } = await supabase.auth.getSession();
-      console.log("Current session:", data.session);
+      console.log("Checking session on component mount");
+      const { data } = await checkAuthSession();
       
       if (data.session) {
+        console.log("User is already logged in, redirecting to mypage");
         toast.success("既にログインしています");
         navigate("/mypage");
+      } else {
+        console.log("No active session found");
       }
     };
     
@@ -39,6 +42,7 @@ const LoginPage = () => {
       (event, session) => {
         console.log("Auth state changed:", event, !!session);
         if (event === 'SIGNED_IN' && session) {
+          console.log("User signed in successfully, session:", session);
           toast.success("ログインしました");
           navigate("/mypage");
         }
@@ -46,6 +50,7 @@ const LoginPage = () => {
     );
     
     return () => {
+      console.log("Cleanup: unsubscribing from auth changes");
       subscription.unsubscribe();
     };
   }, [navigate]);

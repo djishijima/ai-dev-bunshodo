@@ -12,3 +12,15 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     detectSessionInUrl: true
   }
 });
+
+// Export a helper function to check and log auth session
+export const checkAuthSession = async () => {
+  try {
+    const { data, error } = await supabase.auth.getSession();
+    console.log("Auth Session Check:", { data, error });
+    return { data, error };
+  } catch (err) {
+    console.error("Error checking auth session:", err);
+    return { data: null, error: err };
+  }
+};
