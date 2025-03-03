@@ -2,8 +2,8 @@
 import { NavBar } from "@/components/NavBar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Github, Mail } from "lucide-react";
-import { useState } from "react";
+import { Github, Mail, AlertCircle } from "lucide-react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
@@ -16,12 +16,46 @@ const LoginPage = () => {
   });
   const [email, setEmail] = useState("");
   const [showEmailInput, setShowEmailInput] = useState(false);
+  const [error, setError] = useState("");
   
   const navigate = useNavigate();
 
+  // Check if user is already logged in when component mounts
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data } = await supabase.auth.getSession();
+      console.log("Current session:", data.session);
+      
+      if (data.session) {
+        toast.success("既にログインしています");
+        navigate("/mypage");
+      }
+    };
+    
+    checkSession();
+    
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        console.log("Auth state changed:", event, !!session);
+        if (event === 'SIGNED_IN' && session) {
+          toast.success("ログインしました");
+          navigate("/mypage");
+        }
+      }
+    );
+    
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [navigate]);
+
   const handleGithubLogin = async () => {
     setIsLoading(prev => ({ ...prev, github: true }));
+    setError("");
+    
     try {
+      console.log("Starting GitHub login process");
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'github',
         options: {
@@ -29,15 +63,16 @@ const LoginPage = () => {
         }
       });
 
+      console.log("GitHub login response:", { data, error });
+
       if (error) {
         console.error('GitHub login error:', error);
+        setError(`GitHubログイン失敗: ${error.message}`);
         throw error;
       }
 
-      if (data) {
-        toast.success("GitHubでログインしました");
-        navigate("/mypage");
-      }
+      // Note: The actual redirect happens automatically by Supabase
+      toast.success("GitHubログインページに移動します");
     } catch (error) {
       console.error('Error:', error);
       toast.error("GitHubログインに失敗しました。ネットワーク接続を確認してください。");
@@ -48,7 +83,10 @@ const LoginPage = () => {
 
   const handleGoogleLogin = async () => {
     setIsLoading(prev => ({ ...prev, google: true }));
+    setError("");
+    
     try {
+      console.log("Starting Google login process");
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
@@ -56,15 +94,16 @@ const LoginPage = () => {
         }
       });
 
+      console.log("Google login response:", { data, error });
+
       if (error) {
         console.error('Google login error:', error);
+        setError(`Googleログイン失敗: ${error.message}`);
         throw error;
       }
 
-      if (data) {
-        toast.success("Googleでログインしました");
-        navigate("/mypage");
-      }
+      // Note: The actual redirect happens automatically by Supabase
+      toast.success("Googleログインページに移動します");
     } catch (error) {
       console.error('Error:', error);
       toast.error("Googleログインに失敗しました。ネットワーク接続を確認してください。");
@@ -81,7 +120,10 @@ const LoginPage = () => {
     }
 
     setIsLoading(prev => ({ ...prev, email: true }));
+    setError("");
+    
     try {
+      console.log("Starting Email login process for:", email);
       const { data, error } = await supabase.auth.signInWithOtp({
         email,
         options: {
@@ -89,8 +131,11 @@ const LoginPage = () => {
         }
       });
 
+      console.log("Email login response:", { data, error });
+
       if (error) {
         console.error('Email login error:', error);
+        setError(`メールログイン失敗: ${error.message}`);
         throw error;
       }
 
@@ -113,6 +158,13 @@ const LoginPage = () => {
       <div className="max-w-md mx-auto px-4 pt-32">
         <div className="bg-white/10 backdrop-blur-xl p-8 rounded-xl border border-white/20">
           <h1 className="text-2xl font-bold text-white mb-6 text-center">ログイン</h1>
+          
+          {error && (
+            <div className="mb-4 p-3 bg-red-500/20 border border-red-500/50 rounded-md flex items-start">
+              <AlertCircle className="h-5 w-5 text-red-400 mr-2 flex-shrink-0 mt-0.5" />
+              <p className="text-sm text-white">{error}</p>
+            </div>
+          )}
           
           <div className="space-y-4">
             <Button 
