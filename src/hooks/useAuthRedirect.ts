@@ -55,6 +55,9 @@ export const useAuthRedirect = () => {
           toast.info("パスワード復旧プロセスが開始されました");
         } else if (event === 'TOKEN_REFRESHED') {
           console.log("Token refreshed");
+        } else if (event === 'NETWORK_FAILURE') {
+          console.error("Network failure during auth operation");
+          toast.error("ネットワーク接続エラーが発生しました");
         }
       }
     );

@@ -26,6 +26,20 @@ export const SocialLoginButtons = ({
     
     try {
       console.log("Starting Google login process");
+      
+      // Check network connectivity first
+      try {
+        await fetch('https://www.google.com', { 
+          mode: 'no-cors',
+          cache: 'no-store',
+          method: 'HEAD',
+          signal: AbortSignal.timeout(3000) // 3 second timeout
+        });
+      } catch (networkError) {
+        console.error('Network connectivity issue:', networkError);
+        throw new Error('ネットワーク接続に問題があります。インターネット接続を確認してください。');
+      }
+      
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
@@ -37,6 +51,14 @@ export const SocialLoginButtons = ({
 
       if (error) {
         console.error('Google login error:', error);
+        
+        // Handle specific error cases
+        if (error.message.includes('provider is not enabled')) {
+          throw new Error('Googleログインが有効になっていません。管理者に連絡してください。');
+        } else if (error.message.includes('connection')) {
+          throw new Error('サーバーへの接続に問題があります。しばらくしてからもう一度お試しください。');
+        }
+        
         setError(`Googleログイン失敗: ${error.message}`);
         throw error;
       }
@@ -47,7 +69,7 @@ export const SocialLoginButtons = ({
       console.error('Error:', error);
       const errorMessage = error?.message || "不明なエラーが発生しました";
       setError(`Googleログイン失敗: ${errorMessage}`);
-      toast.error("Googleログインに失敗しました。ネットワーク接続を確認してください。");
+      toast.error(errorMessage);
     } finally {
       setIsLoading(prev => ({ ...prev, google: false }));
     }
