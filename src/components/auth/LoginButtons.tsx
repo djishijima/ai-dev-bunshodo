@@ -1,7 +1,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Github, Mail } from "lucide-react";
-import { useState } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
 
@@ -48,8 +47,10 @@ export const LoginButtons = ({
 
       // Note: The actual redirect happens automatically by Supabase
       toast.success("GitHubログインページに移動します");
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error:', error);
+      const errorMessage = error?.message || "不明なエラーが発生しました";
+      setError(`GitHubログイン失敗: ${errorMessage}`);
       toast.error("GitHubログインに失敗しました。ネットワーク接続を確認してください。");
     } finally {
       setIsLoading(prev => ({ ...prev, github: false }));
@@ -79,8 +80,10 @@ export const LoginButtons = ({
 
       // Note: The actual redirect happens automatically by Supabase
       toast.success("Googleログインページに移動します");
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error:', error);
+      const errorMessage = error?.message || "不明なエラーが発生しました";
+      setError(`Googleログイン失敗: ${errorMessage}`);
       toast.error("Googleログインに失敗しました。ネットワーク接続を確認してください。");
     } finally {
       setIsLoading(prev => ({ ...prev, google: false }));
@@ -95,7 +98,12 @@ export const LoginButtons = ({
         disabled={isLoading.github}
       >
         <Github className="mr-2 h-5 w-5" />
-        {isLoading.github ? "GitHubと連携中..." : "GitHubでログイン"}
+        {isLoading.github ? 
+          <span className="flex items-center">
+            <span className="animate-pulse mr-2">●</span> GitHubと連携中...
+          </span> : 
+          "GitHubでログイン"
+        }
       </Button>
 
       <Button 
@@ -122,7 +130,12 @@ export const LoginButtons = ({
           />
           <path d="M1 1h22v22H1z" fill="none" />
         </svg>
-        {isLoading.google ? "Googleと連携中..." : "Googleでログイン"}
+        {isLoading.google ? 
+          <span className="flex items-center">
+            <span className="animate-pulse mr-2">●</span> Googleと連携中...
+          </span> : 
+          "Googleでログイン"
+        }
       </Button>
 
       <Button 

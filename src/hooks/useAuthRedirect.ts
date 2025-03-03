@@ -1,23 +1,37 @@
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { checkAuthSession, supabase } from "@/lib/supabase";
 
 export const useAuthRedirect = () => {
   const navigate = useNavigate();
+  const [isCheckingSession, setIsCheckingSession] = useState(true);
 
   useEffect(() => {
     const checkSession = async () => {
-      console.log("Checking session on component mount");
-      const { data } = await checkAuthSession();
-      
-      if (data.session) {
-        console.log("User is already logged in, redirecting to mypage");
-        toast.success("既にログインしています");
-        navigate("/mypage");
-      } else {
-        console.log("No active session found");
+      setIsCheckingSession(true);
+      try {
+        console.log("Checking session on component mount");
+        const { data, error } = await checkAuthSession();
+        
+        if (error) {
+          console.error("Error checking auth session:", error);
+          toast.error("認証情報の確認中にエラーが発生しました");
+          return;
+        }
+        
+        if (data.session) {
+          console.log("User is already logged in, redirecting to mypage");
+          toast.success("既にログインしています");
+          navigate("/mypage");
+        } else {
+          console.log("No active session found");
+        }
+      } catch (error) {
+        console.error("Unexpected error during session check:", error);
+      } finally {
+        setIsCheckingSession(false);
       }
     };
     
@@ -31,6 +45,16 @@ export const useAuthRedirect = () => {
           console.log("User signed in successfully, session:", session);
           toast.success("ログインしました");
           navigate("/mypage");
+        } else if (event === 'SIGNED_OUT') {
+          console.log("User signed out");
+          toast.info("ログアウトしました");
+        } else if (event === 'USER_UPDATED') {
+          console.log("User profile updated");
+        } else if (event === 'PASSWORD_RECOVERY') {
+          console.log("Password recovery event");
+          toast.info("パスワード復旧プロセスが開始されました");
+        } else if (event === 'TOKEN_REFRESHED') {
+          console.log("Token refreshed");
         }
       }
     );
@@ -40,4 +64,6 @@ export const useAuthRedirect = () => {
       subscription.unsubscribe();
     };
   }, [navigate]);
+
+  return { isCheckingSession };
 };
