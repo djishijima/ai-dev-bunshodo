@@ -1,6 +1,5 @@
 
 import { Button } from "@/components/ui/button";
-import { Github } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
 
@@ -21,39 +20,6 @@ export const SocialLoginButtons = ({
   setError,
 }: SocialLoginButtonsProps) => {
   
-  const handleGithubLogin = async () => {
-    setIsLoading(prev => ({ ...prev, github: true }));
-    setError("");
-    
-    try {
-      console.log("Starting GitHub login process");
-      const { data, error } = await supabase.auth.signInWithOAuth({
-        provider: 'github',
-        options: {
-          redirectTo: `${window.location.origin}/mypage`
-        }
-      });
-
-      console.log("GitHub login response:", { data, error });
-
-      if (error) {
-        console.error('GitHub login error:', error);
-        setError(`GitHubログイン失敗: ${error.message}`);
-        throw error;
-      }
-
-      // Note: The actual redirect happens automatically by Supabase
-      toast.success("GitHubログインページに移動します");
-    } catch (error: any) {
-      console.error('Error:', error);
-      const errorMessage = error?.message || "不明なエラーが発生しました";
-      setError(`GitHubログイン失敗: ${errorMessage}`);
-      toast.error("GitHubログインに失敗しました。ネットワーク接続を確認してください。");
-    } finally {
-      setIsLoading(prev => ({ ...prev, github: false }));
-    }
-  };
-
   const handleGoogleLogin = async () => {
     setIsLoading(prev => ({ ...prev, google: true }));
     setError("");
@@ -89,20 +55,6 @@ export const SocialLoginButtons = ({
 
   return (
     <div className="space-y-4">
-      <Button 
-        className="w-full bg-[#24292F] hover:bg-[#24292F]/90 text-white"
-        onClick={handleGithubLogin}
-        disabled={isLoading.github}
-      >
-        <Github className="mr-2 h-5 w-5" />
-        {isLoading.github ? 
-          <span className="flex items-center">
-            <span className="animate-pulse mr-2">●</span> GitHubと連携中...
-          </span> : 
-          "GitHubでログイン"
-        }
-      </Button>
-
       <Button 
         className="w-full bg-white hover:bg-gray-100 text-gray-900"
         onClick={handleGoogleLogin}
