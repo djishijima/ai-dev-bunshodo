@@ -1,3 +1,4 @@
+
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -41,19 +42,21 @@ const requirementSteps: RequirementStep[] = [
   },
   {
     id: "features",
-    question: "どのような機能が必要ですか？具体的に教えてください。",
-    field: "features"
+    question: "どのような機能が必要ですか？",
+    field: "features",
+    options: ["ユーザー認証", "決済機能", "予約システム", "SNS連携", "チャット機能", "その他"]
   },
   {
     id: "userType",
     question: "アプリの主なユーザーは誰ですか？",
-    field: "userType"
+    field: "userType",
+    options: ["一般消費者", "企業（BtoB）", "学生", "高齢者", "その他"]
   },
   {
     id: "deadline",
     question: "リリース希望時期はありますか？",
     field: "deadline",
-    options: ["1ヶ月以内", "3ヶ月以内", "半年以内", "1年以内", "急ぎではない"]
+    options: ["24時間納品（特急）", "1週間以内", "1ヶ月以内", "3ヶ月以内", "急ぎではない"]
   },
   {
     id: "budget",
@@ -64,7 +67,8 @@ const requirementSteps: RequirementStep[] = [
   {
     id: "otherRequirements",
     question: "その他、何か特別な要件やご希望はありますか？",
-    field: "otherRequirements"
+    field: "otherRequirements",
+    options: ["特になし", "デザインにこだわりたい", "セキュリティを重視", "高速なパフォーマンスが必要", "その他"]
   }
 ];
 
@@ -99,6 +103,7 @@ export function AppRequestChat({ isOpen, onClose, fullPage = false }: AppRequest
   const [userEmail, setUserEmail] = useState("");
   const [userName, setUserName] = useState("");
   const [isSending, setIsSending] = useState(false);
+  const [lastResponseTime, setLastResponseTime] = useState<Date | null>(null);
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -111,10 +116,33 @@ export function AppRequestChat({ isOpen, onClose, fullPage = false }: AppRequest
   useEffect(() => {
     if (isOpen && messages.length === 1) {
       setTimeout(() => {
-        addBotMessage(requirementSteps[0].question);
+        addBotMessage(`${requirementSteps[0].question}\n選択肢から選ぶか、自由に入力してください。`);
       }, 1000);
     }
   }, [isOpen]);
+
+  // 一定時間無応答の場合、フォローアップメッセージを送信
+  useEffect(() => {
+    if (!isTyping && !isComplete && lastResponseTime) {
+      const followUpTimer = setTimeout(() => {
+        const now = new Date();
+        const timeDiff = now.getTime() - lastResponseTime.getTime();
+        
+        // 30秒経過しても応答がない場合
+        if (timeDiff > 30000) {
+          const currentOptions = requirementSteps[currentStep].options;
+          if (currentOptions && currentOptions.length > 0) {
+            addBotMessage(`お選びいただけるものはありますか？\n例えば「${currentOptions[0]}」や「${currentOptions[1]}」などはいかがでしょうか？`);
+          } else {
+            addBotMessage("何かお手伝いできることはありますか？");
+          }
+          setLastResponseTime(now);
+        }
+      }, 30000); // 30秒後
+      
+      return () => clearTimeout(followUpTimer);
+    }
+  }, [lastResponseTime, isTyping, isComplete, currentStep]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -133,6 +161,7 @@ export function AppRequestChat({ isOpen, onClose, fullPage = false }: AppRequest
       
       setMessages((prev) => [...prev, botMessage]);
       setIsTyping(false);
+      setLastResponseTime(new Date());
     }, 1000);
   };
 
@@ -164,7 +193,8 @@ export function AppRequestChat({ isOpen, onClose, fullPage = false }: AppRequest
       
       // 次の質問を送信
       setTimeout(() => {
-        addBotMessage(requirementSteps[currentStep + 1].question);
+        const nextQuestion = requirementSteps[currentStep + 1].question;
+        addBotMessage(`${nextQuestion}\n選択肢から選ぶか、自由に入力してください。`);
       }, 1000);
     } else {
       // 全ての質問が完了
@@ -207,7 +237,9 @@ export function AppRequestChat({ isOpen, onClose, fullPage = false }: AppRequest
       
       // 次の質問を送信
       setTimeout(() => {
-        addBotMessage(requirementSteps[currentStep + 1].question);
+        const nextQuestion = requirementSteps[currentStep + 1].question;
+        const responseWithHelp = `${nextQuestion}\n選択肢から選ぶか、自由に入力してください。`;
+        addBotMessage(responseWithHelp);
       }, 1000);
     } else {
       // 全ての質問が完了
@@ -243,7 +275,10 @@ export function AppRequestChat({ isOpen, onClose, fullPage = false }: AppRequest
       setShowConfirmDialog(false);
       
       // 最後のメッセージを追加
-      addBotMessage("要件定義が送信されました！担当者から48時間以内にご連絡いたします。ご協力ありがとうございました。");
+      const deliveryMessage = requirementData.deadline === "24時間納品（特急）" 
+        ? "要件定義が送信されました！24時間以内に納品いたします。ご協力ありがとうございました。" 
+        : "要件定義が送信されました！担当者から48時間以内にご連絡いたします。ご協力ありがとうございました。";
+      addBotMessage(deliveryMessage);
       
       // ステートをリセット
       setTimeout(() => {
