@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
+import { useNavigate } from "react-router-dom";
 
 interface PricingSectionProps {
   price: number;
@@ -24,6 +25,35 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
   const [isPurchaseComplete, setIsPurchaseComplete] = useState(false);
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const navigate = useNavigate();
+  
+  // ユーザー認証状態を確認
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      try {
+        const { data: sessionData } = await supabase.auth.getSession();
+        if (sessionData?.session?.user) {
+          setIsAuthenticated(true);
+          
+          // 認証済みユーザーの場合、無料テンプレートは購入済みとみなす
+          if (price === 0) {
+            setIsPurchaseComplete(true);
+            savePurchaseToLocalStorage();
+          } else {
+            // 購入状態を確認
+            checkPurchaseStatus();
+          }
+        } else {
+          setIsAuthenticated(false);
+        }
+      } catch (error) {
+        console.error("認証状態確認エラー:", error);
+      }
+    };
+    
+    checkAuthStatus();
+  }, [templateId, price]);
   
   // 購入状態を確認
   useEffect(() => {
@@ -39,48 +69,45 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
       
       // URLからパラメータを削除（ブラウザの履歴を汚さないため）
       window.history.replaceState({}, document.title, window.location.pathname);
-      return;
     }
-    
-    // ローカルストレージから購入状態を確認
-    const checkPurchaseStatus = async () => {
-      try {
-        const purchasedItems = localStorage.getItem('purchasedTemplates');
-        if (purchasedItems) {
-          const purchases = JSON.parse(purchasedItems);
-          if (purchases.includes(templateId)) {
-            setIsPurchaseComplete(true);
-            return;
-          }
+  }, [templateId]);
+  
+  // 購入状態を確認する関数
+  const checkPurchaseStatus = async () => {
+    try {
+      const purchasedItems = localStorage.getItem('purchasedTemplates');
+      if (purchasedItems) {
+        const purchases = JSON.parse(purchasedItems);
+        if (purchases.includes(templateId)) {
+          setIsPurchaseComplete(true);
+          return;
+        }
+      }
+      
+      // またはSupabaseから購入履歴を確認（認証済みの場合）
+      const { data: sessionData } = await supabase.auth.getSession();
+      if (sessionData?.session?.user) {
+        const { data: purchaseData, error } = await supabase
+          .from('purchases')
+          .select('*')
+          .eq('template_id', templateId)
+          .eq('user_id', sessionData.session.user.id)
+          .maybeSingle();
+          
+        if (purchaseData) {
+          setIsPurchaseComplete(true);
+          // ローカルにも保存
+          savePurchaseToLocalStorage();
         }
         
-        // またはSupabaseから購入履歴を確認（認証済みの場合）
-        const { data: sessionData } = await supabase.auth.getSession();
-        if (sessionData?.session?.user) {
-          const { data: purchaseData, error } = await supabase
-            .from('purchases')
-            .select('*')
-            .eq('template_id', templateId)
-            .eq('user_id', sessionData.session.user.id)
-            .maybeSingle();
-            
-          if (purchaseData) {
-            setIsPurchaseComplete(true);
-            // ローカルにも保存
-            savePurchaseToLocalStorage();
-          }
-          
-          if (error && error.code !== 'PGRST116') {
-            console.error("購入確認エラー:", error);
-          }
+        if (error && error.code !== 'PGRST116') {
+          console.error("購入確認エラー:", error);
         }
-      } catch (error) {
-        console.error("購入状態確認エラー:", error);
       }
-    };
-    
-    checkPurchaseStatus();
-  }, [templateId]);
+    } catch (error) {
+      console.error("購入状態確認エラー:", error);
+    }
+  };
   
   // ローカルストレージに購入情報を保存
   const savePurchaseToLocalStorage = () => {
@@ -230,6 +257,12 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
     trackDownload().catch(console.error);
   };
 
+  // ログインページに誘導
+  const handleRedirectToLogin = () => {
+    toast.info("ダウンロードにはログインが必要です");
+    navigate("/login");
+  };
+
   // 価格表示を日本円に変換して整形（カンマ区切り）
   const formattedPrice = price.toLocaleString('ja-JP');
 
@@ -252,20 +285,36 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
           >
             ダウンロードする <Download className="w-5 h-5" />
           </Button>
-        ) : price === 0 ? (
-          // 無料テンプレートの場合はダウンロードボタンを直接表示
-          <Button 
-            className="w-full text-lg py-6 gap-2 bg-green-600 hover:bg-green-700 text-white"
-            onClick={handleDownload}
-          >
-            今すぐダウンロード <Download className="w-5 h-5" />
-          </Button>
+        ) : isAuthenticated ? (
+          // 認証済みだが購入が完了していない場合
+          price === 0 ? (
+            // 無料テンプレートの場合は「無料でダウンロード」ボタン
+            <Button 
+              className="w-full text-lg py-6 gap-2 bg-green-600 hover:bg-green-700 text-white"
+              onClick={() => {
+                savePurchaseToLocalStorage();
+                setIsPurchaseComplete(true);
+                toast.success("ダウンロード権限を取得しました");
+              }}
+            >
+              無料でダウンロード <Download className="w-5 h-5" />
+            </Button>
+          ) : (
+            // 有料テンプレートの場合は購入ボタン
+            <Button 
+              className="premium-button w-full text-lg py-6 gap-2"
+              onClick={handlePurchase}
+            >
+              今すぐ購入 <ChevronRight className="w-5 h-5" />
+            </Button>
+          )
         ) : (
+          // 認証されていない場合はログインボタン
           <Button 
-            className="premium-button w-full text-lg py-6 gap-2"
-            onClick={handlePurchase}
+            className="w-full text-lg py-6 gap-2 bg-blue-600 hover:bg-blue-700 text-white"
+            onClick={handleRedirectToLogin}
           >
-            今すぐ購入 <ChevronRight className="w-5 h-5" />
+            会員登録してダウンロード <ChevronRight className="w-5 h-5" />
           </Button>
         )}
         
@@ -348,4 +397,3 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
     </>
   );
 };
-
