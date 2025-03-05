@@ -30,7 +30,6 @@ export const TestimonialsSection = ({ testimonials }: TestimonialsSectionProps) 
               "{testimonial.comment}"
             </p>
             <div>
-              <p className="font-semibold text-card-foreground">{testimonial.name}</p>
               <p className="text-muted-foreground text-sm">{testimonial.role}</p>
             </div>
           </motion.div>
