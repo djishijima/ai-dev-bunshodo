@@ -73,7 +73,7 @@ export const NavBar = () => {
                 `text-sm ${isActive ? 'text-white' : 'text-muted-foreground hover:text-white'} transition-colors`
               }
             >
-              料金プラン
+              アプリ開発のご依頼
             </NavLink>
             
             {user ? (
