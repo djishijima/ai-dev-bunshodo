@@ -4,9 +4,12 @@ import { motion } from "framer-motion";
 import { Check, ChevronRight, Code, Sparkles, Rocket } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { ChatBot } from "@/components/ChatBot";
+import { useState } from "react";
 
 const PricingPage = () => {
   const navigate = useNavigate();
+  const [showChatBot, setShowChatBot] = useState(false);
 
   // 価格表示を日本円形式に整形するヘルパー関数
   const formatPrice = (price: number) => {
@@ -210,16 +213,29 @@ const PricingPage = () => {
             ご不明な点やカスタムプランについてのご相談は、お気軽にお問い合わせください。
             専門スタッフが丁寧にご対応いたします。
           </p>
-          <Button 
-            variant="premium"
-            size="lg"
-            className="gap-2"
-            onClick={() => navigate('/contact')}
-          >
-            無料相談する <ChevronRight className="w-5 h-5" />
-          </Button>
+          <div className="flex flex-col sm:flex-row justify-center gap-4 items-center">
+            <Button 
+              variant="premium"
+              size="lg"
+              className="gap-2"
+              onClick={() => navigate('/contact')}
+            >
+              無料相談する <ChevronRight className="w-5 h-5" />
+            </Button>
+            <Button 
+              variant="outline"
+              size="lg"
+              className="gap-2"
+              onClick={() => setShowChatBot(true)}
+            >
+              AIに要件を相談する <Sparkles className="w-5 h-5" />
+            </Button>
+          </div>
         </div>
       </motion.div>
+      
+      {/* 要件定義用チャットボット */}
+      <ChatBot isOpen={showChatBot} onClose={() => setShowChatBot(false)} />
     </div>
   );
 };
