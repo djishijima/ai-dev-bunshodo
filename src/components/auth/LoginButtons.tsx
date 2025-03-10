@@ -1,7 +1,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Mail } from "lucide-react";
-import { SocialLoginButtons } from "./SocialLoginButtons";
 
 type LoadingState = {
   github: boolean;
@@ -25,12 +24,6 @@ export const LoginButtons = ({
   
   return (
     <div className="space-y-4">
-      <SocialLoginButtons 
-        isLoading={isLoading}
-        setIsLoading={setIsLoading}
-        setError={setError}
-      />
-
       <Button 
         variant="premium"
         className="w-full"
