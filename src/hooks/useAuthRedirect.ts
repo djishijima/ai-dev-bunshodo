@@ -66,6 +66,24 @@ export const useAuthRedirect = () => {
       }
     );
     
+    // ハッシュフラグメントからエラーを探す（OAuthリダイレクト後）
+    const handleHashParams = () => {
+      const hash = window.location.hash;
+      if (hash && hash.includes('error=')) {
+        // URLからエラーパラメータを抽出
+        const params = new URLSearchParams(hash.substring(1));
+        const error = params.get('error');
+        const errorDescription = params.get('error_description');
+        
+        if (error) {
+          console.error("OAuth error:", error, errorDescription);
+          toast.error(`認証エラー: ${errorDescription || error}`);
+        }
+      }
+    };
+    
+    handleHashParams();
+    
     return () => {
       console.log("Cleanup: unsubscribing from auth changes");
       subscription.unsubscribe();

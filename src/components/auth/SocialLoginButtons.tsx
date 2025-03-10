@@ -40,10 +40,18 @@ export const SocialLoginButtons = ({
         throw new Error('ネットワーク接続に問題があります。インターネット接続を確認してください。');
       }
       
+      // 現在のURLをログに出力して確認
+      console.log("Current URL:", window.location.origin);
+      console.log("Redirect URL will be:", `${window.location.origin}/mypage`);
+      
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/mypage`
+          redirectTo: `${window.location.origin}/mypage`,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+          }
         }
       });
 
