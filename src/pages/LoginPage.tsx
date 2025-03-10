@@ -24,7 +24,7 @@ const LoginPage = () => {
       <NavBar />
       <div className="max-w-md mx-auto px-4 pt-32">
         <div className="bg-white/10 backdrop-blur-xl p-8 rounded-xl border border-white/20">
-          <h1 className="text-2xl font-bold text-white mb-6 text-center">ログイン</h1>
+          <h1 className="text-2xl font-bold text-white mb-6 text-center">ログイン / 新規登録</h1>
           
           {isCheckingSession ? (
             <div className="text-center py-4">
@@ -68,7 +68,7 @@ const LoginPage = () => {
 
               <p className="text-sm text-white/70 text-center">
                 アカウントをお持ちでない場合は<br />
-                上記の方法でそのまま新規登録できます
+                <span className="font-medium text-white">メールでログイン</span>から新規登録できます
               </p>
             </>
           )}

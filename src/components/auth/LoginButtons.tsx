@@ -30,7 +30,7 @@ export const LoginButtons = ({
         onClick={() => setShowEmailInput(prev => !prev)}
       >
         <Mail className="mr-2 h-5 w-5" />
-        メールでログイン
+        メールでログイン / 新規登録
       </Button>
     </div>
   );
