@@ -40,14 +40,18 @@ export const SocialLoginButtons = ({
         throw new Error('ネットワーク接続に問題があります。インターネット接続を確認してください。');
       }
       
-      // 現在のURLをログに出力して確認
-      console.log("Current URL:", window.location.origin);
-      console.log("Redirect URL will be:", `${window.location.origin}/mypage`);
+      // 現在のURLとリダイレクトURLをログに出力
+      const currentUrl = window.location.origin;
+      const redirectUrl = `${currentUrl}/mypage`;
+      console.log("Current URL:", currentUrl);
+      console.log("Redirect URL will be:", redirectUrl);
       
+      // Googleログイン処理
+      // redirect_toを指定せずにデフォルトのリダイレクト設定を使用する
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/mypage`,
+          // redirectTo: undefined, // デフォルトのリダイレクト設定を使用
           queryParams: {
             access_type: 'offline',
             prompt: 'consent',
@@ -60,21 +64,23 @@ export const SocialLoginButtons = ({
       if (error) {
         console.error('Google login error:', error);
         
-        // Handle specific error cases
+        // 特定のエラーケースを処理
         if (error.message.includes('provider is not enabled')) {
           throw new Error('Googleログインが有効になっていません。管理者に連絡してください。');
         } else if (error.message.includes('connection')) {
           throw new Error('サーバーへの接続に問題があります。しばらくしてからもう一度お試しください。');
+        } else if (error.message.includes('403')) {
+          throw new Error('アクセス権限がありません。Google認証の設定を確認してください。');
         }
         
         setError(`Googleログイン失敗: ${error.message}`);
         throw error;
       }
 
-      // Note: The actual redirect happens automatically by Supabase
+      // Supabaseによる自動リダイレクト
       toast.success("Googleログインページに移動します");
     } catch (error: any) {
-      console.error('Error:', error);
+      console.error('Error in Google login:', error);
       const errorMessage = error?.message || "不明なエラーが発生しました";
       setError(`Googleログイン失敗: ${errorMessage}`);
       toast.error(errorMessage);
