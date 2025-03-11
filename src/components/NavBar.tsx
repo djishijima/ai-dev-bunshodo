@@ -39,10 +39,17 @@ export const NavBar = () => {
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+    // モバイルメニューを開いたときに背景スクロールを防止
+    if (!isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
   };
 
   const closeMenu = () => {
     setIsMenuOpen(false);
+    document.body.style.overflow = '';
   };
 
   return (
@@ -136,12 +143,12 @@ export const NavBar = () => {
 
       {/* Mobile Navigation Overlay */}
       {isMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-40 bg-background/95 backdrop-blur-lg pt-16">
-          <div className="flex flex-col items-center gap-6 p-6">
+        <div className="md:hidden fixed inset-0 z-40 bg-background/95 backdrop-blur-lg pt-16 overflow-y-auto">
+          <div className="flex flex-col items-center gap-8 p-8">
             <NavLink 
               to="/templates" 
               className={({ isActive }) => 
-                `text-lg ${isActive ? 'text-white font-semibold' : 'text-muted-foreground'} transition-colors py-3`
+                `text-xl ${isActive ? 'text-white font-semibold' : 'text-muted-foreground'} transition-colors py-4`
               }
               onClick={closeMenu}
             >
@@ -151,7 +158,7 @@ export const NavBar = () => {
             <NavLink 
               to="/setup-guide" 
               className={({ isActive }) => 
-                `text-lg ${isActive ? 'text-white font-semibold' : 'text-muted-foreground'} transition-colors py-3`
+                `text-xl ${isActive ? 'text-white font-semibold' : 'text-muted-foreground'} transition-colors py-4`
               }
               onClick={closeMenu}
             >
@@ -161,7 +168,7 @@ export const NavBar = () => {
             <NavLink 
               to="/pricing" 
               className={({ isActive }) => 
-                `text-lg ${isActive ? 'text-white font-semibold' : 'text-muted-foreground'} transition-colors py-3`
+                `text-xl ${isActive ? 'text-white font-semibold' : 'text-muted-foreground'} transition-colors py-4`
               }
               onClick={closeMenu}
             >
@@ -173,7 +180,7 @@ export const NavBar = () => {
                 <NavLink 
                   to="/mypage" 
                   className={({ isActive }) => 
-                    `text-lg ${isActive ? 'text-white font-semibold' : 'text-muted-foreground'} transition-colors py-3`
+                    `text-xl ${isActive ? 'text-white font-semibold' : 'text-muted-foreground'} transition-colors py-4`
                   }
                   onClick={closeMenu}
                 >
@@ -182,7 +189,7 @@ export const NavBar = () => {
                 
                 <Button 
                   variant="outline" 
-                  className="bg-secondary border-white/10 text-white hover:bg-secondary/80 w-full mt-4"
+                  className="bg-secondary border-white/10 text-white hover:bg-secondary/80 w-full mt-4 py-6 text-lg"
                   onClick={() => {
                     handleLogout();
                     closeMenu();
@@ -194,7 +201,7 @@ export const NavBar = () => {
             ) : (
               <Button 
                 variant="outline" 
-                className="bg-secondary border-white/10 text-white hover:bg-secondary/80 w-full mt-4"
+                className="bg-secondary border-white/10 text-white hover:bg-secondary/80 w-full mt-4 py-6 text-lg"
                 onClick={() => {
                   navigate("/login");
                   closeMenu();
