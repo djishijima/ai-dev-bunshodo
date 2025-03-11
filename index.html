@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -30,9 +29,46 @@
 
       gtag('config', 'G-0JXPSCHN89');
     </script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
   </head>
   <body>
     <div id="root"></div>
+    <!-- Google Login Button -->
+    <button id="google-login-btn">Login with Google</button>
+    <script>
+      function onGoogleSignIn() {
+        gapi.load('auth2', function() {
+          gapi.auth2.init({
+            client_id: 'YOUR_CLIENT_ID.apps.googleusercontent.com',
+          }).then(function(auth2) {
+            auth2.signIn().then(function(googleUser) {
+              var profile = googleUser.getBasicProfile();
+              console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+              console.log('Name: ' + profile.getName());
+              console.log('Image URL: ' + profile.getImageUrl());
+              console.log('Email: ' + profile.getEmail());
+            });
+          });
+        });
+      }
+
+      document.getElementById('google-login-btn').addEventListener('click', onGoogleSignIn);
+    </script>
+    <script>
+      function gtag_report_conversion(url) {
+        var callback = function () {
+          if (typeof(url) != 'undefined') {
+            window.location = url;
+          }
+        };
+        gtag('event', 'conversion', {
+            'send_to': 'AW-952809033/WEUfCJfLkZcBEMnsqsYD',
+            'event_callback': callback
+        });
+        return false;
+      }
+    </script>
+    <button onclick="gtag_report_conversion('http://example.com/thank-you')">購入する</button>
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
