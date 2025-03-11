@@ -52,6 +52,7 @@ export const EmailLoginForm = ({
       const { data, error } = await supabase.auth.signInWithOtp({
         email,
         options: {
+          // Don't include any default user data to prevent the "山田太郎" issue
           emailRedirectTo: `${window.location.origin}/mypage`
         }
       });
