@@ -1,4 +1,3 @@
-
 import { Check, ChevronRight, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -28,7 +27,6 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
   
-  // ユーザー認証状態を確認
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
@@ -36,12 +34,10 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
         if (sessionData?.session?.user) {
           setIsAuthenticated(true);
           
-          // 認証済みユーザーの場合、無料テンプレートは購入済みとみなす
           if (price === 0) {
             setIsPurchaseComplete(true);
             savePurchaseToLocalStorage();
           } else {
-            // 購入状態を確認
             checkPurchaseStatus();
           }
         } else {
@@ -55,24 +51,23 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
     checkAuthStatus();
   }, [templateId, price]);
   
-  // 購入状態を確認
   useEffect(() => {
-    // URLパラメータをチェック（Stripeからの成功リダイレクト）
     const urlParams = new URLSearchParams(window.location.search);
     const isSuccess = urlParams.get('success') === 'true';
     
     if (isSuccess) {
-      // Stripeから成功リダイレクト後の処理
-      toast.success("購入が完了しました！テンプレートをダウンロードできます。");
+      toast.success("購入が完了しました！マイページから確認できます。");
       savePurchaseToLocalStorage();
       setIsPurchaseComplete(true);
       
-      // URLからパラメータを削除（ブラウザの履歴を汚さないため）
+      setTimeout(() => {
+        navigate('/mypage');
+      }, 1500);
+      
       window.history.replaceState({}, document.title, window.location.pathname);
     }
-  }, [templateId]);
+  }, [templateId, navigate]);
   
-  // 購入状態を確認する関数
   const checkPurchaseStatus = async () => {
     try {
       const purchasedItems = localStorage.getItem('purchasedTemplates');
@@ -84,7 +79,6 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
         }
       }
       
-      // またはSupabaseから購入履歴を確認（認証済みの場合）
       const { data: sessionData } = await supabase.auth.getSession();
       if (sessionData?.session?.user) {
         const { data: purchaseData, error } = await supabase
@@ -96,7 +90,6 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
           
         if (purchaseData) {
           setIsPurchaseComplete(true);
-          // ローカルにも保存
           savePurchaseToLocalStorage();
         }
         
@@ -109,7 +102,6 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
     }
   };
   
-  // ローカルストレージに購入情報を保存
   const savePurchaseToLocalStorage = () => {
     try {
       const purchasedItems = localStorage.getItem('purchasedTemplates');
@@ -142,7 +134,6 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
 
     setIsSubmitting(true);
     try {
-      // さらにデバッグ情報を追加
       console.log("チェックアウト開始:", {
         templateId,
         templateName,
@@ -152,15 +143,12 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
         cancelUrl: `${window.location.origin}/template/${templateId}?canceled=true`,
       });
 
-      // Supabaseのエッジ関数のURL確認
       const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://fkjgcszdgcbcdmclgfer.supabase.co';
       console.log("Supabase URL:", supabaseUrl);
       
-      // エッジ関数呼び出しの詳細をログに出力
       const edgeFunctionUrl = `${supabaseUrl}/functions/v1/create-checkout`;
       console.log("呼び出すエッジ関数URL:", edgeFunctionUrl);
       
-      // Supabaseのエッジ関数でStripeチェックアウトセッションを作成
       const response = await fetch(edgeFunctionUrl, {
         method: "POST",
         headers: {
@@ -179,7 +167,6 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
 
       console.log("レスポンスステータス:", response.status);
       
-      // レスポンスが正常でない場合の詳細情報
       if (!response.ok) {
         const errorText = await response.text();
         console.error("エラーレスポンス:", errorText);
@@ -189,7 +176,6 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
       const data = await response.json();
       console.log("チェックアウトレスポンス:", data);
       
-      // Stripeチェックアウトページにリダイレクト
       if (data.url) {
         console.log("リダイレクト先URL:", data.url);
         window.location.href = data.url;
@@ -206,7 +192,6 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
   };
 
   const handleDownload = () => {
-    // 実際のテンプレートファイルのダウンロード処理
     const templateContent = `
 # ${templateName} テンプレート
 
@@ -219,18 +204,15 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
 詳しいセットアップ方法とカスタマイズガイドは付属のドキュメントをご覧ください。
 `;
 
-    // BlobとURLを作成
     const blob = new Blob([templateContent], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     
-    // ダウンロードリンクを作成して自動クリック
     const a = document.createElement('a');
     a.href = url;
     a.download = `${templateName.replace(/\s+/g, '-').toLowerCase()}-template.txt`;
     document.body.appendChild(a);
     a.click();
     
-    // クリーンアップ
     setTimeout(() => {
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
@@ -238,7 +220,6 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
     
     toast.success("ダウンロードを開始しました");
     
-    // ダウンロード記録（オプション）
     const trackDownload = async () => {
       const { data: sessionData } = await supabase.auth.getSession();
       const userId = sessionData?.session?.user?.id;
@@ -257,13 +238,11 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
     trackDownload().catch(console.error);
   };
 
-  // ログインページに誘導
   const handleRedirectToLogin = () => {
     toast.info("ダウンロードにはログインが必要です");
     navigate("/login");
   };
 
-  // 価格表示を日本円に変換して整形（カンマ区切り）
   const formattedPrice = price.toLocaleString('ja-JP');
 
   return (
@@ -281,26 +260,24 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
         {isPurchaseComplete ? (
           <Button 
             className="w-full text-lg py-6 gap-2 bg-green-600 hover:bg-green-700 text-white"
-            onClick={handleDownload}
+            onClick={() => navigate("/mypage")}
           >
-            ダウンロードする <Download className="w-5 h-5" />
+            マイページで確認する <ChevronRight className="w-5 h-5" />
           </Button>
         ) : isAuthenticated ? (
-          // 認証済みだが購入が完了していない場合
           price === 0 ? (
-            // 無料テンプレートの場合は「無料でダウンロード」ボタン
             <Button 
               className="w-full text-lg py-6 gap-2 bg-green-600 hover:bg-green-700 text-white"
               onClick={() => {
                 savePurchaseToLocalStorage();
                 setIsPurchaseComplete(true);
                 toast.success("ダウンロード権限を取得しました");
+                navigate("/mypage");
               }}
             >
-              無料でダウンロード <Download className="w-5 h-5" />
+              無料で入手する <ChevronRight className="w-5 h-5" />
             </Button>
           ) : (
-            // 有料テンプレートの場合は購入ボタン
             <Button 
               className="premium-button w-full text-lg py-6 gap-2"
               onClick={handlePurchase}
@@ -309,12 +286,11 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
             </Button>
           )
         ) : (
-          // 認証されていない場合はログインボタン
           <Button 
             className="w-full text-lg py-6 gap-2 bg-blue-600 hover:bg-blue-700 text-white"
             onClick={handleRedirectToLogin}
           >
-            会員登録してダウンロード <ChevronRight className="w-5 h-5" />
+            会員登録して入手 <ChevronRight className="w-5 h-5" />
           </Button>
         )}
         
