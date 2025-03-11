@@ -1,11 +1,14 @@
 
-import { Button } from "@/components/ui/button";
-import { NavLink, useNavigate } from "react-router-dom";
-import { supabase } from "@/lib/supabase";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { User } from "@supabase/supabase-js";
 import { toast } from "sonner";
-import { Menu, PlusCircle, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { supabase } from "@/lib/supabase";
+import { NavLogo } from "./navigation/NavLogo";
+import { DesktopNav } from "./navigation/DesktopNav";
+import { MobileNav } from "./navigation/MobileNav";
 
 export const NavBar = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -56,72 +59,14 @@ export const NavBar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-lg bg-background/80 border-b border-white/5">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <div className="flex items-center space-x-2">
-            <PlusCircle className="h-5 w-5 text-primary" />
-            <span className="text-sm font-medium text-primary">Plus+Program</span>
-            <NavLink to="/" className="ml-4 text-xl md:text-2xl font-bold text-white hover:text-white/80 transition-colors" onClick={closeMenu}>
-              AI開発プラットフォーム
-            </NavLink>
-          </div>
+          <NavLogo closeMenu={closeMenu} />
           
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-6">
-            <NavLink 
-              to="/templates" 
-              className={({ isActive }) => 
-                `text-sm ${isActive ? 'text-white' : 'text-muted-foreground hover:text-white'} transition-colors`
-              }
-            >
-              テンプレート一覧
-            </NavLink>
-            
-            <NavLink 
-              to="/setup-guide" 
-              className={({ isActive }) => 
-                `text-sm ${isActive ? 'text-white' : 'text-muted-foreground hover:text-white'} transition-colors`
-              }
-            >
-              セットアップガイド
-            </NavLink>
-            
-            <NavLink 
-              to="/pricing" 
-              className={({ isActive }) => 
-                `text-sm ${isActive ? 'text-white' : 'text-muted-foreground hover:text-white'} transition-colors`
-              }
-            >
-              アプリ開発のご依頼
-            </NavLink>
-            
-            {user ? (
-              <>
-                <NavLink 
-                  to="/mypage" 
-                  className={({ isActive }) => 
-                    `text-sm ${isActive ? 'text-white' : 'text-muted-foreground hover:text-white'} transition-colors`
-                  }
-                >
-                  マイページ
-                </NavLink>
-                
-                <Button 
-                  variant="outline" 
-                  className="bg-secondary border-white/10 text-white hover:bg-secondary/80"
-                  onClick={handleLogout}
-                >
-                  ログアウト
-                </Button>
-              </>
-            ) : (
-              <Button 
-                variant="outline" 
-                className="bg-secondary border-white/10 text-white hover:bg-secondary/80"
-                onClick={() => navigate("/login")}
-              >
-                ログイン
-              </Button>
-            )}
-          </div>
+          <DesktopNav 
+            user={user} 
+            handleLogout={handleLogout} 
+            navigate={navigate} 
+          />
 
           {/* Mobile Menu Button */}
           <div className="md:hidden">
@@ -141,78 +86,14 @@ export const NavBar = () => {
         </div>
       </div>
 
-      {/* Mobile Navigation Overlay */}
-      {isMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-40 bg-background/95 backdrop-blur-lg pt-16 overflow-y-auto">
-          <div className="flex flex-col items-center gap-8 p-8">
-            <NavLink 
-              to="/templates" 
-              className={({ isActive }) => 
-                `text-xl ${isActive ? 'text-white font-semibold' : 'text-muted-foreground'} transition-colors py-4`
-              }
-              onClick={closeMenu}
-            >
-              テンプレート一覧
-            </NavLink>
-            
-            <NavLink 
-              to="/setup-guide" 
-              className={({ isActive }) => 
-                `text-xl ${isActive ? 'text-white font-semibold' : 'text-muted-foreground'} transition-colors py-4`
-              }
-              onClick={closeMenu}
-            >
-              セットアップガイド
-            </NavLink>
-            
-            <NavLink 
-              to="/pricing" 
-              className={({ isActive }) => 
-                `text-xl ${isActive ? 'text-white font-semibold' : 'text-muted-foreground'} transition-colors py-4`
-              }
-              onClick={closeMenu}
-            >
-              アプリ開発のご依頼
-            </NavLink>
-            
-            {user ? (
-              <>
-                <NavLink 
-                  to="/mypage" 
-                  className={({ isActive }) => 
-                    `text-xl ${isActive ? 'text-white font-semibold' : 'text-muted-foreground'} transition-colors py-4`
-                  }
-                  onClick={closeMenu}
-                >
-                  マイページ
-                </NavLink>
-                
-                <Button 
-                  variant="outline" 
-                  className="bg-secondary border-white/10 text-white hover:bg-secondary/80 w-full mt-4 py-6 text-lg"
-                  onClick={() => {
-                    handleLogout();
-                    closeMenu();
-                  }}
-                >
-                  ログアウト
-                </Button>
-              </>
-            ) : (
-              <Button 
-                variant="outline" 
-                className="bg-secondary border-white/10 text-white hover:bg-secondary/80 w-full mt-4 py-6 text-lg"
-                onClick={() => {
-                  navigate("/login");
-                  closeMenu();
-                }}
-              >
-                ログイン
-              </Button>
-            )}
-          </div>
-        </div>
-      )}
+      {/* Mobile Navigation */}
+      <MobileNav 
+        isMenuOpen={isMenuOpen}
+        closeMenu={closeMenu}
+        user={user}
+        handleLogout={handleLogout}
+        navigate={navigate}
+      />
     </nav>
   );
 };
