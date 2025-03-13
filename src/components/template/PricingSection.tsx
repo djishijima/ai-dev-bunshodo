@@ -83,20 +83,26 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
       
       const { data: sessionData } = await supabase.auth.getSession();
       if (sessionData?.session?.user) {
-        const { data: purchaseData, error } = await supabase
-          .from('purchases')
-          .select('*')
-          .eq('template_id', templateId)
-          .eq('user_id', sessionData.session.user.id)
-          .maybeSingle();
+        // Check if the purchases table exists and the user has purchased this template
+        try {
+          const { data: purchaseData, error } = await supabase
+            .from('purchases')
+            .select('*')
+            .eq('template_id', templateId)
+            .eq('user_id', sessionData.session.user.id)
+            .maybeSingle();
+            
+          if (purchaseData) {
+            setIsPurchaseComplete(true);
+            savePurchaseToLocalStorage();
+          }
           
-        if (purchaseData) {
-          setIsPurchaseComplete(true);
-          savePurchaseToLocalStorage();
-        }
-        
-        if (error && error.code !== 'PGRST116') {
-          console.error("購入確認エラー:", error);
+          if (error && error.code !== 'PGRST116') {
+            console.error("購入確認エラー:", error);
+          }
+        } catch (error) {
+          console.error("購入テーブルエラー:", error);
+          // Continue with local storage check as fallback
         }
       }
     } catch (error) {
@@ -227,13 +233,18 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
       const userId = sessionData?.session?.user?.id;
       
       if (userId) {
-        await supabase
-          .from('downloads')
-          .insert({
-            template_id: templateId,
-            user_id: userId,
-            downloaded_at: new Date().toISOString()
-          });
+        try {
+          await supabase
+            .from('downloads')
+            .insert({
+              template_id: templateId,
+              user_id: userId,
+              downloaded_at: new Date().toISOString()
+            });
+        } catch (error) {
+          console.error("ダウンロード記録エラー:", error);
+          // Continue even if recording fails
+        }
       }
     };
     

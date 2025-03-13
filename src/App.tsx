@@ -1,66 +1,54 @@
 
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Toaster as SonnerToaster } from "sonner";
 import { useEffect } from "react";
 import Index from "./pages/Index";
-import TemplatesPage from "./pages/TemplatesPage";
-import TemplateDetail from "./pages/TemplateDetail";
-import PricingPage from "./pages/PricingPage";
-import MyPage from "./pages/MyPage";
 import NotFound from "./pages/NotFound";
-import SetupGuidePage from "./pages/SetupGuidePage";
 import LoginPage from "./pages/LoginPage";
+import MyPage from "./pages/MyPage";
+import TemplateDetail from "./pages/TemplateDetail";
+import AuthCallback from "./pages/AuthCallback";
+import AdminPage from "./pages/AdminPage";
 
-const queryClient = new QueryClient();
-
-const App = () => {
+// Google Analytics tracking
+function GoogleAnalytics() {
+  const location = useLocation();
+  
   useEffect(() => {
-    // Google Analytics pageview tracking
-    const handleRouteChange = () => {
-      if (window.gtag) {
-        window.gtag('config', 'G-RJSYBPJH5H', {
-          page_path: window.location.pathname
-        });
-        window.gtag('config', 'G-0JXPSCHN89', {
-          page_path: window.location.pathname
-        });
-      }
-    };
+    // Track pageview on route change
+    if (window.gtag) {
+      window.gtag('config', 'G-RJSYBPJH5H', {
+        page_path: location.pathname + location.search
+      });
+      
+      // Second tracking ID
+      window.gtag('config', 'G-0JXPSCHN89', {
+        page_path: location.pathname + location.search
+      });
+    }
+  }, [location]);
+  
+  return null;
+}
 
-    // Initial page load
-    handleRouteChange();
-
-    // Listen for location changes
-    window.addEventListener('popstate', handleRouteChange);
-    
-    return () => {
-      window.removeEventListener('popstate', handleRouteChange);
-    };
-  }, []);
-
+function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/templates" element={<TemplatesPage />} />
-            <Route path="/template/:id" element={<TemplateDetail />} />
-            <Route path="/pricing" element={<PricingPage />} />
-            <Route path="/mypage" element={<MyPage />} />
-            <Route path="/setup-guide" element={<SetupGuidePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
+    <Router>
+      <GoogleAnalytics />
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/template/:id" element={<TemplateDetail />} />
+        <Route path="/auth/callback" element={<AuthCallback />} />
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <Toaster />
+      <SonnerToaster closeButton position="top-right" />
+    </Router>
   );
-};
+}
 
 export default App;
