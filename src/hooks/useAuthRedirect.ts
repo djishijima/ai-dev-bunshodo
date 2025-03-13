@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { checkAuthSession, supabase } from "@/lib/supabase";
+import { supabase } from "@/integrations/supabase/client"; // Use the consistent Supabase client
 
 export const useAuthRedirect = () => {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ export const useAuthRedirect = () => {
       setIsCheckingSession(true);
       try {
         console.log("Checking session on component mount");
-        const { data, error } = await checkAuthSession();
+        const { data, error } = await supabase.auth.getSession();
         
         if (error) {
           console.error("Error checking auth session:", error);

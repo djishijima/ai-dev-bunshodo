@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/integrations/supabase/client"; // Use the consistent Supabase client
 import { FormEvent, useState } from "react";
 import { ErrorDisplay } from "./ErrorDisplay";
 

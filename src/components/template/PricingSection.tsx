@@ -1,3 +1,4 @@
+
 import { Check, ChevronRight, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,7 +11,7 @@ import {
 import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/integrations/supabase/client"; // Use the consistent Supabase client
 import { useNavigate } from "react-router-dom";
 
 interface PricingSectionProps {
@@ -33,6 +34,7 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
         const { data: sessionData } = await supabase.auth.getSession();
         if (sessionData?.session?.user) {
           setIsAuthenticated(true);
+          setEmail(sessionData.session.user.email || "");
           
           if (price === 0) {
             setIsPurchaseComplete(true);
@@ -260,9 +262,10 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
         {isPurchaseComplete ? (
           <Button 
             className="w-full text-lg py-6 gap-2 bg-green-600 hover:bg-green-700 text-white"
-            onClick={() => navigate("/mypage")}
+            onClick={handleDownload}
           >
-            マイページで確認する <ChevronRight className="w-5 h-5" />
+            <Download className="w-5 h-5 mr-2" />
+            テンプレートをダウンロード
           </Button>
         ) : isAuthenticated ? (
           price === 0 ? (
@@ -272,7 +275,7 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
                 savePurchaseToLocalStorage();
                 setIsPurchaseComplete(true);
                 toast.success("ダウンロード権限を取得しました");
-                navigate("/mypage");
+                handleDownload();
               }}
             >
               無料で入手する <ChevronRight className="w-5 h-5" />
