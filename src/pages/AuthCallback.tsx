@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 
 const AuthCallback = () => {
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,16 +18,25 @@ const AuthCallback = () => {
 
     const handleCallback = async () => {
       try {
+        console.log("Auth callback: Processing authentication...");
         // Get the current URL
         const url = window.location.href;
         const { data, error } = await supabase.auth.getSession();
         
         if (error) {
+          console.error("Session error:", error);
           throw error;
         }
         
         if (data.session) {
           console.log("User is logged in:", data.session.user.email);
+          
+          // Attempt to log conversion if appropriate
+          if (window.gtag_report_conversion) {
+            window.gtag_report_conversion();
+            console.log("Conversion tracked for login");
+          }
+          
           toast.success("ログインしました！");
           navigate("/mypage");
         } else {
@@ -61,6 +72,8 @@ const AuthCallback = () => {
         setTimeout(() => {
           navigate("/login");
         }, 3000);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -75,9 +88,12 @@ const AuthCallback = () => {
         </h1>
         
         {error ? (
-          <div className="text-red-300 mb-4 text-center">
-            <p>{error}</p>
-            <p className="mt-4 text-white/70">
+          <div className="space-y-4">
+            <Alert variant="destructive">
+              <AlertTitle>エラーが発生しました</AlertTitle>
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+            <p className="mt-4 text-white/70 text-center">
               3秒後にログインページに戻ります...
             </p>
           </div>

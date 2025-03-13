@@ -11,21 +11,27 @@ import TemplateDetail from "./pages/TemplateDetail";
 import AuthCallback from "./pages/AuthCallback";
 import AdminPage from "./pages/AdminPage";
 
-// Google Analytics tracking
+// Google Analytics tracking - 改善版
 function GoogleAnalytics() {
   const location = useLocation();
   
   useEffect(() => {
-    // Track pageview on route change
-    if (window.gtag) {
-      window.gtag('config', 'G-RJSYBPJH5H', {
-        page_path: location.pathname + location.search
-      });
-      
-      // Second tracking ID
-      window.gtag('config', 'G-0JXPSCHN89', {
-        page_path: location.pathname + location.search
-      });
+    try {
+      // Track pageview on route change
+      if (window.gtag) {
+        window.gtag('config', 'G-RJSYBPJH5H', {
+          page_path: location.pathname + location.search
+        });
+        
+        // Second tracking ID
+        window.gtag('config', 'G-0JXPSCHN89', {
+          page_path: location.pathname + location.search
+        });
+
+        console.log('GA pageview tracked:', location.pathname);
+      }
+    } catch (err) {
+      console.error('Google Analytics error:', err);
     }
   }, [location]);
   

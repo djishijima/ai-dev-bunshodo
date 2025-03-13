@@ -45,9 +45,44 @@ serve(async (req) => {
     
     console.log("Request data:", { templateId, templateName, price, email, successUrl, cancelUrl })
 
+    // Verify required fields
+    if (!templateId || !templateName || price === undefined || !email) {
+      return new Response(
+        JSON.stringify({ error: "必須項目が不足しています" }),
+        { 
+          status: 400, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      )
+    }
+
     // 無料テンプレートの場合は、決済をスキップして成功URLにリダイレクト
     if (price === 0) {
-      console.log("Free template, redirecting to success URL:", successUrl)
+      console.log("Free template, recording purchase directly")
+
+      try {
+        // 無料テンプレートの購入記録を直接作成
+        const { data: purchaseData, error: purchaseError } = await supabase
+          .from("purchases")
+          .insert([
+            {
+              template_id: templateId,
+              email: email,
+              price: 0,
+              purchased_at: new Date().toISOString(),
+              payment_status: "completed"
+            }
+          ]);
+
+        if (purchaseError) {
+          console.error("Error recording free template purchase:", purchaseError);
+        } else {
+          console.log("Free template purchase recorded:", purchaseData);
+        }
+      } catch (dbError) {
+        console.error("Database error for free template:", dbError);
+      }
+
       return new Response(
         JSON.stringify({ 
           url: successUrl,
@@ -107,6 +142,29 @@ serve(async (req) => {
       url: session.url,
       payment_status: session.payment_status 
     })
+
+    // 事前に purchase_intent レコードを作成
+    try {
+      const { data: intentData, error: intentError } = await supabase
+        .from("purchases")
+        .insert([
+          {
+            template_id: templateId,
+            email: email,
+            price: price / 100, // セントから円に変換
+            payment_id: session.id,
+            payment_status: "pending"
+          }
+        ]);
+
+      if (intentError) {
+        console.error("Error recording purchase intent:", intentError);
+      } else {
+        console.log("Purchase intent recorded:", intentData);
+      }
+    } catch (dbError) {
+      console.error("Database error for purchase intent:", dbError);
+    }
 
     // Return the session ID and URL
     return new Response(

@@ -20,21 +20,9 @@
       gtag('js', new Date());
 
       gtag('config', 'G-RJSYBPJH5H');
-    </script>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0JXPSCHN89"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
       gtag('config', 'G-0JXPSCHN89');
-    </script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <!-- Removed Google Login Button and related script -->
-    <script>
+      
+      // コンバージョントラッキング関数
       function gtag_report_conversion(url) {
         var callback = function () {
           if (typeof(url) != 'undefined') {
@@ -48,8 +36,9 @@
         return false;
       }
     </script>
-    <button onclick="gtag_report_conversion('http://example.com/thank-you')">購入する</button>
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+  </head>
+  <body>
+    <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
