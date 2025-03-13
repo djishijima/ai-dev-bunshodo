@@ -1,15 +1,8 @@
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-
-declare global {
-  interface Window {
-    gtag_report_conversion?: (url?: string) => boolean;
-  }
-}
 
 const AuthCallback = () => {
   const [error, setError] = useState<string | null>(null);
