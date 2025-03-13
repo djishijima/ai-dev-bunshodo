@@ -1,8 +1,13 @@
 
-import { User } from "@supabase/supabase-js";
 import { NavigateFunction } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import { NavItem } from "./NavItem";
+import { Button } from "@/components/ui/button";
+
+// Define a custom User type that matches what we're using
+type User = {
+  id: string;
+  email?: string;
+};
 
 type DesktopNavProps = {
   user: User | null;
@@ -12,28 +17,27 @@ type DesktopNavProps = {
 
 export const DesktopNav = ({ user, handleLogout, navigate }: DesktopNavProps) => {
   return (
-    <div className="hidden md:flex items-center gap-6">
-      <NavItem to="/templates">テンプレート一覧</NavItem>
-      <NavItem to="/setup-guide">セットアップガイド</NavItem>
-      <NavItem to="/pricing">アプリ開発のご依頼</NavItem>
+    <div className="hidden md:flex md:items-center md:space-x-4">
+      <NavItem to="/">ホーム</NavItem>
+      <NavItem to="/templates">テンプレート</NavItem>
+      <NavItem to="/pricing">料金</NavItem>
       
       {user ? (
         <>
           <NavItem to="/mypage">マイページ</NavItem>
-          
           <Button 
-            variant="outline" 
-            className="bg-secondary border-white/10 text-white hover:bg-secondary/80"
+            variant="ghost" 
             onClick={handleLogout}
+            className="text-white hover:text-white hover:bg-primary/20"
           >
             ログアウト
           </Button>
         </>
       ) : (
         <Button 
-          variant="outline" 
-          className="bg-secondary border-white/10 text-white hover:bg-secondary/80"
+          variant="default" 
           onClick={() => navigate("/login")}
+          className="bg-primary hover:bg-primary/90"
         >
           ログイン
         </Button>

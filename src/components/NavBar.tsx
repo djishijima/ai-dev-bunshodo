@@ -1,7 +1,6 @@
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { User } from "@supabase/supabase-js";
 import { toast } from "sonner";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,6 +8,12 @@ import { supabase } from "@/integrations/supabase/client"; // Use the consistent
 import { NavLogo } from "./navigation/NavLogo";
 import { DesktopNav } from "./navigation/DesktopNav";
 import { MobileNav } from "./navigation/MobileNav";
+
+// Define a type for the User based on what we need
+type User = {
+  id: string;
+  email?: string;
+};
 
 export const NavBar = () => {
   const [user, setUser] = useState<User | null>(null);
