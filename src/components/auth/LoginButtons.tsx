@@ -35,6 +35,7 @@ export const LoginButtons = ({
     try {
       // Get current site URL for redirect
       const siteUrl = window.location.origin;
+      console.log("Current site URL:", siteUrl);
       
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'github',
@@ -64,6 +65,7 @@ export const LoginButtons = ({
     try {
       // Get current site URL for redirect
       const siteUrl = window.location.origin;
+      console.log("Current site URL for Google auth:", siteUrl);
       
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
