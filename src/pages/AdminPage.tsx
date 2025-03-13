@@ -51,7 +51,6 @@ const AdminPage = () => {
           return;
         }
         
-        // Check if the user is an admin
         const { data: adminData } = await getAdminUsersTable()
           .select('*')
           .eq('user_id', session.session.user.id)
@@ -78,7 +77,6 @@ const AdminPage = () => {
   
   const loadData = async () => {
     try {
-      // Load templates
       const { data: templateData, error: templateError } = await getTemplatesTable()
         .select('*')
         .order('created_at', { ascending: false });
@@ -86,7 +84,6 @@ const AdminPage = () => {
       if (templateError) throw templateError;
       setTemplates(templateData as Template[] || []);
       
-      // Load purchases with customer info
       const { data: purchaseData, error: purchaseError } = await getPurchasesTable()
         .select('*')
         .order('purchased_at', { ascending: false });
@@ -94,9 +91,6 @@ const AdminPage = () => {
       if (purchaseError) throw purchaseError;
       setPurchases(purchaseData as Purchase[] || []);
       
-      // Load customers from auth.users via admin API
-      // Note: In a real app, you'd probably want to implement this in a secure backend function
-      // For simplicity, we're just showing the UI here
       setCustomers([
         {
           id: "example-user-id",
@@ -205,7 +199,6 @@ const AdminPage = () => {
             </TabsTrigger>
           </TabsList>
 
-          {/* テンプレート管理 */}
           <TabsContent value="templates">
             <div className="mb-6 flex justify-between items-center">
               <h2 className="text-xl font-semibold">テンプレート一覧</h2>
@@ -257,7 +250,6 @@ const AdminPage = () => {
             </Card>
           </TabsContent>
 
-          {/* 購入履歴 */}
           <TabsContent value="purchases">
             <div className="mb-6">
               <h2 className="text-xl font-semibold">購入履歴</h2>
@@ -306,7 +298,6 @@ const AdminPage = () => {
             </Card>
           </TabsContent>
 
-          {/* 顧客情報 */}
           <TabsContent value="customers">
             <div className="mb-6">
               <h2 className="text-xl font-semibold">顧客情報</h2>
@@ -356,7 +347,6 @@ const AdminPage = () => {
           </TabsContent>
         </Tabs>
 
-        {/* テンプレート編集ダイアログ */}
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogContent className="sm:max-w-xl">
             <DialogHeader>
