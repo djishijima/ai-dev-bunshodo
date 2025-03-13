@@ -1,4 +1,3 @@
-
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as SonnerToaster } from "sonner";
@@ -10,8 +9,8 @@ import MyPage from "./pages/MyPage";
 import TemplateDetail from "./pages/TemplateDetail";
 import AuthCallback from "./pages/AuthCallback";
 import AdminPage from "./pages/AdminPage";
+import TemplatesPage from "./pages/TemplatesPage";
 
-// Google Analytics tracking - 改善版
 function GoogleAnalytics() {
   const location = useLocation();
   
@@ -47,6 +46,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/template/:id" element={<TemplateDetail />} />
+        <Route path="/templates" element={<TemplatesPage />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="*" element={<NotFound />} />
