@@ -1,24 +1,23 @@
 
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
-import { PostgrestQueryBuilder } from "@supabase/supabase-js";
 
 // Helper functions for working with custom tables (not in the auto-generated types)
 export const getAdminUsersTable = () => {
-  // Use a more specific type assertion to avoid TypeScript errors
-  return supabase.from('admin_users') as unknown as PostgrestQueryBuilder<Database['public'], AdminUser, 'admin_users'>;
+  // Since these tables aren't in the auto-generated types, use 'any' for type safety bypass
+  return supabase.from('admin_users') as any;
 };
 
 export const getTemplatesTable = () => {
-  return supabase.from('templates') as unknown as PostgrestQueryBuilder<Database['public'], Template, 'templates'>;
+  return supabase.from('templates') as any;
 };
 
 export const getPurchasesTable = () => {
-  return supabase.from('purchases') as unknown as PostgrestQueryBuilder<Database['public'], Purchase, 'purchases'>;
+  return supabase.from('purchases') as any;
 };
 
 export const getDownloadsTable = () => {
-  return supabase.from('downloads') as unknown as PostgrestQueryBuilder<Database['public'], Download, 'downloads'>;
+  return supabase.from('downloads') as any;
 };
 
 // Custom types for tables not in the auto-generated types
