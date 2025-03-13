@@ -4,20 +4,20 @@ import type { Database } from "@/integrations/supabase/types";
 
 // Helper functions for working with custom tables (not in the auto-generated types)
 export const getAdminUsersTable = () => {
-  // Use type assertion with 'any' to bypass TypeScript's type checking for tables not in the schema
-  return supabase.from('admin_users') as any;
+  // Type assertion to bypass TypeScript's type checking - use double casting to avoid errors
+  return supabase.from('admin_users') as unknown as ReturnType<typeof supabase.from>;
 };
 
 export const getTemplatesTable = () => {
-  return supabase.from('templates') as any;
+  return supabase.from('templates') as unknown as ReturnType<typeof supabase.from>;
 };
 
 export const getPurchasesTable = () => {
-  return supabase.from('purchases') as any;
+  return supabase.from('purchases') as unknown as ReturnType<typeof supabase.from>;
 };
 
 export const getDownloadsTable = () => {
-  return supabase.from('downloads') as any;
+  return supabase.from('downloads') as unknown as ReturnType<typeof supabase.from>;
 };
 
 // Custom types for tables not in the auto-generated types
