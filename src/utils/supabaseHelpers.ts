@@ -1,23 +1,24 @@
 
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
+import { PostgrestQueryBuilder } from "@supabase/supabase-js";
 
 // Helper functions for working with custom tables (not in the auto-generated types)
 export const getAdminUsersTable = () => {
-  // Need to cast to any to bypass TypeScript's strict type checking
-  return supabase.from('admin_users') as any;
+  // Use double type assertion to bypass TypeScript's type checking
+  return supabase.from('admin_users') as unknown as PostgrestQueryBuilder<any, any>;
 };
 
 export const getTemplatesTable = () => {
-  return supabase.from('templates') as any;
+  return supabase.from('templates') as unknown as PostgrestQueryBuilder<any, any>;
 };
 
 export const getPurchasesTable = () => {
-  return supabase.from('purchases') as any;
+  return supabase.from('purchases') as unknown as PostgrestQueryBuilder<any, any>;
 };
 
 export const getDownloadsTable = () => {
-  return supabase.from('downloads') as any;
+  return supabase.from('downloads') as unknown as PostgrestQueryBuilder<any, any>;
 };
 
 // Custom types for tables not in the auto-generated types
