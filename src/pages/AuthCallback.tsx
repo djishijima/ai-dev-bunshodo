@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -34,6 +35,27 @@ const AuthCallback = () => {
           if (window.gtag_report_conversion) {
             window.gtag_report_conversion();
             console.log("Conversion tracked for login");
+          }
+          
+          // Check if the user has a profile and update it if needed
+          try {
+            const { data: profileData, error: profileError } = await supabase
+              .from('profiles')
+              .select('*')
+              .eq('id', data.session.user.id)
+              .single();
+              
+            if (profileError && profileError.code !== 'PGRST116') {
+              console.error("Profile fetch error:", profileError);
+            }
+            
+            // If there's no profile data or it's incomplete, we can prompt user to complete profile later
+            if (!profileData || (!profileData.first_name && !profileData.last_name)) {
+              console.log("User profile is incomplete or missing");
+              // We'll handle this in the MyPage component
+            }
+          } catch (profileErr) {
+            console.error("Error checking profile:", profileErr);
           }
           
           toast.success("ログインしました！");
