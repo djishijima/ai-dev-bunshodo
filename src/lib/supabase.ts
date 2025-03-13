@@ -1,11 +1,11 @@
 
-import { createClient } from '@supabase/supabase-js';
+import { createBrowserClient } from '@supabase/ssr';
 
 // 新しいSupabaseプロジェクトの認証情報を使用
 const supabaseUrl = 'https://fkjgcszdgcbcdmclgfer.supabase.co';
 const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZramdjc3pkZ2NiY2RtY2xnZmVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAwODUyMDgsImV4cCI6MjA1NTY2MTIwOH0.M-6eN4TW_87p1JpXAN5HhY1mRCK7b8GOFXiRdRuRmUM';
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+export const supabase = createBrowserClient(supabaseUrl, supabaseAnonKey, {
   auth: {
     autoRefreshToken: true,
     persistSession: true,
@@ -47,15 +47,21 @@ export const getUserDisplayName = async (userId: string | undefined) => {
       return `${profileData.first_name || ''} ${profileData.last_name || ''}`.trim();
     }
     
-    // If no profile, get the email from auth.users
-    const { data: userData, error: userError } = await supabase.auth.admin.getUserById(userId);
-    
-    if (userError) {
-      console.error("Error fetching user:", userError);
+    // If no profile, get the email from auth.users - this needs to be updated
+    // as admin.getUserById is not available in the newer version
+    try {
+      const { data: userData, error: userError } = await supabase.auth.getUser(userId);
+      
+      if (userError) {
+        console.error("Error fetching user:", userError);
+        return null;
+      }
+      
+      return userData?.user?.email || null;
+    } catch (err) {
+      console.error("Error getting user:", err);
       return null;
     }
-    
-    return userData?.user?.email || null;
   } catch (err) {
     console.error("Error in getUserDisplayName:", err);
     return null;
