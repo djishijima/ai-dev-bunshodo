@@ -1,7 +1,7 @@
+
 import { NavBar } from "@/components/NavBar";
 import { Hero } from "@/components/Hero";
 import { Features } from "@/components/Features";
-import { Pricing } from "@/components/Pricing";
 import { TemplatesGrid } from "@/components/TemplatesGrid";
 import { ApiShowcase } from "@/components/ApiShowcase";
 import { motion } from "framer-motion";
@@ -25,7 +25,6 @@ const Index = () => {
         <Features />
         <ApiShowcase />
         <TemplatesGrid />
-        <Pricing />
       </div>
     </motion.div>
   );
