@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { NavBar } from "@/components/NavBar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -14,29 +13,7 @@ import { ChevronDown, FileText, MessageSquare, Upload, Users } from "lucide-reac
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
-
-interface Template {
-  id: string;
-  title: string;
-  description: string;
-  price: number;
-  file_url?: string;
-  created_at: string;
-  updated_at: string;
-}
-
-interface Purchase {
-  id: string;
-  user_id: string | null;
-  email: string;
-  template_id: string;
-  template_title?: string;
-  price: number;
-  purchased_at: string;
-  payment_id: string;
-  payment_status: string;
-  stripe_customer_id: string;
-}
+import { getAdminUsersTable, getTemplatesTable, getPurchasesTable, Template, Purchase } from "@/utils/supabaseHelpers";
 
 interface Customer {
   id: string;
@@ -75,8 +52,7 @@ const AdminPage = () => {
         }
         
         // Check if the user is an admin
-        const { data: adminData } = await supabase
-          .from('admin_users')
+        const { data: adminData } = await getAdminUsersTable()
           .select('*')
           .eq('user_id', session.session.user.id)
           .maybeSingle();
@@ -103,22 +79,20 @@ const AdminPage = () => {
   const loadData = async () => {
     try {
       // Load templates
-      const { data: templateData, error: templateError } = await supabase
-        .from('templates')
+      const { data: templateData, error: templateError } = await getTemplatesTable()
         .select('*')
         .order('created_at', { ascending: false });
         
       if (templateError) throw templateError;
-      setTemplates(templateData || []);
+      setTemplates(templateData as Template[] || []);
       
       // Load purchases with customer info
-      const { data: purchaseData, error: purchaseError } = await supabase
-        .from('purchases')
+      const { data: purchaseData, error: purchaseError } = await getPurchasesTable()
         .select('*')
         .order('purchased_at', { ascending: false });
         
       if (purchaseError) throw purchaseError;
-      setPurchases(purchaseData || []);
+      setPurchases(purchaseData as Purchase[] || []);
       
       // Load customers from auth.users via admin API
       // Note: In a real app, you'd probably want to implement this in a secure backend function
@@ -146,8 +120,7 @@ const AdminPage = () => {
         return;
       }
       
-      const { error } = await supabase
-        .from('templates')
+      const { error } = await getTemplatesTable()
         .upsert({
           id: newTemplate.id,
           title: newTemplate.title,
@@ -313,7 +286,7 @@ const AdminPage = () => {
                           <TableCell className="font-mono">{purchase.template_id}</TableCell>
                           <TableCell>¥{purchase.price.toLocaleString()}</TableCell>
                           <TableCell>
-                            <Badge variant={purchase.payment_status === "paid" ? "success" : "secondary"}>
+                            <Badge variant={purchase.payment_status === "paid" ? "default" : "secondary"}>
                               {purchase.payment_status === "paid" ? "支払い完了" : purchase.payment_status}
                             </Badge>
                           </TableCell>

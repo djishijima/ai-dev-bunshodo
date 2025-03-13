@@ -1,4 +1,3 @@
-
 import { Check, ChevronRight, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,8 +10,9 @@ import {
 import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client"; // Use the consistent Supabase client
+import { supabase } from "@/integrations/supabase/client"; 
 import { useNavigate } from "react-router-dom";
+import { getPurchasesTable, getDownloadsTable } from "@/utils/supabaseHelpers";
 
 interface PricingSectionProps {
   price: number;
@@ -85,8 +85,7 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
       if (sessionData?.session?.user) {
         // Check if the purchases table exists and the user has purchased this template
         try {
-          const { data: purchaseData, error } = await supabase
-            .from('purchases')
+          const { data: purchaseData, error } = await getPurchasesTable()
             .select('*')
             .eq('template_id', templateId)
             .eq('user_id', sessionData.session.user.id)
@@ -234,8 +233,7 @@ export const PricingSection = ({ price, templateId, templateName }: PricingSecti
       
       if (userId) {
         try {
-          await supabase
-            .from('downloads')
+          await getDownloadsTable()
             .insert({
               template_id: templateId,
               user_id: userId,

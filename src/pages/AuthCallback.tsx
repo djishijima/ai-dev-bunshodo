@@ -5,6 +5,12 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 
+declare global {
+  interface Window {
+    gtag_report_conversion?: (url?: string) => boolean;
+  }
+}
+
 const AuthCallback = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -63,7 +69,7 @@ const AuthCallback = () => {
             }
           }
         }
-      } catch (err) {
+      } catch (err: any) {
         console.error("Auth callback error:", err);
         setError(err.message);
         toast.error("認証エラー: " + err.message);
