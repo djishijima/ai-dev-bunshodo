@@ -4,7 +4,7 @@ import type { Database } from "@/integrations/supabase/types";
 
 // Helper functions for working with custom tables (not in the auto-generated types)
 export const getAdminUsersTable = () => {
-  // Use any to bypass type checking completely for custom tables
+  // Need to cast to any to bypass TypeScript's strict type checking
   return supabase.from('admin_users') as any;
 };
 
